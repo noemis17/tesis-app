@@ -1,0 +1,30 @@
+
+<ion-header class="ion-no-border" translucent>
+  <ion-toolbar color="secondary">
+    <ion-title class="ion-text-capitalize">Promociones</ion-title>
+        <ion-buttons slot="end">
+              <ion-button (click)="closeModal()">
+                <ion-icon name="close-circle-sharp"></ion-icon>
+              </ion-button>
+        </ion-buttons>
+  </ion-toolbar>
+</ion-header> 
+
+<ion-content>
+  <ion-grid >
+  <ion-row>
+    <ion-col size="6"  *ngFor="let  item of  listaPromociones">
+      <ion-card class="card">
+        <img  src="/assets/fruta.jpg" class="img">
+        
+        <p class="text" ><b>{{item.fecha_fin}}</b></p>
+       
+      </ion-card>
+    
+    </ion-col>
+  </ion-row>
+  
+</ion-grid>
+
+
+</ion-content>

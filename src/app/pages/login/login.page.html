@@ -1,0 +1,35 @@
+
+<ion-content class="ion-padding">
+  <br>
+  <br>
+  <br>
+  <br>
+  <img src="/assets/SUPERCITO.png"   class="center" >
+  <br>
+ 
+  <form [formGroup]="todo" (ngSubmit)="login()" >
+  <ion-list>
+        <ion-item>
+            <ion-label position="floating" ><h3>Correo electrónico</h3></ion-label>
+            <ion-input formControlName="Usuario" placeholder=""></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating" > Contraseña</ion-label>
+          <ion-input #passwordEyeRegister formControlName="Contrasena"   [type]="passwordTypeInput" placeholder=""></ion-input>
+          <button  item-end  class="btn_eye_icon"  (click)="togglePasswordMode()">
+            <ion-icon  [name]="iconpassword"></ion-icon>
+        </button>
+        </ion-item>
+      </ion-list>
+
+        <br>
+        <ion-button expand="full" color="warning" type="submit" shape="round" [disabled]="!todo.valid">Iniciar</ion-button>
+        <br>
+ <p  class="ion-text-center"  routerLink="/menu/usuario"> <ion-text color="primary"> Registro</ion-text></p>
+  </form>
+ 
+ 
+
+  
+
+</ion-content>

@@ -11,7 +11,6 @@
 
 /* Core CSS required for Ionic components to work properly */
 @import "~@ionic/angular/css/core.css";
-
 /* Basic CSS for apps built with Ionic */
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
@@ -24,3 +23,45 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+.icon{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.line-input {
+    margin-bottom: 0!important;
+    ion-item {
+        --border-color: transparent!important;
+        --highlight-height: 0;
+        border: 1px solid #dedede;
+        border-radius: 4px;
+        &.item-has-focus {
+            border: 1px solid var(--ion-color-primary);
+        }
+        ion-label {
+            color: #807e7e!important;
+            font-weight: 300;
+            font-size: 1rem!important;
+        }
+    }
+}
+// input[type="search"]{
+//     width: 45px; /*ancho por defecto*/
+//     background: #ededed url('search-icon.png') no-repeat 9px center; /*icono lupa*/
+//     padding: 9px 10px 9px 32px;
+//     border-radius: 15em;
+//     -webkit-transition: all .5s; /* transición de .5seg a todos los elementos para chrome*/
+//     -moz-transition: all .5s; /* transición de .5seg a todos los elementos para mozilla*/
+//     -o-transition: all .5s; /* transición de .5seg a todos los elementos para ophera*/
+//     transition: all .5s; /* transición de .5seg a todos los elementos*/
+//     outline: none; /* ocultar el fucos automático de los input */
+// }
+// input[type="search"]:focus{
+//     width: 130px; /*tamaño del boton buscar al hacer click*/
+//     padding-left: 32px; /*espacio entre el icono lupa y el placeholder*/
+//     color: #000;
+//     background-color: #FFF;
+// }

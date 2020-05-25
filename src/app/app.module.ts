@@ -9,18 +9,32 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-
+import { ComponentsModule } from './components/components.module';
 import { HttpClientModule } from '@angular/common/http';
 import { RutaService } from './Servicios/Rutas/ruta.service';
+import { ReactiveFormsModule, FormsModule} from '@angular/forms';
+
+
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  declarations: [
+    AppComponent
+   
+   
+  ],
+  entryComponents: [
+  
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ComponentsModule,
+    ReactiveFormsModule
+  
+   
   ],
   providers: [
     StatusBar,

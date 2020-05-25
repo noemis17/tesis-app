@@ -1,0 +1,43 @@
+
+<ion-header class="ion-no-border" translucent>
+  <ion-toolbar class="tool" >
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="ion-text-capitalize"></ion-title>
+    <br>
+    <img src="/assets/SUPERCITO.png"   class="icon1" >
+    <!-- <form action=""slot="end" >
+      <input type="search" name="nombre" placeholder="Buscar">
+  </form> -->
+  </ion-toolbar>
+</ion-header> 
+
+<ion-content class="ion-padding">
+  <ion-list>
+  <ion-item *ngFor="let  item of producto ">
+    <img  src="/assets/fruta.jpg" class="img">
+    <ion-label>
+      <h3 class="text">{{item.NAME}}</h3>
+      <p class="text1" *ngIf=" item.promocionesdel_producto.length===0">{{ item.PRICE | currency:"USD":true}}</p>
+      <p class="text" *ngIf=" item.promocionesdel_producto.length===0">{{item.stock}}</p>
+      <div  *ngIf=" item.promocionesdel_producto.length>0" >
+        <div *ngFor="let  item1 of item.promocionesdel_producto ">
+          <p class="text1" >{{ ((item1.descuento)/100 *item.PRICE) | currency:"USD":true}}     <s style="font-size: x-small;">{{ item.PRICE | currency:"USD":true}}</s></p> 
+          <p class="text"  >{{item1.stock}}</p>
+        
+        </div>  
+      </div>
+      <ion-buttons>
+        <ion-button  class="boton" > 
+          <ion-icon  slot="start" name="cart-outline"></ion-icon> Agregar
+        </ion-button>
+      </ion-buttons> 
+    </ion-label>
+  </ion-item>
+</ion-list>
+</ion-content>
+
+
+
+

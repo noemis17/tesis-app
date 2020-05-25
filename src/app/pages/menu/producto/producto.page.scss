@@ -1,0 +1,90 @@
+input[type="search"] {
+	width: 45px;
+	background: #3dc2ff url('https://antocas.com/demos/search-css3/search-icon.png') no-repeat 9px center;
+	padding: 9px 10px 9px 32px;
+  border-radius: 14em;
+  border: 0;
+	-webkit-transition: all .5s;
+	-moz-transition: all .5s;
+	-o-transition: all .5s;
+	transition: all .5s;
+	outline: none;
+	&:focus {
+    margin-right: 6px;
+		width: 200px;
+		padding-right: 32px;
+		color: #000;
+		background-color: #FFF;
+	}
+}
+
+.icon1{
+    display: block;
+    width: 30%;
+    height: 40%;
+   
+}
+.img{
+ 
+width: 80px;
+height: 80px;
+}
+
+.card {
+    
+  margin-left: 0px;
+  
+        
+  }
+  
+.boton {
+  margin-left: 0px;
+  text-transform: none;
+  font-size: small;
+  
+        
+  }
+    
+.tool {
+  background-color: rgb(225, 226, 227);
+  background-color: rgb(245, 246, 247);
+  text-shadow: 1px 1px #f8f9fa;;
+  
+        
+  }
+  .text{
+
+    font-weight: bold;
+    text-transform: capitalize;
+    text-transform: none;
+    margin-top: 0px;
+    margin-left: 20px;
+    margin-bottom: 6px;
+    
+	
+  }
+  .text1{
+ 
+   
+    text-transform: capitalize;
+    text-transform: none;
+    margin-top: 0px;
+    margin-left: 20px;
+    margin-bottom: 6px;
+    
+	
+  }
+  .preci{
+ 
+    font-size: small;
+    text-transform: capitalize;
+  
+    margin-top: 0px;
+    margin-left: 20px;
+    margin-bottom: 6px;
+    
+	
+  }
+ 
+
+
