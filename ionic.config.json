@@ -1,5 +1,7 @@
 {
   "name": "SupercitoMovil",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

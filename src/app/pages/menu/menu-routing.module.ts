@@ -24,12 +24,28 @@ const routes: Routes = [
       },{
         path: 'vista-producto',
         loadChildren: () => import('./vista-producto/vista-producto.module').then( m => m.VistaProductoPageModule)
+      },{
+        path: 'promocion',
+        loadChildren: () => import('./promocion/promocion.module').then( m => m.PromocionPageModule)
+      },
+      {
+        path: 'compra',
+        loadChildren: () => import('./compra/compra.module').then( m => m.CompraPageModule)
+      },
+      {
+        path: 'paypal',
+        loadChildren: () => import('./paypal/paypal.module').then( m => m.PaypalPageModule)
+      },
+      {
+        path: 'producto-detalle',
+        loadChildren: () => import('./producto-detalle/producto-detalle.module').then( m => m.ProductoDetallePageModule)
       }
-
       
       ]
 
-  }
+  },
+ 
+  
 
 ];
 

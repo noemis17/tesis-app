@@ -20,4 +20,34 @@ export class CarritoService {
                 });
     });
   }
+
+
+  guardarCompra(idPromocionProducto,idUsuario,producto){
+    const _body = new HttpParams()
+      .set("idPromociones",idPromocionProducto)
+      .set("idUsuario",idUsuario)
+      .set("productos",producto)
+      ;
+    return new Promise((resolve, reject) => {
+      this.http.post(server+"/v0/ComprarProducto/",_body.toString(),{headers:this._header})
+                .subscribe(res=>{
+                  resolve(res);
+                },(err)=>{
+                  reject(err);
+                });
+    });
+  }
+  ConsultarOrdenesCompradas(idUsuario){
+    const _body = new HttpParams()
+      .set("idUsuario",idUsuario)
+      ;
+    return new Promise((resolve, reject) => {
+      this.http.post(server+"/v0/OrdenesCompradas/",_body.toString(),{headers:this._header})
+                .subscribe(res=>{
+                  resolve(res);
+                },(err)=>{
+                  reject(err);
+                });
+    });
+  }
 }

@@ -10,6 +10,7 @@ import { ProductoPage } from './producto.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { ModalPromocionesPage } from '../modal-promociones/modal-promociones.page';
 import { ModalPromocionesPageModule } from '../modal-promociones/modal-promociones.module';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 
 @NgModule({
   entryComponents:[
@@ -21,7 +22,8 @@ ModalPromocionesPage
     IonicModule,
     ProductoPageRoutingModule,
     ComponentsModule,
-    ModalPromocionesPageModule
+    ModalPromocionesPageModule,
+    PipesModule
   ],
   declarations: [ProductoPage]
 })

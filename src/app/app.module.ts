@@ -13,8 +13,8 @@ import { ComponentsModule } from './components/components.module';
 import { HttpClientModule } from '@angular/common/http';
 import { RutaService } from './Servicios/Rutas/ruta.service';
 import { ReactiveFormsModule, FormsModule} from '@angular/forms';
-
-
+import { PipesModule } from './pipes/pipes.module';
+import { PayPal } from '@ionic-native/paypal/ngx';
 
 @NgModule({
   declarations: [
@@ -32,7 +32,8 @@ import { ReactiveFormsModule, FormsModule} from '@angular/forms';
     AppRoutingModule,
     FormsModule,
     ComponentsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PipesModule
   
    
   ],
@@ -41,6 +42,7 @@ import { ReactiveFormsModule, FormsModule} from '@angular/forms';
     SplashScreen,
     Geolocation,
     RutaService,
+    PayPal,
   
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
