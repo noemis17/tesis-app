@@ -15,6 +15,8 @@ import { RutaService } from './Servicios/Rutas/ruta.service';
 import { ReactiveFormsModule, FormsModule} from '@angular/forms';
 import { PipesModule } from './pipes/pipes.module';
 import { PayPal } from '@ionic-native/paypal/ngx';
+import { Camera } from '@ionic-native/camera/ngx';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,7 @@ import { PayPal } from '@ionic-native/paypal/ngx';
     ComponentsModule,
     ReactiveFormsModule,
     PipesModule
+    
   
    
   ],
@@ -43,6 +46,8 @@ import { PayPal } from '@ionic-native/paypal/ngx';
     Geolocation,
     RutaService,
     PayPal,
+    Camera,
+    WebView,
   
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

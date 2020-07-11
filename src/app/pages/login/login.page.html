@@ -1,55 +1,22 @@
 
-<!-- <ion-content class="ion-padding">
-  <br>
-  <br>
-  <br>
-  <br>
-  <img src="/assets/SUPERCITO.png"   class="center" >
-  <br>
- 
-  <form [formGroup]="todo" (ngSubmit)="login()" >
-  <ion-list>
-        <ion-item>
-            <ion-label position="floating" ><h3>Correo electrónico:</h3></ion-label>
-            <ion-input formControlName="Usuario" placeholder=""></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating" > Contraseña:</ion-label>
-          <ion-input #passwordEyeRegister formControlName="Contrasena"   [type]="passwordTypeInput" placeholder=""></ion-input>
-          <button  item-end  class="btn_eye_icon"  (click)="togglePasswordMode()">
-            <ion-icon  [name]="iconpassword"></ion-icon>
-        </button>
-        </ion-item>
-      </ion-list>
-
-        <br>
-        <ion-button expand="full" color="warning" type="submit" shape="round" [disabled]="!todo.valid">Iniciar</ion-button>
-        <br>
- <p  class="ion-text-center"  routerLink="/menu/usuario"> <ion-text color="primary"> Registro</ion-text></p>
-  </form>
- 
- 
-
-  
-
-</ion-content> -->
 <ion-content >
   <div class="sign-container gradient-1" >
 
     <div class="header">
+      
       <div class="title ion-text-center">
         <img src="/assets/SUPERCITO.png" >
      
       </div>
-    </div>
-
-        <div class="login-container ion-padding">
+    </div> 
+    
+         <!-- <div class="login-container ion-padding login-box">
         <form [formGroup]="todo" (ngSubmit)="login()" >
 
-          <ion-list lines="none" class="form fade-in">
+          <ion-list  class="form fade-in">
             <ion-item>
       
-                <ion-input  formControlName="Usuario" placeholder="Email"></ion-input>
+                <ion-input  formControlName="Usuario"  placeholder="Email"></ion-input>
             </ion-item>
           
             <ion-item>
@@ -61,18 +28,38 @@
             </ion-item>
           </ion-list>
 
-          <div class="ion-text-center fade-in">
-          <ion-button  expand="full" class="green-button" type="submit" shape="round" [disabled]="!todo.valid">Iniciar</ion-button>
+          <div class="ion-text-center fade-in ">
+          <ion-button  class="green-button" type="submit" shape="round" [disabled]="!todo.valid">Iniciar</ion-button>
           
           </div>
         </form>
-        </div>
+        </div>  -->
+      <div class="login-box">
+        <br>
+        <br>
+
+      <form [formGroup]="todo" (ngSubmit)="login()">
+  
+        <label for="username">Email</label>
+        <input type="text"formControlName="Usuario"  placeholder="Email">
+    
+        <label for="password">Password</label>
+        <input  #passwordEyeRegister formControlName="Contrasena"  [type]="passwordTypeInput" placeholder="Password"  >
+      
+        <div class="ion-text-center fade-in ">
+          <ion-button  class="green-button" type="submit" shape="round" [disabled]="!todo.valid">Iniciar</ion-button>
+          
+          </div>
+      
+      </form>
+    </div>
+
 
     <div class="sign-up-container gradient-2  ion-padding" [ngClass]="{'active': signupView}">
 
       <div class="toggle-text ion-text-center" tappable (click)="toggleSignUpView()">
 
-        <span *ngIf="!signupView" [ngClass]="{'fade-in': !signupView, 'fade-out': signupView}">Sign Up</span>
+        <span *ngIf="!signupView" [ngClass]="{'fade-in': !signupView, 'fade-out': signupView}">Registro</span>
         <span *ngIf="signupView" [ngClass]="{'fade-in': signupView, 'fade-out': !signupView}">Login</span>
         <br>
         <ion-icon name="arrow-round-up" *ngIf="!signupView" [ngClass]="{'fade-in': !signupView, 'fade-out': signupView}"></ion-icon>
@@ -114,7 +101,7 @@
             && user.controls['Confirmar'].value !== user.controls['Contrasena'].value">
             contreseña deve ser igual</div>
               <div class="ion-text-center" [ngClass]="{'fade-in': signupView, 'fade-out': !signupView}">
-                <ion-button  class="green-button" type="submit" shape="round" [disabled]="!user.valid">Registrar</ion-button>
+                <ion-button  class="gray-button" type="submit" shape="round" [disabled]="!user.valid">Registrar</ion-button>
                
               </div>
       </ion-list>
@@ -125,3 +112,4 @@
 
   </div>
 </ion-content>
+

@@ -18,3 +18,4 @@ import { ModalPromocionesPage } from './modal-promociones.page';
   declarations: [ModalPromocionesPage]
 })
 export class ModalPromocionesPageModule {}
+

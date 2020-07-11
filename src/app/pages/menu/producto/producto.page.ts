@@ -34,7 +34,7 @@ iconoCargando = false;
     .then(data=>{ 
       if(data['code']=="200"){
         this.producto=data['items'];
-      console.log(this.producto);
+      // console.log(this.producto);
       }
 
     }).catch((error) => console.log(error))
@@ -140,6 +140,7 @@ async presentAlertPrompt(item) {
             //console.log("correcto")
             //console.log('Confirm Ok',data);
           }
+          this.router.navigateByUrl('/menu/carrito'); 
         }
       }
     ]

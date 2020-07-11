@@ -23,6 +23,7 @@ export class PromocionesService {
     });
   }
 
+  
 mostrarPromocionesproducto(idregistro:string){
  const registro=server+"/v0/kit_filtro?idRegistro="+idregistro;
 

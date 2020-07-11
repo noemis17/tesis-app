@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CarritoService } from '../../../Servicios/carrito.service'
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-compra',
   templateUrl: './compra.page.html',
@@ -9,7 +9,10 @@ import { CarritoService } from '../../../Servicios/carrito.service'
 export class CompraPage implements OnInit {
 
   CompraProducto:any;
-  constructor( private compraServi: CarritoService) { }
+  nombre="";
+  cedula="";
+
+  constructor( private compraServi: CarritoService, private router:Router) { }
 
   ngOnInit() {
     this.consultarOrdenesCompra();
@@ -18,8 +21,13 @@ export class CompraPage implements OnInit {
     this.compraServi.ConsultarOrdenesCompradas(localStorage.getItem("nomeToken"))
       .then((data) =>{
         if(data['code']==""){
-          this.CompraProducto=data['items'];
-        console.log(this.CompraProducto);
+
+          if(data['items'].length>0){
+            this.CompraProducto=data['items'];
+          this.nombre=data['items'][0].usuarios.name;
+          this.cedula=data['items'][0].usuarios.cedula;
+          }
+          console.log(this.CompraProducto);
         }
 
       })
@@ -40,6 +48,10 @@ export class CompraPage implements OnInit {
         return listItem;
       });
     }
+  }
+
+  rutadelcarrito(){
+    this.router.navigate(['/menu/carrito']);
   }
 
 }

@@ -3,8 +3,10 @@ import { ProductosService } from '../../../Servicios/productos.service';
 import { PromocionesService } from '../../../Servicios/promociones.service'
 import { CarritoService } from '../../../Servicios/carrito.service'
 import { AlertController, NavController} from '@ionic/angular'
+import { ModalController,NavParams  } from '@ionic/angular';
+import { PagoPage } from '../pago/pago.page';
 
-import { PayPal, PayPalPayment, PayPalConfiguration,  PayPalPaymentDetails} from '@ionic-native/paypal/ngx';
+
 @Component({
   selector: 'app-carrito',
   templateUrl: './carrito.page.html',
@@ -18,16 +20,45 @@ export class CarritoPage implements OnInit {
   constructor(private productoServi: ProductosService,
     private promocionServi: PromocionesService,
     private compraServi: CarritoService,
-    public alertController: AlertController,
-    private payPal:PayPal, 
-    public navCtrl: NavController
+    public alertController: AlertController, 
+    public navCtrl: NavController,
+    private modalC:ModalController
   ) {
   }
   ngOnInit() {
     this.setDatos();
     this.setDatos1();
-    this.consultarOrdenesCompra();
+    //this.consultarOrdenesCompra();
   
+  }
+  //Permite abril una modal
+  validarCarrito()
+  {
+    if(this.carritoProducto.length==0 && this.carritoPromociones.length==0){
+      this.showAlert("No tiene ningun producto en el carrito");
+    }else{
+      this.abrirModal();
+    }
+  }
+  async abrirModal(){
+      const modal = await this.modalC.create({
+      component:PagoPage ,
+      componentProps: {
+        "producto":this.carritoProducto,
+        "promociones":this.carritoPromociones,
+        "total":this.totalAPagar
+        //aqui tiene que enviar a la modal los 2 array el de promocion y el de producto no se mardar eso
+      }
+    });
+    modal.onDidDismiss().then(data => {
+      if(data['data']=="1"){
+        this.totalAPagar = 0;
+        this.carritoProducto = [];
+        this.carritoPromociones = [];
+      }
+        console.log('datos', data);
+    });
+    return await modal.present();
   }
   eliminar(carri) {
     let itemIndexProducto = this.carritoProducto.findIndex(item => item.id == carri.id);
@@ -232,28 +263,6 @@ export class CarritoPage implements OnInit {
     });
     await alert.present();
   };
-
-  registroCompra() {
-    if (this.carritoProducto.find(e => e['PermitirVender'] == false) == undefined && this.carritoPromociones.find(e => e['PermitirVender'] == false) == undefined) {
-      this.compraServi.guardarCompra(JSON.stringify(this.carritoPromociones), localStorage.getItem("nomeToken"), JSON.stringify(this.carritoProducto))
-        .then((ok) => {
-          console.log(ok)
-          if (ok['code'] == "200") {
-            var setDato: any[] = [];
-            localStorage.setItem("carrito", JSON.stringify(setDato));
-            localStorage.setItem("carritoPromociones", JSON.stringify(setDato));
-            this.setDatos();
-            this.setDatos1();
-            this.showAlert("Compra realizada exitosamenete");
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else {
-      this.showAlert("Todos los productos no estan disponible");
-    }
-  }
   consultarOrdenesCompra() {
     this.compraServi.ConsultarOrdenesCompradas(localStorage.getItem("nomeToken"))
       .then((ok) => {
@@ -263,28 +272,7 @@ export class CarritoPage implements OnInit {
         console.log(error);
       });
   }
- comprar(){
-    this.payPal.init({
-        PayPalEnvironmentProduction: '',
-        PayPalEnvironmentSandbox:'AVgkq99IooTEcBVPU_Xo93RH5SkNFMy9vufiV5qnsDPusqvLWyzkvFeTYq5fC27LCWOMEkk_Vl-40cIA'
-    }).then(() => {
-      this.payPal.prepareToRender('PayPalEnvironmentSandbox', new PayPalConfiguration({
-        acceptCreditCards: true,
-        languageOrLocale: 'pt-BR',
-        merchantName: 'CanalDoAbranches',
-        merchantPrivacyPolicyURL: '',
-        merchantUserAgreementURL: ''
-      })).then(() => {
-        let detail = new PayPalPaymentDetails('19.99', '0.00', '0.00');
-        let payment = new PayPalPayment('19.99', 'USD', 'CanalDoAbranches', 'Sale', detail);
-        this.payPal.renderSinglePaymentUI(payment).then((response) => {
-          console.log('pagamento efetuado')
-        }, () => {
-          console.log('erro ao renderizar o pagamento do paypal');
-        })
-      })
-    })
-  }
+
 
   
 

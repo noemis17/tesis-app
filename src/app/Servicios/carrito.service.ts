@@ -22,11 +22,15 @@ export class CarritoService {
   }
 
 
-  guardarCompra(idPromocionProducto,idUsuario,producto){
+  guardarCompra(idPromocionProducto,idUsuario,producto,idTipoPago,total,latitud,longitud){
     const _body = new HttpParams()
       .set("idPromociones",idPromocionProducto)
       .set("idUsuario",idUsuario)
       .set("productos",producto)
+      .set("idTipoPago",idTipoPago)
+      .set("total",total)
+      .set("latitud",latitud)
+      .set("longitud",longitud)
       ;
     return new Promise((resolve, reject) => {
       this.http.post(server+"/v0/ComprarProducto/",_body.toString(),{headers:this._header})

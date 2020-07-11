@@ -1,0 +1,55 @@
+.compa{
+  padding-top: 0px;
+  padding-bottom: 0px;
+    font-size: medium;
+    margin-top: 0px;
+
+    margin-bottom: 8px;
+    
+  
+}
+.cass{
+  padding-top: 0px;
+  padding-bottom: 0px;
+
+  
+}
+.cassPrecio{
+  word-spacing: normal; 
+}
+.casstotal{
+  text-align-last: end;
+  margin-right: 20px;  
+  margin-top: 0px;
+}
+hr {
+  background-color:rgb(160,160,160);
+  margin-bottom: 0px;
+}
+
+.negativo {
+   
+    font-size: small;
+    text-transform: none;
+    --background:rgb(235, 219, 219);
+    color: red;
+  }
+
+  .positivo {
+   
+    font-size: small;
+    --background:rgb(235, 219, 219);
+    text-transform: none;
+    color: rgb(76, 158, 38);
+  }
+  .proceso {
+    font-size: small;
+    text-transform: none;
+    --background:rgb(235, 219, 219);
+    color: rgb(228, 215, 32);
+  }
+  .estado{
+    text-align-last: end; 
+    margin-top: 0px;
+    margin-bottom: 8px;
+  }

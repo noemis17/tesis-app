@@ -4,6 +4,7 @@ import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import {UsuarioService } from '../../Servicios/usuario.service';
 import { AlertController } from '@ionic/angular';
+import { Camera,CameraOptions} from '@ionic-native/camera/ngx';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -19,7 +20,7 @@ export class LoginPage implements OnInit {
     private loginService:LoginService,
     private formBuilder: FormBuilder,
     public alertController: AlertController,
-    private router:Router
+    private router:Router, private camera: Camera
     ) {
       this.todo = this.formBuilder.group({
         Usuario: ['', Validators.required],
@@ -35,6 +36,8 @@ export class LoginPage implements OnInit {
       });
     
      }
+     image:string;
+   
 
      toggleSignUpView () {
       this.signupView = !this.signupView

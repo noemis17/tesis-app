@@ -6,6 +6,7 @@ import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 
+
 @Component({
   selector: 'app-promocion',
   templateUrl: './promocion.page.html',
@@ -139,6 +140,7 @@ export class PromocionPage implements OnInit {
             }else {
               this.showAlert("No hay la cantidad necesaria")
             }
+            this.router.navigateByUrl('/menu/carrito');
 
           }
         }

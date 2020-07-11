@@ -19,24 +19,76 @@
     }
     .login-container {
         flex: 2
+        
     }
+    .login-box {
+        width: 320px;
+        height: 420px;
+     
+        color: rgb(29, 27, 27);
+        top: 50%;
+        left: 50%;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        box-sizing: border-box;
+        padding: 70px 30px;
+      }
+      .login-box label {
+        margin: 0;
+        padding: 0;
+        font-weight: bold;
+        display: block;
+      }
+      .login-box input {
+        width: 100%;
+        margin-bottom: 20px;
+      }
+      
+
+  
+  .login-box input[type="submit"]:hover {
+    cursor: pointer;
+    background: #ffc107;
+    color: #000;
+  }
+  
+  .login-box a {
+    text-decoration: none;
+    font-size: 12px;
+    line-height: 20px;
+    color: darkgrey;
+  }
+  
+  .login-box a:hover {
+    color: #fff;
+  }
+  .login-box input[type="text"], .login-box input[type="password"] {
+    border: none;
+    border-bottom: 1px solid #ffc107;
+    background: transparent;
+    outline: none;
+    height: 40px;
+    color:  #000;
+    font-size: 16px;
+  }
 
     .form {
+
         --background: none;
         background: none;
         max-width: 320px;
         margin: 0 auto;
 
         ion-item {
-            --background: #63869b;
-            --border-radius: 4px;
+           
+            
             --border-color: transparent !important;
             --highlight-height: 0;
-            color: #FAFAFA;
+            color: #080808;
             margin-bottom: 10px;
 
             ion-icon {
-                color: #FAFAFA;
+                color: #201f1f;
             }
         }
     }
@@ -52,39 +104,51 @@
         overflow: hidden;
 
         &.active {
-            height: calc(120% - 180px);
+            height: calc(115% - 180px);
         }
         
         .toggle-text {
-            color: #FAFAFA;
+            color:  #201f1f;
             font-size: 16px;
             margin-bottom: 20px;
         }
 
         .form {
             ion-item {
-                --background: #2bc1b1;
+                --background: #fefffe;
             }
         }
     }
 }
 
 .gradient-1 {
-    --background: linear-gradient(180deg, rgba(132,163,183,1) 0%, rgba(97,135,157,1) 100%);
-    background: linear-gradient(180deg, rgba(132,163,183,1) 0%, rgba(97,135,157,1) 100%);
+    margin: 0;
+    padding: 0;
+  
+    background-size: cover;
+    font-family: sans-serif;
+    height: 100vh;
+    --background: linear-gradient(180deg, rgb(235, 219, 219) 0%, rgb(219, 207, 207) 100%);
+    background: linear-gradient(180deg, rgb(235, 230, 230) 0%, rgb(235, 219, 219) 100%);
 }
+
 .gradient-2 {
-    --background: linear-gradient(180deg, rgb(39, 245, 217) 0%, rgb(61, 180, 182) 100%);
-    background: linear-gradient(180deg, rgb(40, 228, 203) 0%, rgb(94, 214, 216) 100%);
+    --background: linear-gradient(180deg, rgb(199, 188, 188) 0%, rgb(189, 182, 182) 100%);
+    background: linear-gradient(180deg, rgb(211, 206, 206) 0%, rgb(202, 193, 193) 100%);
 }
 
 .green-button {
-    --background: rgba(35,224,200,1);
-    color: #FFF;
+    --background:  #b80f22;
+    color: rgb(10, 10, 10);
+    
+    width:80%;
+  
 }
 .gray-button {
-    --background: rgba(97,135,157,1);
-    color: #FFF;
+    --background:  #cffd02;
+    color: rgb(10, 10, 10);
+    
+    width:80%;
 }
 
 .fade-in {
