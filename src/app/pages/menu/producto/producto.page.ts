@@ -110,6 +110,8 @@ async presentAlertPrompt(item) {
       {
         name:'cantidad',
         type: 'number',
+        min: item.stock,
+        max: item.stock,
         placeholder: 'cantidad'
       },
       

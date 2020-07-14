@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ModalController,NavParams,AlertController, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { TipoPagoService} from '../../../Servicios/tipo-pago.service';
@@ -75,9 +75,11 @@ export class PagoPage implements OnInit {
     }
    }else{
      // aqui va el codigo donde accede a la camara o a la galeria del telefono 
-     this.showAlert("Ingrese la foto de la transaccion");
+     this.presentAlertPrompt();
+    //  this.showAlert("Ingrese la foto de la transaccion");
    }
   }
+  
   async showAlert(Mensaje) {
     const alert = await this.alertController.create({
       message: Mensaje,
@@ -152,23 +154,40 @@ private addMaker(lat: number, lng: number) {
       lng: rta.coords.longitude
     };
   }
+  async hola(){
+    console.log('hola');
+  }
+
+  @ViewChild('listaTPagos',{static:false}) listaTPagos: ElementRef;
+  
   async presentAlertPrompt() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Comprobante',
-      mode:"ios",
       inputs: [
         {
-          name: 'foto',
-          type:'text',
-          placeholder: 'Comprobante'
+          name: 'radio1',
+          type: 'radio',
+          label: 'Camara',
+          value: 'value1',
+          checked: true,
+          handler:()=>{
+            console.log('hoohohoh');
+            this.takePicture();
+          }
         },
         {
-          name: 'foto',
-          type:'text',
-          placeholder: 'Comprobante'
-        },
+          name: 'radio2',
+          type: 'radio',
+          label: 'galeria',
+          value: 'value2',
+          handler:()=>{
+            console.log('hoohohoh');
+            this.AccessGallery();
+          }
+        }
       ],
+      mode:"ios",
       buttons: [
         {
           text: 'Cancel',
@@ -182,7 +201,9 @@ private addMaker(lat: number, lng: number) {
            cssClass: 'alertButton',
           handler: () => {
             console.log('Confirm Ok');
-          
+            
+            let listaTPagosPorId = document.getElementById('listaTPagos');
+            listaTPagosPorId.hidden = true;
             
           }
         }
@@ -238,7 +259,12 @@ private addMaker(lat: number, lng: number) {
   //     console.log(err);
   //   });
   // }
-
+  @ViewChild('mapa' ,{static:false}) mapa : ElementRef;
+  ocultarMapa(){
+    let mapap = document.getElementById('map');
+    mapap.hidden = true;
+    // this.mapa.nativeElement.hidden = true;
+  }
 
 
 }

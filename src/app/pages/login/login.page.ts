@@ -97,5 +97,95 @@ export class LoginPage implements OnInit {
   }
  
 
+  async presentAlertPrompt() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Comprobante',
+      inputs: [
+        {
+          name: 'radio1',
+          type: 'radio',
+          label: 'Camara',
+          value: 'value1',
+          checked: true,
+          // handler:()=>{
+          //   console.log('hoohohoh');
+          //   this.takePicture();
+          // }
+        },
+        {
+          name: 'radio2',
+          type: 'radio',
+          label: 'galeria',
+          value: 'value2',
+          // handler:()=>{
+          //   console.log('hoohohoh');
+          //   this.AccessGallery();
+          // }
+        }
+      ],
+      mode:"ios",
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'alertButton',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+           cssClass: 'alertButton',
+          handler: (data) => {
+            console.log('Confirm Ok');
+            if (data==='value1') {
+              this.takePicture();
+            } else if(data==='value2') {
+              this.AccessGallery();
+            }
+            // let listaTPagosPorId = document.getElementById('listaTPagos');
+            // listaTPagosPorId.hidden = true;
+            
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  takePicture() {
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType: this.camera.PictureSourceType.CAMERA
+    };
+    this.camera.getPicture(options)
+    .then((imageData) => {
+      this.image = 'data:image/jpeg;base64,' + imageData;
+    }, (err) => {
+      console.log(err);
+    });
+  }
+
+  AccessGallery(){
+    this.camera.getPicture({
+      sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
+       destinationType: this.camera.DestinationType.DATA_URL
+   
+      }).then((imageData) => {
+   
+        this.image= 'data:image/jpeg;base64,'+imageData;
+
+           }, (err) => {
+   
+        console.log(err);
+   
+      });
+   
+   }
+
 
 }
