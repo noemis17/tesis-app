@@ -75,7 +75,7 @@ export class PagoPage implements OnInit {
     }
    }else{
      // aqui va el codigo donde accede a la camara o a la galeria del telefono 
-     this.showAlert("Ingrese la foto de la transaccion");
+     this.presentAlertPrompt();
    }
   }
   async showAlert(Mensaje) {
@@ -157,18 +157,7 @@ private addMaker(lat: number, lng: number) {
       cssClass: 'my-custom-class',
       header: 'Comprobante',
       mode:"ios",
-      inputs: [
-        {
-          name: 'foto',
-          type:'text',
-          placeholder: 'Comprobante'
-        },
-        {
-          name: 'foto',
-          type:'text',
-          placeholder: 'Comprobante'
-        },
-      ],
+    
       buttons: [
         {
           text: 'Cancel',

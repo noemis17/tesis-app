@@ -11,11 +11,11 @@
         </ion-button>
       </ion-buttons> 
     </ion-toolbar>
-   
+    <ion-searchbar   placeholder="Productos"  color="warning"  (ionChange)="buscar( $event )"animated  style="padding-top: 0px;" mode="ios" ></ion-searchbar>
 </ion-header>
-<ion-searchbar   placeholder="Productos"  color="warning"  (ionChange)="buscar( $event )"animated  style="padding-top: 0px;" mode="ios" ></ion-searchbar>
-<ion-content    class="ion-padding ">
 
+<ion-content    class="ion-padding ">
+ 
   <p *ngIf="iconoCargando"  color="light" class="spinners"><ion-spinner color="primary" name="circles"></ion-spinner></p>
 
   <ion-grid>
