@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { server } from "../../environments/environment";
+import { resolve } from 'url';
 
 
 @Injectable({
@@ -54,4 +55,21 @@ export class CarritoService {
                 });
     });
   }
+
+  guardarDocumentoTransaccion(imagen:string){
+    const _body = new HttpParams()
+    .set("file_producto_img",imagen)
+    ;
+
+    return new Promise((resolve,reject)=>{ this.http.post(server+'/v0/guardarDocumentoTransaccion',_body.toString(),{headers:this._header})
+                    .subscribe(res=>{
+                      resolve(res);
+                    },(err)=>{
+                      reject(err);
+                    });
+                });
+  }
+
 }
+
+
