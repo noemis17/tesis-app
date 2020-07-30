@@ -39,6 +39,14 @@ const routes: Routes = [
       {
         path: 'producto-detalle',
         loadChildren: () => import('./producto-detalle/producto-detalle.module').then( m => m.ProductoDetallePageModule)
+      },
+      {
+        path: 'perfil',
+        loadChildren: () => import('./perfil/perfil.module').then( m => m.PerfilPageModule)
+      } ,
+      {
+        path: 'editar-peril',
+        loadChildren: () => import('./editar-peril/editar-peril.module').then( m => m.EditarPerilPageModule)
       }
       // {
       //   path: 'pago',
@@ -48,6 +56,8 @@ const routes: Routes = [
       ]
 
   }
+
+
  
   
 

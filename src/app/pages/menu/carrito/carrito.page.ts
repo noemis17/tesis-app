@@ -116,7 +116,7 @@ export class CarritoPage implements OnInit {
     this.carritoPromociones = [];
     var listaPromociones: any[] = [];
     listaPromociones = JSON.parse(localStorage.getItem("carritoPromociones"));
-    if (listaPromociones.length > 0) {
+    if (listaPromociones.length>0) {
       listaPromociones.map(e => {
         if (e['cantidad'] != null) {
           this.promocionServi.mostrarRegistroId(e['id'])

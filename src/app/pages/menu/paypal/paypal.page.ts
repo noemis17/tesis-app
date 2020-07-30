@@ -58,5 +58,6 @@ export class PaypalPage implements OnInit {
       // Error in initialization, maybe PayPal isn't supported or something else
     });
   }
+  
 }
 

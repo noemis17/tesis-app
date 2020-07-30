@@ -21,18 +21,18 @@ export class MenuPage implements OnInit {
       icon: 'map'
     },
     
-    {
-      title: 'Producto',
-      url: '/menu/producto',
-      icon: 'card'
-    },
+    // {
+    //   title: 'Producto',
+    //   url: '/menu/producto',
+    //   icon: 'card'
+    // },
     {
       title: 'Promociones',
       url: '/menu/promocion',
       icon: 'pricetags'
     }
     ,{
-      title: 'vista',
+      title: 'Producto',
       url: '/menu/vista-producto/product',
       icon: 'card'
     }, {
@@ -43,6 +43,11 @@ export class MenuPage implements OnInit {
     , {
       title: 'Compra',
       url: '/menu/compra',
+      icon: 'archive'
+    }
+    , {
+      title: 'Perfil',
+      url: '/menu/perfil',
       icon: 'archive'
     }
     , {

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import {UsuarioService } from '../../Servicios/usuario.service';
 import { AlertController, IonInput } from '@ionic/angular';
 import { Camera,CameraOptions} from '@ionic-native/camera/ngx';
+import { PayPal, PayPalPayment, PayPalConfiguration } from '@ionic-native/paypal/ngx';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -20,7 +21,8 @@ export class LoginPage implements OnInit {
     private loginService:LoginService,
     private formBuilder: FormBuilder,
     public alertController: AlertController,
-    private router:Router, private camera: Camera
+    private router:Router, private camera: Camera,
+    private payPal: PayPal
     ) {
       this.todo = this.formBuilder.group({
         Usuario: ['', Validators.required],
@@ -29,11 +31,13 @@ export class LoginPage implements OnInit {
       });
       this.user = this.formBuilder.group({
         Nombre: ['', Validators.required],
-        Cedula: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(10)]],
-        Celular: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(10)]],
+        Cedula: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
+        Celular: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
         email: ['', Validators.required],
         Contrasena: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(12)]],
         Confirmar: [''], 
+        cedula: new FormControl({value:"",disabled:false},[Validators.maxLength(10),Validators.pattern('^[0-9]+$')]),
+        celular:new FormControl({value:"",disabled:false},[Validators.maxLength(10),Validators.pattern('^[0-9]+$')]),
       });
     
      }
@@ -47,21 +51,28 @@ export class LoginPage implements OnInit {
   login(){
     this.loginService.getlogin(this.todo.controls['Usuario'].value, this.todo.controls['Contrasena'].value)
       .then((ok) => {
-      
         if(ok['items'] == null){
           console.log('error')
+          
         }else{
           this.router.navigateByUrl("menu/vista-producto");
-          localStorage.setItem("nomeToken",ok['items'].nome_token)
+          localStorage.setItem("nomeToken",ok['items'].nome_token);
+          localStorage.setItem("id",ok['items'].id);
+          localStorage.setItem("name",ok['items'].name);
+          localStorage.setItem("email",ok['items'].email);
+          localStorage.setItem("cedula",ok['items'].cedula);
+          localStorage.setItem("celular",ok['items'].celular);
           var setDato:any[]=[];
           localStorage.setItem("carrito",JSON.stringify(setDato));
           localStorage.setItem("carritoPromociones",JSON.stringify(setDato));
         }
+        console.log(ok);
       })
       .catch((error) => {
         console.log(error);
       });
-     
+      
+      
   }
   passwordTypeInput  =  'password';
   iconpassword  =  'eye-off';
@@ -94,100 +105,12 @@ export class LoginPage implements OnInit {
   };
   ngOnInit() {
   
-    // this.user.reset();
-    
+   this.login();
+
   }
  
 
-  async presentAlertPrompt() {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Comprobante',
-      inputs: [
-        {
-          name: 'radio1',
-          type: 'radio',
-          label: 'Camara',
-          value: 'value1',
-          checked: true,
-          // handler:()=>{
-          //   console.log('hoohohoh');
-          //   this.takePicture();
-          // }
-        },
-        {
-          name: 'radio2',
-          type: 'radio',
-          label: 'galeria',
-          value: 'value2',
-          // handler:()=>{
-          //   console.log('hoohohoh');
-          //   this.AccessGallery();
-          // }
-        }
-      ],
-      mode:"ios",
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'alertButton',
-          handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }, {
-          text: 'Ok',
-           cssClass: 'alertButton',
-          handler: (data) => {
-            console.log('Confirm Ok');
-            if (data==='value1') {
-              this.takePicture();
-            } else if(data==='value2') {
-              this.AccessGallery();
-            }
-            // let listaTPagosPorId = document.getElementById('listaTPagos');
-            // listaTPagosPorId.hidden = true;
-            
-          }
-        }
-      ]
-    });
-
-    await alert.present();
-  }
-
-  takePicture() {
-    const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      sourceType: this.camera.PictureSourceType.CAMERA
-    };
-    this.camera.getPicture(options)
-    .then((imageData) => {
-      this.image = 'data:image/jpeg;base64,' + imageData;
-    }, (err) => {
-      console.log(err);
-    });
-  }
-
-  AccessGallery(){
-    this.camera.getPicture({
-      sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
-       destinationType: this.camera.DestinationType.DATA_URL
-   
-      }).then((imageData) => {
-   
-        this.image= 'data:image/jpeg;base64,'+imageData;
-
-           }, (err) => {
-   
-        console.log(err);
-   
-      });
-   
-   }
+  
 
 
 }

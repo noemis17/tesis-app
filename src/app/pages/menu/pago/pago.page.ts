@@ -76,8 +76,9 @@ export class PagoPage implements OnInit {
    }else{
      // aqui va el codigo donde accede a la camara o a la galeria del telefono 
      this.presentAlertPrompt();
-    //  this.showAlert("Ingrese la foto de la transaccion");
+
    }
+   
   }
   
   async showAlert(Mensaje) {
@@ -164,6 +165,8 @@ private addMaker(lat: number, lng: number) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Comprobante',
+      mode:'ios',
+  
       inputs: [
         {
           name: 'radio1',
@@ -187,7 +190,6 @@ private addMaker(lat: number, lng: number) {
           }
         }
       ],
-      mode:"ios",
       buttons: [
         {
           text: 'Cancel',
@@ -247,26 +249,11 @@ private addMaker(lat: number, lng: number) {
       });
    
    }
-  // takePicture() {
-  //   const options: CameraOptions = {
-  //     quality: 100,
-  //     destinationType: this.camera.DestinationType.FILE_URI,
-  //     encodingType: this.camera.EncodingType.JPEG,
-  //     mediaType: this.camera.MediaType.PICTURE,
-  //     sourceType: this.camera.PictureSourceType.CAMERA
-  //   };
-  //   this.camera.getPicture(options)
-  //   .then((file) => {
-  //     this.image = this.web.convertFileSrc(file);
-  //   }, (err) => {
-  //     console.log(err);
-  //   });
-  // }
+
   @ViewChild('mapa' ,{static:false}) mapa : ElementRef;
   ocultarMapa(){
     let mapap = document.getElementById('map');
     mapap.hidden = true;
-    // this.mapa.nativeElement.hidden = true;
   }
 
   guardarDocumentoTransaccion(_imagen:string){
