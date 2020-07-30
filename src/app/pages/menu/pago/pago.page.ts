@@ -206,6 +206,9 @@ private addMaker(lat: number, lng: number) {
             
             let listaTPagosPorId = document.getElementById('listaTPagos');
             listaTPagosPorId.hidden = true;
+            this.guardarDocumentoTransaccion(`data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUA
+            AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
+                9TXL0Y4OHwAAAABJRU5ErkJggg==`);
             
           }
         }
@@ -251,6 +254,22 @@ private addMaker(lat: number, lng: number) {
   ocultarMapa(){
     let mapap = document.getElementById('map');
     mapap.hidden = true;
+  }
+
+  guardarDocumentoTransaccion(_imagen:string){
+    this.compraServi.guardarDocumentoTransaccion(_imagen)
+        .then(data=>{
+          if (data['code']=='200') {
+            console.log('se guardo la imagen');
+          } else {
+            console.log(data);
+            
+          }
+          
+        }).catch(error=>{
+          console.log(error);
+          
+        }).finally(()=>{});
   }
 
 
