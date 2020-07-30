@@ -36,12 +36,19 @@
           </div>
         </form>
         </div>  -->
+   
+
       <div class="login-box">
         <br>
         <br>
 
+        
+
       <form [formGroup]="todo" (ngSubmit)="login()">
-  
+        <ion-item>
+          <ion-label color="danger" *ngIf="todo.get('cedula').invalid">Solo Números</ion-label>
+          <ion-input maxlength="10" formControlName="cedula" type="text"></ion-input>
+        </ion-item>
         <label for="username">Email</label>
         <input type="text"formControlName="Usuario"  placeholder="Email">
     

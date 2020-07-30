@@ -1,9 +1,9 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, OnInit,ViewChild, ElementRef } from '@angular/core';
 import { LoginService } from '../../Servicios/login.service';
-import {Validators, FormBuilder, FormGroup } from '@angular/forms';
+import {Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import {UsuarioService } from '../../Servicios/usuario.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, IonInput } from '@ionic/angular';
 import { Camera,CameraOptions} from '@ionic-native/camera/ngx';
 @Component({
   selector: 'app-login',
@@ -24,7 +24,8 @@ export class LoginPage implements OnInit {
     ) {
       this.todo = this.formBuilder.group({
         Usuario: ['', Validators.required],
-        Contrasena: ['',Validators.required],
+        Contrasena: ['',Validators.required], 
+        cedula: new FormControl({value:"",disabled:false},[Validators.maxLength(10),Validators.pattern('^[0-9]+$')])
       });
       this.user = this.formBuilder.group({
         Nombre: ['', Validators.required],
@@ -37,7 +38,8 @@ export class LoginPage implements OnInit {
     
      }
      image:string;
-   
+
+     //@ViewChild('cedula',{static:false}) cedula: ElementRef;
 
      toggleSignUpView () {
       this.signupView = !this.signupView
@@ -93,7 +95,7 @@ export class LoginPage implements OnInit {
   ngOnInit() {
   
     // this.user.reset();
-
+    
   }
  
 
