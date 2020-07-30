@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ModalController,NavParams,AlertController, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { TipoPagoService} from '../../../Servicios/tipo-pago.service';
@@ -76,8 +76,11 @@ export class PagoPage implements OnInit {
    }else{
      // aqui va el codigo donde accede a la camara o a la galeria del telefono 
      this.presentAlertPrompt();
+
    }
+   
   }
+  
   async showAlert(Mensaje) {
     const alert = await this.alertController.create({
       message: Mensaje,
@@ -152,12 +155,41 @@ private addMaker(lat: number, lng: number) {
       lng: rta.coords.longitude
     };
   }
+  async hola(){
+    console.log('hola');
+  }
+
+  @ViewChild('listaTPagos',{static:false}) listaTPagos: ElementRef;
+  
   async presentAlertPrompt() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Comprobante',
-      mode:"ios",
-    
+      mode:'ios',
+  
+      inputs: [
+        {
+          name: 'radio1',
+          type: 'radio',
+          label: 'Camara',
+          value: 'value1',
+          checked: true,
+          handler:()=>{
+            console.log('hoohohoh');
+            this.takePicture();
+          }
+        },
+        {
+          name: 'radio2',
+          type: 'radio',
+          label: 'galeria',
+          value: 'value2',
+          handler:()=>{
+            console.log('hoohohoh');
+            this.AccessGallery();
+          }
+        }
+      ],
       buttons: [
         {
           text: 'Cancel',
@@ -171,7 +203,9 @@ private addMaker(lat: number, lng: number) {
            cssClass: 'alertButton',
           handler: () => {
             console.log('Confirm Ok');
-          
+            
+            let listaTPagosPorId = document.getElementById('listaTPagos');
+            listaTPagosPorId.hidden = true;
             
           }
         }
@@ -212,22 +246,12 @@ private addMaker(lat: number, lng: number) {
       });
    
    }
-  // takePicture() {
-  //   const options: CameraOptions = {
-  //     quality: 100,
-  //     destinationType: this.camera.DestinationType.FILE_URI,
-  //     encodingType: this.camera.EncodingType.JPEG,
-  //     mediaType: this.camera.MediaType.PICTURE,
-  //     sourceType: this.camera.PictureSourceType.CAMERA
-  //   };
-  //   this.camera.getPicture(options)
-  //   .then((file) => {
-  //     this.image = this.web.convertFileSrc(file);
-  //   }, (err) => {
-  //     console.log(err);
-  //   });
-  // }
 
+  @ViewChild('mapa' ,{static:false}) mapa : ElementRef;
+  ocultarMapa(){
+    let mapap = document.getElementById('map');
+    mapap.hidden = true;
+  }
 
 
 }
