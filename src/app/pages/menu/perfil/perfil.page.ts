@@ -55,7 +55,7 @@ editar(){
       this.celular = data['items']['celular'];
       this.password=data['items']['password'];
       this.password2=data['items']['password2'];
-      this.nome_token_user=data['items']['nome_token_user'];
+      this.nome_token_user=data['items']['nome_token'];
       console.log("datosmodificados");
     }
   }).catch(err=>{

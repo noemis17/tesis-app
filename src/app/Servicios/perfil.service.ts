@@ -19,7 +19,7 @@ export class PerfilService {
     .set("password2",password2)
   ;
     return new Promise((resolve, reject) => {
-      this.http.put(server+"/v0/usuarios_update/"+nome_token_user,{headers:this._header,params:_body})
+      this.http.put(server+"/v0/usuarios_update/"+nome_token_user,_body.toString(),{headers:this._header})
                 .subscribe(res=>{
                   resolve(res);
                 },(err)=>{
