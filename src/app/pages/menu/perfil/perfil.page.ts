@@ -12,14 +12,14 @@ import { PerfilService } from 'src/app/Servicios/perfil.service';
   styleUrls: ['./perfil.page.scss'],
 })
 export class PerfilPage implements OnInit {
- nombres: any ;
- cedula: any;
- celular: any;
- email: any;
-  password:any;
-  password2:any;
-  nome_token_user:any;
-  constructor( private perfilServi:PerfilService) { 
+    nombres: any ;
+    cedula: any;
+    celular: any;
+    email: any;
+    password:any;
+    password2:any;
+    nome_token_user:any;
+    constructor( private perfilServi:PerfilService) { 
     
 
 
@@ -35,6 +35,8 @@ export class PerfilPage implements OnInit {
   }
 
   
+
+  
   @ViewChild('lista' ,{static:false}) lista : ElementRef;
   ocultarPerfil(){
     let listaOcultar = document.getElementById('list');
@@ -46,6 +48,7 @@ export class PerfilPage implements OnInit {
 
 editar(){
   this.password2=this.password;
+  debugger
  this.perfilServi.modificarperfil(this.nombres,this.email,this.cedula,this.celular,this.password,this.password2,this.nome_token_user)
   .then(data=>{
     if(data['code']=='200'){
@@ -55,8 +58,12 @@ editar(){
       this.celular = data['items']['celular'];
       this.password=data['items']['password'];
       this.password2=data['items']['password2'];
-      this.nome_token_user=data['items']['nome_token'];
+      this.nome_token_user=localStorage.getItem("nomeToken");
       console.log("datosmodificados");
+      console.log(data);
+    }else{
+      console.log(data);
+      
     }
   }).catch(err=>{
 

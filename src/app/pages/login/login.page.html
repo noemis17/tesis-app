@@ -11,40 +11,16 @@
      
       </div>
     </div> 
-    
-         <!-- <div class="login-container ion-padding login-box">
-        <form [formGroup]="todo" (ngSubmit)="login()" >
 
-          <ion-list  class="form fade-in">
-            <ion-item>
-      
-                <ion-input  formControlName="Usuario"  placeholder="Email"></ion-input>
-            </ion-item>
-          
-            <ion-item>
-              <ion-input  #passwordEyeRegister formControlName="Contrasena"  [type]="passwordTypeInput" placeholder="Password" ></ion-input>
-              <button  item-end  class="btn_eye_icon"  (click)="togglePasswordMode()">
-                <ion-icon  [name]="iconpassword"></ion-icon>
-            </button>
-              
-            </ion-item>
-          </ion-list>
-
-          <div class="ion-text-center fade-in ">
-          <ion-button  class="green-button" type="submit" shape="round" [disabled]="!todo.valid">Iniciar</ion-button>
-          
-          </div>
-        </form>
-        </div>  -->
       <div class="login-box">
         <br>
         <br>
 
       <form [formGroup]="todo" (ngSubmit)="login()">
-  
+       
         <label for="username">Email</label>
         <input type="text" formControlName="Usuario"  placeholder="Email">
-    
+
         <label for="password">Password</label>
         <input  #passwordEyeRegister formControlName="Contrasena"  [type]="passwordTypeInput" placeholder="Password"  >
       

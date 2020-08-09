@@ -1,0 +1,21 @@
+<ion-header   class="ion-no-border" >
+ 
+  <ion-toolbar  >
+    <ion-menu-button  slot="start"></ion-menu-button>
+    <img src="/assets/SUPERCITO.png" class="icon1" >
+  </ion-toolbar>
+  
+</ion-header>
+<ion-content class="ion-padding ">
+
+  <ion-list *ngFor="let item of  Orden">
+    <div class="estado">
+      <ion-button color= "light" size="small" shape="round" (click)="abrirModal(item)">{{item.estado.descripcion}}</ion-button>
+     </div>
+    <ion-item >
+      <ion-label>{{item.Orden}}</ion-label>
+    </ion-item>
+
+    
+  </ion-list>
+</ion-content>

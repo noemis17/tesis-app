@@ -45,8 +45,8 @@ const routes: Routes = [
         loadChildren: () => import('./perfil/perfil.module').then( m => m.PerfilPageModule)
       } ,
       {
-        path: 'editar-peril',
-        loadChildren: () => import('./editar-peril/editar-peril.module').then( m => m.EditarPerilPageModule)
+        path: 'orden',
+        loadChildren: () => import('./orden/orden.module').then( m => m.OrdenPageModule)
       }
       // {
       //   path: 'pago',
@@ -56,6 +56,13 @@ const routes: Routes = [
       ]
 
   }
+  // ,
+  // {
+  //   path: 'mapa',
+  //   loadChildren: () => import('./mapa/mapa.module').then( m => m.MapaPageModule)
+  // }
+
+
 
 
  

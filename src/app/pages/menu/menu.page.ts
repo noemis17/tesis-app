@@ -55,6 +55,11 @@ export class MenuPage implements OnInit {
       url: '/menu/paypal',
       icon: 'archive'
     }
+    , {
+      title: 'Orden',
+      url: '/menu/orden',
+      icon: 'archive'
+    }
     
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];

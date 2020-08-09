@@ -11,6 +11,7 @@ export class PerfilService {
   private _header = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
   modificarperfil(name,email,cedula,celular,password,password2,nome_token_user){
     const _body = new HttpParams()
+    .set("nome_token",nome_token_user)
     .set("name",name)
     .set("email",email)
     .set("cedula",cedula)
