@@ -4,7 +4,7 @@
     <img src="/assets/SUPERCITO.png" class="icon1">
     <ion-buttons slot="end" (click) ="rutadelcarrito()">
       <ion-button >
-        <ion-icon slot="icon-only" name="cart-outline"></ion-icon> 
+        <ion-icon slot="icon-only" name="cart-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -23,16 +23,22 @@
   <ion-card  (click)="expandItem(item)" *ngFor="let item of  CompraProducto">
    <ion-card-header >
     <b>Pedidos</b>
+
       <div class="estado">
+        <ion-buttons slot="send" >
+          <ion-button >
+            <ion-icon slot="icon-only" name="cart-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
        <ion-button size="small" shape="round"  [ngClass]="item.estado.cod == '001' ? 'positivo': item.estado.cod == '004'? 'negativo':item.estado.cod == '002'? 'proceso':item.estado.cod == '003'? 'positivo':item.estado.cod == '006'? 'negativo':'positivo'" >{{item.estado.descripcion}}</ion-button>
       </div>
-      <h5 class="compa">{{item.Orden}} </h5> 
+      <h5 class="compa">{{item.Orden}} </h5>
      <p class="compa">Fecha: &nbsp;{{item.fechaOrden}} </p>
      <p class="compa" >Pago:&nbsp;{{item.tipo_pago.descricion}}</p>
     </ion-card-header>
    <ion-card-content class="cass" *ngFor="let item1 of   item.compras">
     <ion-row >
-      
+
       <ion-col *ngIf=" item1.id_Productos != null" >
         <p >{{item1.producto.NAME}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item1.producto.PRICE |number}} </p>
       </ion-col>
@@ -40,16 +46,16 @@
         <p  >{{item1.promocion.productos_promocion1.NAME}}</p>
       </ion-col>
       <ion-col *ngIf=" item1.idRegistros != null"  >
-        <p  >{{item1.registro.descripcion}}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item1.registro.descuento}}</p> 
-     
+        <p  >{{item1.registro.descripcion}}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item1.registro.descuento}}</p>
+
       </ion-col>
-  
+
     </ion-row>
-    
+
  </ion-card-content>
  <hr>
  <ion-col>
 <p class="casstotal">Total:&nbsp;&nbsp;{{item.total |number}}</p>
 </ion-col>
- </ion-card> 
+ </ion-card>
  </ion-content>
