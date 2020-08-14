@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CarritoService } from '../../../Servicios/carrito.service'
 import { Router } from '@angular/router';
+import {MapaPage } from '../mapa/mapa.page';
+import { ModalController,NavParams  } from '@ionic/angular';
 @Component({
   selector: 'app-compra',
   templateUrl: './compra.page.html',
@@ -12,7 +14,7 @@ export class CompraPage implements OnInit {
   nombre="";
   cedula="";
 
-  constructor( private compraServi: CarritoService, private router:Router) { }
+  constructor( private compraServi: CarritoService, private router:Router,private modalC:ModalController) { }
 
   ngOnInit() {
     this.consultarOrdenesCompra();
@@ -49,7 +51,16 @@ export class CompraPage implements OnInit {
       });
     }
   }
-
+  async abrirModal(element?){
+    const modal = await this.modalC.create({
+    component: MapaPage ,
+    componentProps: {
+      "orden":element,
+      "identificador":2
+    }
+   });
+   return await modal.present();
+  }
   rutadelcarrito(){
     this.router.navigate(['/menu/carrito']);
   }

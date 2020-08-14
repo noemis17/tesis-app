@@ -25,7 +25,8 @@
     <b>Pedidos</b>
     <div *ngIf="item.estado.cod == '002';else boton"  mode="ios">
       <ion-buttons >
-        <ion-button ><img src="/assets/mapa.png" class="compra1" routerLink ="/menu/ubicacion"> </ion-button>
+        <!-- <ion-button ><img src="/assets/mapa.png" class="compra1" routerLink ="/menu/ubicacion"> </ion-button> -->
+        <ion-button (click)="abrirModal(item)"><img src="/assets/mapa.png" class="compra1"> </ion-button>
         <ion-button  size="small" shape="round"  [ngClass]="item.estado.cod == '001' ? 'positivo': item.estado.cod == '004'? 'negativo':item.estado.cod == '002'? 'proceso':item.estado.cod == '003'? 'positivo':item.estado.cod == '006'? 'negativo':'positivo'" >{{item.estado.descripcion}}</ion-button>
       </ion-buttons>
     </div>

@@ -23,6 +23,18 @@ export class TransportistaService {
                      });
          });
   }
+  posicionTransportista(idCourier){
+    const registro=server+"/v0/PosicionTrasnportista?idUsuario="+idCourier;
+         return new Promise((resolve, reject) => {
+           this.http.get(registro,
+           {headers:new HttpHeaders().set('Content-Type','application/json')})
+                     .subscribe(res=>{
+                       resolve(res);
+                     },(err)=>{
+                       reject(err);
+                     });
+         });
+  }
   guardarUbicacionTransportista(longitud,latitud,idUsuario){
     const _body = new HttpParams()
       .set("longitud",longitud)

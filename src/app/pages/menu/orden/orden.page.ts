@@ -17,7 +17,7 @@ export class OrdenPage implements OnInit {
   }
   mostrar(){
     this.OrdenServi.mostrarOrden(localStorage.getItem("id"))
-    .then(data=>{ 
+    .then(data=>{
       if(data['code']=="200"){
         this.Orden=data['items'];
      console.log(this.Orden);
@@ -31,18 +31,19 @@ export class OrdenPage implements OnInit {
     const modal = await this.modalC.create({
     component: MapaPage ,
     componentProps: {
-      "orden":element
+      "orden":element,
+      "identificador":1
     }
-   
+
    });
- 
+
    return await modal.present();
- 
+
 
   }
-  
+
 rutadelUsuario(){
   this.router.navigate(['/menu/perfil']);
 }
- 
+
 }
