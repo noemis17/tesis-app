@@ -23,15 +23,16 @@
   <ion-card  (click)="expandItem(item)" *ngFor="let item of  CompraProducto">
    <ion-card-header >
     <b>Pedidos</b>
+    <div *ngIf="item.estado.cod == '002';else boton"  mode="ios">
+      <ion-buttons >
+        <ion-button ><img src="/assets/mapa.png" class="compra1" routerLink ="/menu/ubicacion"> </ion-button>
+        <ion-button  size="small" shape="round"  [ngClass]="item.estado.cod == '001' ? 'positivo': item.estado.cod == '004'? 'negativo':item.estado.cod == '002'? 'proceso':item.estado.cod == '003'? 'positivo':item.estado.cod == '006'? 'negativo':'positivo'" >{{item.estado.descripcion}}</ion-button>
+      </ion-buttons>
+    </div>
 
-      <div class="estado">
-        <ion-buttons slot="send" >
-          <ion-button >
-            <ion-icon slot="icon-only" name="cart-outline"></ion-icon>
-          </ion-button>
-        </ion-buttons>
+      <ng-template   #boton>
        <ion-button size="small" shape="round"  [ngClass]="item.estado.cod == '001' ? 'positivo': item.estado.cod == '004'? 'negativo':item.estado.cod == '002'? 'proceso':item.estado.cod == '003'? 'positivo':item.estado.cod == '006'? 'negativo':'positivo'" >{{item.estado.descripcion}}</ion-button>
-      </div>
+      </ng-template>
       <h5 class="compa">{{item.Orden}} </h5>
      <p class="compa">Fecha: &nbsp;{{item.fechaOrden}} </p>
      <p class="compa" >Pago:&nbsp;{{item.tipo_pago.descricion}}</p>

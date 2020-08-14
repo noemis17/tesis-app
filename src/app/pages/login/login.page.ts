@@ -74,6 +74,7 @@ export class LoginPage implements OnInit {
       
       
   }
+  
   passwordTypeInput  =  'password';
   iconpassword  =  'eye-off';
   togglePasswordMode() {

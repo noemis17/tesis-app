@@ -1,8 +1,12 @@
 <ion-header class="ion-no-border" >
   <ion-toolbar >
+    <ion-buttons slot="end">
+      <!-- para regresar a lo anterior  -->
+      <ion-back-button  defaultHref="/menu/compra"></ion-back-button>
+    </ion-buttons>
     <ion-menu-button slot="start"></ion-menu-button>
     <img src="/assets/SUPERCITO.png" class="icon1" >
-    
+  
   </ion-toolbar>
   
 </ion-header>
@@ -12,8 +16,3 @@
   
 </ion-content>
 
-<ion-footer>
-  <ion-toolbar>
-    <ion-button expand="full" color="primary" (click)="UbicacionGuarda()">Primary</ion-button>
-  </ion-toolbar>
-</ion-footer>
