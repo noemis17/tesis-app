@@ -6,6 +6,7 @@ import { PerfilService } from 'src/app/Servicios/perfil.service';
 
 
 
+
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.page.html',
@@ -19,6 +20,7 @@ export class PerfilPage implements OnInit {
     password:any;
     password2:any;
     nome_token_user:any;
+    @ViewChild('passwordEyeRegister',{static:false}) passwordEye;
     constructor( private perfilServi:PerfilService) { 
     
 
@@ -74,6 +76,14 @@ editar(){
 
 }
 
+
+passwordTypeInput  =  'password';
+iconpassword  =  'eye-off';
+togglePasswordMode() {
+  this.passwordTypeInput  =  this.passwordTypeInput  ===  'text'  ?  'password'  :  'text';
+  this.iconpassword  =  this.iconpassword  ===  'eye-off'  ?  'eye'  :  'eye-off';
+  this.passwordEye.el.setFocus();
+}
 
 
 }

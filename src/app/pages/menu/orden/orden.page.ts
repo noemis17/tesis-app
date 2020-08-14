@@ -40,5 +40,9 @@ export class OrdenPage implements OnInit {
  
 
   }
+  
+rutadelUsuario(){
+  this.router.navigate(['/menu/perfil']);
+}
  
 }
