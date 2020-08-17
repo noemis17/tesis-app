@@ -26,6 +26,7 @@ export class CarritoService {
   }
 
 
+ 
   guardarCompra(idPromocionProducto,idUsuario,producto,idTipoPago,total,latitud,longitud){
     const _body = new HttpParams()
       .set("idPromociones",idPromocionProducto)
@@ -58,9 +59,10 @@ export class CarritoService {
                 });
     });
 
-  } 
+  }
 
   
+
 
   guardarDocumentoTransaccion(imagen:string){
     const _body = new HttpParams()

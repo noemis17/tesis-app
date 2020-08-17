@@ -13,7 +13,7 @@
 <ion-content class="ion-padding ">
   <ion-list #lista id="list" >
     <ion-item>
-      <ion-avatar slot="start">
+      <ion-avatar slot="start" (click)="presentAlertPrompt()">
         <img src="/assets/SUPERCITO.png" >
       </ion-avatar>
       <ion-label class="perfil">{{email}}</ion-label>

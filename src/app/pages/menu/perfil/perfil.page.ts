@@ -3,7 +3,8 @@ import { Component, OnInit,ViewChild, ElementRef } from '@angular/core';
 // import { NavController, NavParams } from '@ionic/angular';
 // import {EditarPerilPage } from '../editar-peril/editar-peril.page';
 import { PerfilService } from 'src/app/Servicios/perfil.service';
-
+import { Camera,CameraOptions} from '@ionic-native/camera/ngx';
+import { AlertController} from '@ionic/angular';
 
 
 
@@ -15,13 +16,16 @@ import { PerfilService } from 'src/app/Servicios/perfil.service';
 export class PerfilPage implements OnInit {
     nombres: any ;
     cedula: any;
+    image:string;
     celular: any;
     email: any;
     password:any;
     password2:any;
     nome_token_user:any;
     @ViewChild('passwordEyeRegister',{static:false}) passwordEye;
-    constructor( private perfilServi:PerfilService) { 
+    constructor( private perfilServi:PerfilService, 
+       private camera: Camera, 
+       public alertController: AlertController) { 
     
 
 
@@ -86,4 +90,71 @@ togglePasswordMode() {
 }
 
 
+async presentAlertPrompt() {
+  const alert = await this.alertController.create({
+    cssClass: 'my-custom-class',
+    header: 'Comprobante',
+    mode:'ios',
+
+    inputs: [
+      {
+        name: 'radio1',
+        type: 'radio',
+        label: 'Camara',
+        value: 'value1',
+        checked: true,
+        handler:()=>{
+          console.log('hoohohoh');
+          this.takePicture();
+        }
+      },
+      {
+        name: 'radio2',
+        type: 'radio',
+        label: 'galeria',
+        value: 'value2',
+        handler:()=>{
+          console.log('hoohohoh');
+          this.AccessGallery();
+        }
+      }
+    ],
+    
+  });
+
+  await alert.present();
+}
+
+takePicture() {
+  const options: CameraOptions = {
+    quality: 100,
+    destinationType: this.camera.DestinationType.DATA_URL,
+    encodingType: this.camera.EncodingType.JPEG,
+    mediaType: this.camera.MediaType.PICTURE,
+    sourceType: this.camera.PictureSourceType.CAMERA
+  };
+  this.camera.getPicture(options)
+  .then((imageData) => {
+    this.image = 'data:image/jpeg;base64,' + imageData;
+  }, (err) => {
+    console.log(err);
+  });
+}
+
+AccessGallery(){
+  this.camera.getPicture({
+    sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
+     destinationType: this.camera.DestinationType.DATA_URL
+ 
+    }).then((imageData) => {
+ 
+      this.image= 'data:image/jpeg;base64,'+imageData;
+
+         }, (err) => {
+ 
+      console.log(err);
+ 
+    });
+ 
+ }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { LoadingController } from '@ionic/angular';
-import { NavParams } from '@ionic/angular';
+import { NavParams,ModalController } from '@ionic/angular';
 import { TransportistaService } from '../../../Servicios/transportista.service'
 
 declare var google;
@@ -13,7 +13,7 @@ declare var google;
 export class MapaPage implements OnInit {
   mapRef: any;
   constructor(private geolocation: Geolocation,
-    private loadingCtrl: LoadingController, private navParams: NavParams, private transportistaServe: TransportistaService) {
+    private loadingCtrl: LoadingController, private navParams: NavParams, private transportistaServe: TransportistaService, private modalC:ModalController,) {
   }
 
   ngOnInit() {
@@ -171,5 +171,7 @@ export class MapaPage implements OnInit {
     };
   }
 
-
+  async closeModal(){
+    await this.modalC.dismiss();
+  }
 }

@@ -217,6 +217,7 @@ private addMaker(lat: number, lng: number) {
 
     await alert.present();
   }
+  
   takePicture() {
     const options: CameraOptions = {
       quality: 100,

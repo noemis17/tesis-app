@@ -15,7 +15,7 @@
       <div class="login-box">
         <br>
         <br>
-
+       
       <form [formGroup]="todo" (ngSubmit)="login()">
        
         <label for="username">Email</label>
@@ -40,8 +40,8 @@
         <span *ngIf="!signupView" [ngClass]="{'fade-in': !signupView, 'fade-out': signupView}">Registro</span>
         <span *ngIf="signupView" [ngClass]="{'fade-in': signupView, 'fade-out': !signupView}">Login</span>
         <br>
-        <ion-icon name="arrow-round-up" *ngIf="!signupView" [ngClass]="{'fade-in': !signupView, 'fade-out': signupView}"></ion-icon>
-        <ion-icon name="arrow-round-down" *ngIf="signupView" [ngClass]="{'fade-in': signupView, 'fade-out': !signupView}"></ion-icon>
+        <ion-icon  *ngIf="!signupView" [ngClass]="{'fade-in': !signupView, 'fade-out': signupView}"></ion-icon>
+        <ion-icon  *ngIf="signupView" [ngClass]="{'fade-in': signupView, 'fade-out': !signupView}"></ion-icon>
 
       </div>
       <form [formGroup]="user"  (ngSubmit)="registroUsuario()" novalidate >

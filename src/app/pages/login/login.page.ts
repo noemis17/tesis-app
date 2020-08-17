@@ -53,7 +53,6 @@ export class LoginPage implements OnInit {
       .then((ok) => {
         if(ok['items'] == null){
           console.log('error')
-          
         }else{
           this.router.navigateByUrl("menu/vista-producto");
           localStorage.setItem("nomeToken",ok['items'].nome_token);
