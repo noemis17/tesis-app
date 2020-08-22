@@ -18,6 +18,7 @@ import { PayPal } from '@ionic-native/paypal/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 
+
 @NgModule({
   declarations: [
     AppComponent

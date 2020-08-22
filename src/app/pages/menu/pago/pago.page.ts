@@ -65,6 +65,7 @@ export class PagoPage implements OnInit {
             localStorage.setItem("carritoPromociones", JSON.stringify(setDato));
             //this.showAlert("Compra realizada exitosamenete");
             this.modalC.dismiss("1");
+            
           }
         })
         .catch((error) => {
