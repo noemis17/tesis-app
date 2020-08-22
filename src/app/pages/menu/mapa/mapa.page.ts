@@ -5,6 +5,7 @@ import { NavParams,ModalController } from '@ionic/angular';
 import { TransportistaService } from '../../../Servicios/transportista.service'
 import * as  mapboxgl  from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import  MapboxDirections from 'mapbox-gl-directions';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
 declare var google;
@@ -180,7 +181,6 @@ export class MapaPage implements OnInit {
     await this.modalC.dismiss();
   }
   lat=-80.244266;
-  
 lng=-0.929941;
 
 posicionTransportista(){
@@ -192,26 +192,40 @@ posicionTransportista(){
        zoom:9
        });
        
-    var marker = new mapboxgl.Marker()
-    .setLngLat([this.lat,this.lng])
-    .addTo(map);
-   
-    map.addControl(
-      new MapboxGeocoder({
-      accessToken: mapboxgl.accessToken,
-      mapboxgl: mapboxgl
-      })
-      );
+    // var marker = new mapboxgl.Marker()
+    // .setLngLat([this.lat,this.lng])
+    // .addTo(map);
+  
       map.on('load', function(){
         map.resize();
       })
+      map.addControl( new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl
+        })
+        );
+      map.addControl(new mapboxgl.NavigationControl());
+      map.addControl(new mapboxgl.FullscreenControl());
       map.addControl(new mapboxgl.GeolocateControl({
         positionOptions: {
             enableHighAccuracy: true
         },
         trackUserLocation: true
-    }));
+      }));
+      map.on('mousemove', function (e) {
+        document.getElementById('coordenadas').innerHTML =
+            JSON.stringify(e.lngLat);
+         
+      });
      
+      console.log(map);
+  //  map.addControl(
+  //   new MapboxDirections({
+  //   accessToken: mapboxgl.accessToken
+  //  }),
+  //  'top-left'
+  //  ); 
+      
       }
 
 }
