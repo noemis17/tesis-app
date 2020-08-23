@@ -104,7 +104,7 @@
         overflow: hidden;
 
         &.active {
-            height: calc(115% - 180px);
+            height: calc(90% - 180px);
         }
         
         .toggle-text {
@@ -124,17 +124,17 @@
 .gradient-1 {
     margin: 0;
     padding: 0;
-  
+ 
     background-size: cover;
     font-family: sans-serif;
     height: 100vh;
-    --background: linear-gradient(180deg, rgb(235, 219, 219) 0%, rgb(219, 207, 207) 100%);
-    background: linear-gradient(180deg, rgb(235, 230, 230) 0%, rgb(235, 219, 219) 100%);
+    --background: linear-gradient(180deg, rgb(253, 254, 254) 0%, rgb(253, 254, 254) 100%);
+    background: linear-gradient(180deg, rgb(251, 252, 252) 0%, rgb(251, 252, 252) 100%);
 }
 
 .gradient-2 {
-    --background: linear-gradient(180deg, rgb(199, 188, 188) 0%, rgb(189, 182, 182) 100%);
-    background: linear-gradient(180deg, rgb(211, 206, 206) 0%, rgb(202, 193, 193) 100%);
+    --background: linear-gradient(180deg, rgb(233, 248, 248) 0%, rgb(223, 243, 243) 100%);
+    background: linear-gradient(180deg, rgb(242, 248, 248) 0%, rgb(224, 231, 231)100%);
 }
 
 .green-button {

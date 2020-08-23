@@ -12,13 +12,15 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 export class MenuPage implements OnInit {
 
   public selectedIndex = 0;
+
   public appPages = [
     
     
     {
-      title: 'Ubicación',
-      url: '/menu/ubicacion',
-      icon: 'map'
+      title: 'Cerrar sesión',
+      url: '/login',
+      icon: 'close',
+     
     },
     
     // {

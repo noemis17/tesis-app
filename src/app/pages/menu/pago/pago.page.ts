@@ -9,6 +9,9 @@ import { LoadingController } from '@ionic/angular';
 import { RutaService } from '../../../Servicios/Rutas/ruta.service';
 import { Camera,CameraOptions} from '@ionic-native/camera/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
+import * as  mapboxgl from 'mapbox-gl';
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+
 
 
 declare var google;
@@ -37,13 +40,18 @@ export class PagoPage implements OnInit {
     private camera: Camera
   
     ) { }
+    posicion_:any[]=[];
   ngOnInit() {
     //aqui imprima lo que llega que no me acuerdo
     this.carritoProducto = this.navParams.data['producto'];
     this.carritoPromociones = this.navParams.data['promociones'];
     this.totalAPagar = this.navParams.data['total'];
     this.mostrarTipoPago();
-    this.loadMap();
+    this.obtenerlocalizacion();
+  
+    console.log("asdsa",this.posicion_[1]);
+    console.log("asdsa",this.posicion_);
+    //this.addMarker(posicion_[1],posicion_[0],"");
   }
   mostrarTipoPago(){
     this.tipoServicio.mostrarTipoPago()
@@ -52,7 +60,10 @@ export class PagoPage implements OnInit {
         this.tipoPago=data['items'];
       }
     });
+
   }
+  latitud = 0;
+  longitud = 0;
  registroPago(item){
    if(item.identificador == 2){
     if (this.carritoProducto.find(e => e['PermitirVender'] == false) == undefined && this.carritoPromociones.find(e => e['PermitirVender'] == false) == undefined) {
@@ -96,69 +107,127 @@ export class PagoPage implements OnInit {
 rutadelcarrito(){
   this.router.navigate(['/menu/carrito']);
 }
-UbicacionGuarda()
-  {
-    this.llamarAPi();
-  }
-async loadMap() {
-  const loading = await this.loadingCtrl.create();
-  loading.present();
-  const myLatLng = await this.getLocation();
-  const mapEle: HTMLElement = document.getElementById('map');
-  this.mapRef = new google.maps.Map(mapEle, {
-    center: myLatLng,
-    zoom: 12
-  });
-  google.maps.event
-  .addListenerOnce(this.mapRef, 'idle', () => {
-    loading.dismiss();
-    this.addMaker(myLatLng.lat, myLatLng.lng);
-  });
-  google.maps.event
-  .addListener(this.mapRef, 'click', (e) => {
-    loading.dismiss();
-    this.addMaker(e.latLng.lat(), e.latLng.lng());
-  });
+ionViewDidEnter() {
+  this.posicion();
 }
-latitud:number=0;
-longitud:number=0;
-listaMarker:any[]=[];
-private addMaker(lat: number, lng: number) {
-  this.listaMarker.map(item=>{
-    item.setMap(null);
-  });
-  const marker = new google.maps.Marker({
-    position: { lat, lng },
-    map: this.mapRef,
-    title: 'Hello World!'
-  });
-  this.listaMarker.push(marker);
-  this.longitud = lng;
-  this.latitud = lat;
-  console.log("latitud",this.latitud);
-  console.log("longitud",this.longitud);
-}
- llamarAPi(){
-    this.rutaService.guardarUbicacion(
-      '2y10kuJotplmz7rJALTZhnVazeLMPXN6PIExs2LTInVRZqGJfDqUQa',
-      this.latitud,this.longitud,
-      '').then(data=>{
-        console.log(data)
-      }).catch(error=>{
-        console.log(error)
-      })
-  }
+map: any;
+addMarker(longitud,latitud,nombre) {
+ 
+  var trainStationIcon = document.createElement('div');
+  trainStationIcon.style.width = '38px';
+  trainStationIcon.style.height = '55px';
+  trainStationIcon.style.backgroundImage = "url(https://image.flaticon.com/icons/svg/2850/2850651.svg)";
+  trainStationIcon.style.cursor = "pointer";
+  var marker = new mapboxgl.Marker()
+    // .setLngLat([parseFloat(this.navParams.data['orden'].longitud), parseFloat(this.navParams.data['orden'].latitud)])
+    .setLngLat([parseFloat(longitud), parseFloat(latitud)])
+    .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+    .setHTML('<h3>' +nombre+ '</h3>'))
+    .addTo(this.map);
 
-  private async getLocation() {
-    const rta = await this.geolocation.getCurrentPosition();
-    return {
-      lat: rta.coords.latitude,
-      lng: rta.coords.longitude
-    };
-  }
-  async hola(){
-    console.log('hola');
-  }
+}
+obtenerlocalizacion() {
+  var posicionamiento:any[]=[];
+  navigator.geolocation.getCurrentPosition(position => {
+    this.posicion_.push(position.coords.latitude);
+    this.posicion_.push(position.coords.longitude);
+  }); 
+}
+posicion() {
+  mapboxgl.accessToken = 'pk.eyJ1Ijoibm9lbWkxNyIsImEiOiJja2U0eDlmbXUweGVlMnptdzhyMmhxY3NqIn0.pdK5JCeAlWgpAXIfQIKovQ';
+  navigator.geolocation.getCurrentPosition(position => {
+    this.latitud = position.coords.latitude;
+    this.longitud = position.coords.longitude;
+  });  
+
+    this.map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v9',
+      center:[this.longitud, this.latitud],
+      zoom: 15,
+    });
+  this.map.addControl(
+    new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken,
+    mapboxgl: mapboxgl
+    })
+    );
+  this.map.addControl(new mapboxgl.NavigationControl());
+  this.map.addControl(new mapboxgl.FullscreenControl());
+  this.map.addControl(new mapboxgl.GeolocateControl({
+    positionOptions: {
+      enableHighAccuracy: true
+    },
+    trackUserLocation: true
+  }));
+ 
+ 
+ 
+  
+}
+// UbicacionGuarda()
+//   {
+//     this.llamarAPi();
+//   }
+// async loadMap() {
+//   const loading = await this.loadingCtrl.create();
+//   loading.present();
+//   const myLatLng = await this.getLocation();
+//   const mapEle: HTMLElement = document.getElementById('map');
+//   this.mapRef = new google.maps.Map(mapEle, {
+//     center: myLatLng,
+//     zoom: 12
+//   });
+//   google.maps.event
+//   .addListenerOnce(this.mapRef, 'idle', () => {
+//     loading.dismiss();
+//     this.addMaker(myLatLng.lat, myLatLng.lng);
+//   });
+//   google.maps.event
+//   .addListener(this.mapRef, 'click', (e) => {
+//     loading.dismiss();
+//     this.addMaker(e.latLng.lat(), e.latLng.lng());
+//   });
+// }
+// latitud:number=0;
+// longitud:number=0;
+// listaMarker:any[]=[];
+// private addMaker(lat: number, lng: number) {
+//   this.listaMarker.map(item=>{
+//     item.setMap(null);
+//   });
+//   const marker = new google.maps.Marker({
+//     position: { lat, lng },
+//     map: this.mapRef,
+//     title: 'Hello World!'
+//   });
+//   this.listaMarker.push(marker);
+//   this.longitud = lng;
+//   this.latitud = lat;
+//   console.log("latitud",this.latitud);
+//   console.log("longitud",this.longitud);
+// }
+//  llamarAPi(){
+//     this.rutaService.guardarUbicacion(
+//       '2y10kuJotplmz7rJALTZhnVazeLMPXN6PIExs2LTInVRZqGJfDqUQa',
+//       this.latitud,this.longitud,
+//       '').then(data=>{
+//         console.log(data)
+//       }).catch(error=>{
+//         console.log(error)
+//       })
+//   }
+
+//   private async getLocation() {
+//     const rta = await this.geolocation.getCurrentPosition();
+//     return {
+//       lat: rta.coords.latitude,
+//       lng: rta.coords.longitude
+//     };
+//   }
+//   async hola(){
+//     console.log('hola');
+//   }
 
   @ViewChild('listaTPagos',{static:false}) listaTPagos: ElementRef;
   
