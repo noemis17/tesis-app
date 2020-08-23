@@ -28,7 +28,9 @@ lng=-0.929941;
   ngOnInit() {
     this.builMap(); 
   }
-
+  ionViewDidEnter() {
+    this.builMap();
+  }
  builMap(){
   mapboxgl.accessToken = 'pk.eyJ1Ijoibm9lbWkxNyIsImEiOiJja2U0eDlmbXUweGVlMnptdzhyMmhxY3NqIn0.pdK5JCeAlWgpAXIfQIKovQ';
    var map= new mapboxgl.Map({
@@ -37,7 +39,7 @@ lng=-0.929941;
      center:[this.lat,this.lng],
      zoom:9
      });
-     
+   
   var marker = new mapboxgl.Marker()
   .setLngLat([this.lat,this.lng])
   .addTo(map);

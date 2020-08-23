@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { LoadingController } from '@ionic/angular';
-import { NavParams,ModalController } from '@ionic/angular';
+import { NavParams, ModalController } from '@ionic/angular';
 import { TransportistaService } from '../../../Servicios/transportista.service'
-import * as  mapboxgl  from 'mapbox-gl';
+import * as  mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
-import  MapboxDirections from 'mapbox-gl-directions';
+import MapboxDirections from 'mapbox-gl-directions';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
 declare var google;
@@ -17,12 +17,15 @@ declare var google;
 export class MapaPage implements OnInit {
   mapRef: any;
   constructor(private geolocation: Geolocation,
-    private loadingCtrl: LoadingController, private navParams: NavParams, private transportistaServe: TransportistaService, private modalC:ModalController,) {
+    private loadingCtrl: LoadingController, private navParams: NavParams, private transportistaServe: TransportistaService, private modalC: ModalController, ) {
   }
 
   ngOnInit() {
-    this.posicionTransportista(); 
-
+    this.posicionTransportista();
+    this.addMarker(this.navParams.data['orden'].longitud,this.navParams.data['orden'].latitud,this.navParams.data['orden'].usuarios.name);
+    navigator.geolocation.getCurrentPosition(position => {
+      this.addMarker(position.coords.longitude,position.coords.latitude,localStorage.getItem("name"));
+    });
     // if (this.navParams.data['identificador'] == 1) {
     //   this.loadMap();
     //   setInterval(() => {
@@ -177,55 +180,80 @@ export class MapaPage implements OnInit {
   //   };
   // }
 
-  async closeModal(){
+  async closeModal() {
     await this.modalC.dismiss();
   }
-  lat=-80.244266;
-lng=-0.929941;
-
-posicionTransportista(){
+  lat: any;
+  lng: any;
+  addMarker(longitud,latitud,nombre) {
+    var trainStationIcon = document.createElement('div');
+    trainStationIcon.style.width = '38px';
+    trainStationIcon.style.height = '55px';
+    trainStationIcon.style.backgroundImage = "url(https://image.flaticon.com/icons/svg/2850/2850651.svg)";
+    trainStationIcon.style.cursor = "pointer";
+    var marker = new mapboxgl.Marker()
+      // .setLngLat([parseFloat(this.navParams.data['orden'].longitud), parseFloat(this.navParams.data['orden'].latitud)])
+      .setLngLat([parseFloat(longitud), parseFloat(latitud)])
+      .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+      .setHTML('<h3>' +nombre+ '</h3>'))
+      .addTo(this.map);
+    // this.map.on('load', function() {
+    //   this.map.resize();
+    // })
+    // this.map.addControl(new MapboxGeocoder({
+    //   accessToken: mapboxgl.accessToken,
+    //   mapboxgl: mapboxgl
+    // })
+    // );
+    // this.map.addControl(new mapboxgl.NavigationControl());
+    // this.map.addControl(new mapboxgl.FullscreenControl());
+    // this.map.addControl(new mapboxgl.GeolocateControl({
+    //   positionOptions: {
+    //     enableHighAccuracy: true
+    //   },
+    //   trackUserLocation: true
+    // }));
+    // this.map.on('mousemove', function(e) {
+    //   document.getElementById('coordenadas').innerHTML =
+    //     JSON.stringify(e.lngLat);
+    // });
+  }
+  map: any;
+  posicionTransportista() {
     mapboxgl.accessToken = 'pk.eyJ1Ijoibm9lbWkxNyIsImEiOiJja2U0eDlmbXUweGVlMnptdzhyMmhxY3NqIn0.pdK5JCeAlWgpAXIfQIKovQ';
-     var map= new mapboxgl.Map({
-       container:'map',
-       style:'mapbox://styles/mapbox/streets-v11',
-       center:[this.lat,this.lng],
-       zoom:9
-       });
-       
-    // var marker = new mapboxgl.Marker()
-    // .setLngLat([this.lat,this.lng])
-    // .addTo(map);
-  
-      map.on('load', function(){
-        map.resize();
-      })
-      map.addControl( new MapboxGeocoder({
-        accessToken: mapboxgl.accessToken,
-        mapboxgl: mapboxgl
-        })
-        );
-      map.addControl(new mapboxgl.NavigationControl());
-      map.addControl(new mapboxgl.FullscreenControl());
-      map.addControl(new mapboxgl.GeolocateControl({
-        positionOptions: {
-            enableHighAccuracy: true
-        },
-        trackUserLocation: true
-      }));
-      map.on('mousemove', function (e) {
-        document.getElementById('coordenadas').innerHTML =
-            JSON.stringify(e.lngLat);
-         
-      });
-     
-      
-  //  map.addControl(
-  //   new MapboxDirections({
-  //   accessToken: mapboxgl.accessToken
-  //  }),
-  //  'top-left'
-  //  ); 
-      
-      }
+    var latitud = 0;
+    var longitud = 0;
+    navigator.geolocation.getCurrentPosition(position => {
+      latitud = position.coords.latitude;
+      longitud = position.coords.longitude;
+    });
+    this.map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center:[longitud,latitud],
+      zoom: 9
+    });
+    this.map.addControl(
+      new MapboxGeocoder({
+      accessToken: mapboxgl.accessToken,
+      mapboxgl: mapboxgl
+      }),
+    );
+    this.map.addControl(new mapboxgl.NavigationControl());
+    this.map.addControl(new mapboxgl.FullscreenControl());
+    this.map.addControl(new mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true
+      },
+      trackUserLocation: true
+    }));
+    this.map.on('mousemove', function(e) {
+      document.getElementById('coordenadas').innerHTML =
+        JSON.stringify(e.lngLat);
+    });
+    this.map.on('load', function() {
+     this.map.resize();
+    })
 
+  }
 }
