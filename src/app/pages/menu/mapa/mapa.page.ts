@@ -8,11 +8,9 @@ import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 // import MapboxDirections from 'mapbox-gl-directions';
 import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions'
 import 'mapbox-gl/dist/mapbox-gl.css' // Updating node module will keep css up to date.
-import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css' // Updating node module will keep css up to date.
-
+import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css' // Updating node module will keep css up to date
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
-declare var google;
 @Component({
   selector: 'app-mapa',
   templateUrl: './mapa.page.html',
@@ -268,7 +266,7 @@ export class MapaPage implements OnInit {
       unit: 'metric',
       profile: 'mapbox/driving'
     });
-    this.map.addControl(this.directions, 'top-left');
+    this.map.addControl(this.directions, 'bottom-left');
     // this.map.addControl(
     //   new MapboxDirections({
     //     accessToken: mapboxgl.accessToken

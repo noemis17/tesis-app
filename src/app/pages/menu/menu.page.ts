@@ -50,11 +50,11 @@ export class MenuPage implements OnInit {
       url: '/menu/perfil',
       icon: 'archive'
     }
-    , {
-      title: 'Pago',
-      url: '/menu/paypal',
-      icon: 'archive'
-    }
+    // , {
+    //   title: 'Pago',
+    //   url: '/menu/paypal',
+    //   icon: 'archive'
+    // }
     , {
       title: 'Orden',
       url: '/menu/orden',
