@@ -12,6 +12,15 @@
 <ion-content class="ion-padding ">
   <ion-button class="boton" color="danger"  (click)="validarCarrito()" expand="block" shape="round" fill="outline">Proceso de pago</ion-button>
   <p class="text1">Precio:&nbsp;&nbsp;{{ totalAPagar | currency:"USD":true}}</p>
+  <div class="row">
+    
+      <ion-button class="shadow-red" color="warning"  (click)="validarCarrito()" expand="small" shape="round" fill="outline"><img src="/assets/mapa.png" class="compra1">
+         <p style="color:black;font-weight:bold">
+          &nbsp;&nbsp;Cambiar Ubicación
+         </p>
+      </ion-button>
+     
+  </div>
   <ion-list>
     <ion-item *ngFor="let  carri of  carritoProducto" [ngClass]="carri.PermitirVender ? 'positivo':'negativo'">
       <img src="/assets/fruta.jpg" class="img">
