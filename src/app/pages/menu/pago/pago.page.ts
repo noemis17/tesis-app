@@ -28,7 +28,7 @@ export class PagoPage implements OnInit {
   totalAPagar: any;
   image:string;
   constructor(
-    public alertController: AlertController, 
+    public alertController: AlertController,
     private modalC:ModalController,
     private router:Router,
     private tipoServicio:TipoPagoService,
@@ -38,24 +38,24 @@ export class PagoPage implements OnInit {
     private loadingCtrl: LoadingController,
     private rutaService: RutaService,
     private camera: Camera
-  
+
     ) { }
     posicion_:any[]=[];
+    dataPosicionCenter:any;
   ngOnInit() {
     //aqui imprima lo que llega que no me acuerdo
     this.carritoProducto = this.navParams.data['producto'];
     this.carritoPromociones = this.navParams.data['promociones'];
     this.totalAPagar = this.navParams.data['total'];
     this.mostrarTipoPago();
-    this.obtenerlocalizacion();
-  
-    console.log("asdsa",this.posicion_[1]);
-    console.log("asdsa",this.posicion_);
+    this.dataPosicionCenter = this.navParams.data['position'];
+    this.posicion();
+    //this.obtenerlocalizacion();
     //this.addMarker(posicion_[1],posicion_[0],"");
   }
   mostrarTipoPago(){
     this.tipoServicio.mostrarTipoPago()
-    .then(data=>{ 
+    .then(data=>{
       if(data['code']=="200"){
         this.tipoPago=data['items'];
       }
@@ -76,7 +76,7 @@ export class PagoPage implements OnInit {
             localStorage.setItem("carritoPromociones", JSON.stringify(setDato));
             //this.showAlert("Compra realizada exitosamenete");
             this.modalC.dismiss("1");
-            
+
           }
         })
         .catch((error) => {
@@ -86,13 +86,13 @@ export class PagoPage implements OnInit {
       this.showAlert("Todos los productos no estan disponible");
     }
    }else{
-     // aqui va el codigo donde accede a la camara o a la galeria del telefono 
+     // aqui va el codigo donde accede a la camara o a la galeria del telefono
      this.presentAlertPrompt();
 
    }
-   
+
   }
-  
+
   async showAlert(Mensaje) {
     const alert = await this.alertController.create({
       message: Mensaje,
@@ -103,7 +103,7 @@ export class PagoPage implements OnInit {
   async closeModal(){
     await this.modalC.dismiss();
   }
-  
+
 rutadelcarrito(){
   this.router.navigate(['/menu/carrito']);
 }
@@ -112,7 +112,7 @@ ionViewDidEnter() {
 }
 map: any;
 addMarker(longitud,latitud,nombre) {
- 
+
   var trainStationIcon = document.createElement('div');
   trainStationIcon.style.width = '38px';
   trainStationIcon.style.height = '55px';
@@ -131,19 +131,14 @@ obtenerlocalizacion() {
   navigator.geolocation.getCurrentPosition(position => {
     this.posicion_.push(position.coords.latitude);
     this.posicion_.push(position.coords.longitude);
-  }); 
+  });
 }
 posicion() {
   mapboxgl.accessToken = 'pk.eyJ1Ijoibm9lbWkxNyIsImEiOiJja2U0eDlmbXUweGVlMnptdzhyMmhxY3NqIn0.pdK5JCeAlWgpAXIfQIKovQ';
-  navigator.geolocation.getCurrentPosition(position => {
-    this.latitud = position.coords.latitude;
-    this.longitud = position.coords.longitude;
-  });  
-
     this.map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/streets-v9',
-      center:[this.longitud, this.latitud],
+      center:[this.navParams.data['position'].coords.longitude,this.navParams.data['position'].coords.latitude],
       zoom: 15,
     });
   this.map.addControl(
@@ -160,10 +155,10 @@ posicion() {
     },
     trackUserLocation: true
   }));
- 
- 
- 
-  
+  this.map.on('click', function(e) {
+      this.addMarker(e.lng,e.lat,"");
+      console.log(e.lngLat);
+  });
 }
 // UbicacionGuarda()
 //   {
@@ -230,13 +225,13 @@ posicion() {
 //   }
 
   @ViewChild('listaTPagos',{static:false}) listaTPagos: ElementRef;
-  
+
   async presentAlertPrompt() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Comprobante',
       mode:'ios',
-  
+
       inputs: [
         {
           name: 'radio1',
@@ -273,13 +268,13 @@ posicion() {
            cssClass: 'alertButton',
           handler: () => {
             console.log('Confirm Ok');
-            
+
             let listaTPagosPorId = document.getElementById('listaTPagos');
             listaTPagosPorId.hidden = true;
             this.guardarDocumentoTransaccion(`data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUA
             AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
                 9TXL0Y4OHwAAAABJRU5ErkJggg==`);
-            
+
           }
         }
       ]
@@ -287,7 +282,7 @@ posicion() {
 
     await alert.present();
   }
-  
+
   takePicture() {
     const options: CameraOptions = {
       quality: 100,
@@ -308,17 +303,17 @@ posicion() {
     this.camera.getPicture({
       sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
        destinationType: this.camera.DestinationType.DATA_URL
-   
+
       }).then((imageData) => {
-   
+
         this.image= 'data:image/jpeg;base64,'+imageData;
 
            }, (err) => {
-   
+
         console.log(err);
-   
+
       });
-   
+
    }
 
   @ViewChild('mapa' ,{static:false}) mapa : ElementRef;
@@ -334,12 +329,12 @@ posicion() {
             console.log('se guardo la imagen');
           } else {
             console.log(data);
-            
+
           }
-          
+
         }).catch(error=>{
           console.log(error);
-          
+
         }).finally(()=>{});
   }
 
