@@ -218,7 +218,7 @@ posicionTransportista(){
          
       });
      
-      console.log(map);
+      
   //  map.addControl(
   //   new MapboxDirections({
   //   accessToken: mapboxgl.accessToken
