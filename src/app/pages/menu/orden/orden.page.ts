@@ -31,8 +31,8 @@ export class OrdenPage implements OnInit {
     const modal = await this.modalC.create({
     component: MapaPage ,
     componentProps: {
-      // "orden":element,
-      // "identificador":1
+      "orden":element,
+      "identificador":1
     }
 
    });
