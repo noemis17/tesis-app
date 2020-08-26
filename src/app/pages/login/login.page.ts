@@ -26,7 +26,7 @@ export class LoginPage implements OnInit {
     ) {
       this.todo = this.formBuilder.group({
         Usuario: ['', Validators.required],
-        Contrasena: ['',Validators.required], 
+        Contrasena: ['',Validators.required],
         cedula: new FormControl({value:"",disabled:false},[Validators.maxLength(10),Validators.pattern('^[0-9]+$')])
       });
       this.user = this.formBuilder.group({
@@ -35,11 +35,11 @@ export class LoginPage implements OnInit {
         Celular: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
         email: ['', Validators.required],
         Contrasena: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(12)]],
-        Confirmar: [''], 
+        Confirmar: [''],
         cedula: new FormControl({value:"",disabled:false},[Validators.maxLength(10),Validators.pattern('^[0-9]+$')]),
         celular:new FormControl({value:"",disabled:false},[Validators.maxLength(10),Validators.pattern('^[0-9]+$')]),
       });
-    
+
      }
      image:string;
 
@@ -62,18 +62,20 @@ export class LoginPage implements OnInit {
           localStorage.setItem("cedula",ok['items'].cedula);
           localStorage.setItem("celular",ok['items'].celular);
           var setDato:any[]=[];
+          var setUbicacion:any;
           localStorage.setItem("carrito",JSON.stringify(setDato));
           localStorage.setItem("carritoPromociones",JSON.stringify(setDato));
+          localStorage.setItem("ubicacion",JSON.stringify(setUbicacion));
         }
         console.log(ok);
       })
       .catch((error) => {
         console.log(error);
       });
-      
-      
+
+
   }
-  
+
   passwordTypeInput  =  'password';
   iconpassword  =  'eye-off';
   togglePasswordMode() {
@@ -81,7 +83,7 @@ export class LoginPage implements OnInit {
     this.iconpassword  =  this.iconpassword  ===  'eye-off'  ?  'eye'  :  'eye-off';
     this.passwordEye.el.setFocus();
   }
-   
+
  registroUsuario(){
   this.usuarioService.guardarUsuario(this.user.controls['Nombre'].value, this.user.controls['email'].value,this.user.controls['Cedula'].value,this.user.controls['Celular'].value,this.user.controls['Contrasena'].value,this.user.controls['Confirmar'].value)
     .then((ok) => {
@@ -104,13 +106,13 @@ export class LoginPage implements OnInit {
     await alert.present();
   };
   ngOnInit() {
-  
+
    this.login();
 
   }
- 
 
-  
+
+
 
 
 }

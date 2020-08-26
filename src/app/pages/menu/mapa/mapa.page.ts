@@ -37,7 +37,7 @@ export class MapaPage implements OnInit {
           this.directions.setDestination([position.coords.longitude, position.coords.latitude]);
           this.guardarUbicacionTransportista(position.coords.longitude, position.coords.latitude);
         });
-      }, 10000);
+      }, 1000);
     } else {
       this.cargarMapa();
       navigator.geolocation.getCurrentPosition(position => {
@@ -46,7 +46,8 @@ export class MapaPage implements OnInit {
       });
       setInterval(() => {
         this.posicionTransportista(this.navParams.data['orden'].idcourier);
-      }, 10000);
+        console.log("acutalizando transportista")
+      }, 1000);
     }
   }
   lugar: any[] = [];

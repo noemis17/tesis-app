@@ -50,6 +50,7 @@ export class CarritoPage implements OnInit {
     }
   }
   async abrirModal(posicion){
+
       const modal = await this.modalC.create({
       component:PagoPage ,
       componentProps: {

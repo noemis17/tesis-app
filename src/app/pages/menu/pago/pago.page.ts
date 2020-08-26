@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { ModalController,NavParams,AlertController, NavController } from '@ionic/angular';
+import { ModalController, NavParams, AlertController, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { TipoPagoService} from '../../../Servicios/tipo-pago.service';
+import { TipoPagoService } from '../../../Servicios/tipo-pago.service';
 import { CarritoService } from '../../../Servicios/carrito.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { LoadingController } from '@ionic/angular';
 //import { PostProvider } from '@ionic/angular';
 import { RutaService } from '../../../Servicios/Rutas/ruta.service';
-import { Camera,CameraOptions} from '@ionic-native/camera/ngx';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import * as  mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
@@ -24,14 +24,14 @@ export class PagoPage implements OnInit {
   mapRef = null;
   carritoProducto: any[] = [];
   carritoPromociones: any[] = [];
-  tipoPago:any = [];
+  tipoPago: any = [];
   totalAPagar: any;
-  image:string;
+  image: string;
   constructor(
     public alertController: AlertController,
-    private modalC:ModalController,
-    private router:Router,
-    private tipoServicio:TipoPagoService,
+    private modalC: ModalController,
+    private router: Router,
+    private tipoServicio: TipoPagoService,
     private compraServi: CarritoService,
     private navParams: NavParams,
     private geolocation: Geolocation,
@@ -39,9 +39,9 @@ export class PagoPage implements OnInit {
     private rutaService: RutaService,
     private camera: Camera
 
-    ) { }
-    posicion_:any[]=[];
-    dataPosicionCenter:any;
+  ) { }
+  posicion_: any[] = [];
+  dataPosicionCenter: any;
   ngOnInit() {
     //aqui imprima lo que llega que no me acuerdo
     this.carritoProducto = this.navParams.data['producto'];
@@ -49,50 +49,53 @@ export class PagoPage implements OnInit {
     this.totalAPagar = this.navParams.data['total'];
     this.mostrarTipoPago();
     this.dataPosicionCenter = this.navParams.data['position'];
+    if (localStorage.getItem("ubicacion")==null) {
+      localStorage.setItem("ubicacion",JSON.stringify(this._marker));
+    }
     this.posicion();
     //this.obtenerlocalizacion();
     //this.addMarker(posicion_[1],posicion_[0],"");
   }
-  mostrarTipoPago(){
+  mostrarTipoPago() {
     this.tipoServicio.mostrarTipoPago()
-    .then(data=>{
-      if(data['code']=="200"){
-        this.tipoPago=data['items'];
-      }
-    });
+      .then(data => {
+        if (data['code'] == "200") {
+          this.tipoPago = data['items'];
+        }
+      });
 
   }
   latitud = 0;
   longitud = 0;
- registroPago(item){
-   if(item.identificador == 2){
-    if (this.carritoProducto.find(e => e['PermitirVender'] == false) == undefined && this.carritoPromociones.find(e => e['PermitirVender'] == false) == undefined) {
-      this.compraServi.guardarCompra(JSON.stringify(this.carritoPromociones), localStorage.getItem("nomeToken"), JSON.stringify(this.carritoProducto),item.id,this.totalAPagar,this.latitud,this.longitud)
-        .then((ok) => {
-          console.log(ok)
-          if (ok['code'] == "200") {
-            var setDato: any[] = [];
-            localStorage.setItem("carrito", JSON.stringify(setDato));
-            localStorage.setItem("carritoPromociones", JSON.stringify(setDato));
-            //this.showAlert("Compra realizada exitosamenete");
-            this.modalC.dismiss("1");
+  _marker:any;
+  registroPago(item) {
+    if (item.identificador == 2) {
+      if (this.carritoProducto.find(e => e['PermitirVender'] == false) == undefined && this.carritoPromociones.find(e => e['PermitirVender'] == false) == undefined) {
+        this.compraServi.guardarCompra(JSON.stringify(this.carritoPromociones), localStorage.getItem("nomeToken"), JSON.stringify(this.carritoProducto), item.id, this.totalAPagar, JSON.parse(localStorage.getItem("ubicacion"))['lat'], JSON.parse(localStorage.getItem("ubicacion"))['lng'])
+          .then((ok) => {
+            console.log(ok)
+            if (ok['code'] == "200") {
+              var setDato: any[] = [];
+              localStorage.setItem("carrito", JSON.stringify(setDato));
+              localStorage.setItem("carritoPromociones", JSON.stringify(setDato));
+              //this.showAlert("Compra realizada exitosamenete");
+              this.modalC.dismiss("1");
 
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        this.showAlert("Todos los productos no estan disponible");
+      }
     } else {
-      this.showAlert("Todos los productos no estan disponible");
-    }
-   }else{
-     // aqui va el codigo donde accede a la camara o a la galeria del telefono
-     this.presentAlertPrompt();
+      // aqui va el codigo donde accede a la camara o a la galeria del telefono
+      this.presentAlertPrompt();
 
-   }
+    }
 
   }
-
   async showAlert(Mensaje) {
     const alert = await this.alertController.create({
       message: Mensaje,
@@ -100,137 +103,139 @@ export class PagoPage implements OnInit {
     });
     await alert.present();
   };
-  async closeModal(){
+  async closeModal() {
     await this.modalC.dismiss();
   }
-
-rutadelcarrito(){
-  this.router.navigate(['/menu/carrito']);
-}
-ionViewDidEnter() {
-  this.posicion();
-}
-map: any;
-addMarker(longitud,latitud,nombre) {
-
-  var trainStationIcon = document.createElement('div');
-  trainStationIcon.style.width = '38px';
-  trainStationIcon.style.height = '55px';
-  trainStationIcon.style.backgroundImage = "url(https://image.flaticon.com/icons/svg/2850/2850651.svg)";
-  trainStationIcon.style.cursor = "pointer";
-  var marker = new mapboxgl.Marker()
-    // .setLngLat([parseFloat(this.navParams.data['orden'].longitud), parseFloat(this.navParams.data['orden'].latitud)])
-    .setLngLat([parseFloat(longitud), parseFloat(latitud)])
-    .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
-    .setHTML('<h3>' +nombre+ '</h3>'))
-    .addTo(this.map);
-
-}
-obtenerlocalizacion() {
-  var posicionamiento:any[]=[];
-  navigator.geolocation.getCurrentPosition(position => {
-    this.posicion_.push(position.coords.latitude);
-    this.posicion_.push(position.coords.longitude);
-  });
-}
-posicion() {
-  mapboxgl.accessToken = 'pk.eyJ1Ijoibm9lbWkxNyIsImEiOiJja2U0eDlmbXUweGVlMnptdzhyMmhxY3NqIn0.pdK5JCeAlWgpAXIfQIKovQ';
+  rutadelcarrito() {
+    this.router.navigate(['/menu/carrito']);
+  }
+  map: any;
+  addMarker(longitud, latitud, nombre) {
+    this._marker = new mapboxgl.Marker()
+      .setLngLat([longitud, latitud])
+      .addTo(this.map);
+      // this._marker = marker;
+  }
+  obtenerlocalizacion() {
+    var posicionamiento: any[] = [];
+    navigator.geolocation.getCurrentPosition(position => {
+      this.posicion_.push(position.coords.latitude);
+      this.posicion_.push(position.coords.longitude);
+    });
+  }
+  posicion() {
+    mapboxgl.accessToken = 'pk.eyJ1Ijoibm9lbWkxNyIsImEiOiJja2U0eDlmbXUweGVlMnptdzhyMmhxY3NqIn0.pdK5JCeAlWgpAXIfQIKovQ';
     this.map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/streets-v9',
-      center:[this.navParams.data['position'].coords.longitude,this.navParams.data['position'].coords.latitude],
+      center: [this.navParams.data['position'].coords.longitude, this.navParams.data['position'].coords.latitude],
       zoom: 15,
     });
-  this.map.addControl(
-    new MapboxGeocoder({
-    accessToken: mapboxgl.accessToken,
-    mapboxgl: mapboxgl
-    })
+    this.map.addControl(
+      new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl
+      })
     );
-  this.map.addControl(new mapboxgl.NavigationControl());
-  this.map.addControl(new mapboxgl.FullscreenControl());
-  this.map.addControl(new mapboxgl.GeolocateControl({
-    positionOptions: {
-      enableHighAccuracy: true
-    },
-    trackUserLocation: true
-  }));
-  this.map.on('click', function(e) {
-      this.addMarker(e.lng,e.lat,"");
-      console.log(e.lngLat);
-  });
-}
-// UbicacionGuarda()
-//   {
-//     this.llamarAPi();
-//   }
-// async loadMap() {
-//   const loading = await this.loadingCtrl.create();
-//   loading.present();
-//   const myLatLng = await this.getLocation();
-//   const mapEle: HTMLElement = document.getElementById('map');
-//   this.mapRef = new google.maps.Map(mapEle, {
-//     center: myLatLng,
-//     zoom: 12
-//   });
-//   google.maps.event
-//   .addListenerOnce(this.mapRef, 'idle', () => {
-//     loading.dismiss();
-//     this.addMaker(myLatLng.lat, myLatLng.lng);
-//   });
-//   google.maps.event
-//   .addListener(this.mapRef, 'click', (e) => {
-//     loading.dismiss();
-//     this.addMaker(e.latLng.lat(), e.latLng.lng());
-//   });
-// }
-// latitud:number=0;
-// longitud:number=0;
-// listaMarker:any[]=[];
-// private addMaker(lat: number, lng: number) {
-//   this.listaMarker.map(item=>{
-//     item.setMap(null);
-//   });
-//   const marker = new google.maps.Marker({
-//     position: { lat, lng },
-//     map: this.mapRef,
-//     title: 'Hello World!'
-//   });
-//   this.listaMarker.push(marker);
-//   this.longitud = lng;
-//   this.latitud = lat;
-//   console.log("latitud",this.latitud);
-//   console.log("longitud",this.longitud);
-// }
-//  llamarAPi(){
-//     this.rutaService.guardarUbicacion(
-//       '2y10kuJotplmz7rJALTZhnVazeLMPXN6PIExs2LTInVRZqGJfDqUQa',
-//       this.latitud,this.longitud,
-//       '').then(data=>{
-//         console.log(data)
-//       }).catch(error=>{
-//         console.log(error)
-//       })
-//   }
+    this.map.addControl(new mapboxgl.NavigationControl());
+    this.map.addControl(new mapboxgl.FullscreenControl());
+    this.map.addControl(new mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true
+      },
+      trackUserLocation: true
+    }));
+    this.map.on('click', function(e) {
+      if (localStorage.getItem("ubicacion")!="undefined") {
+        if (this._marker!= undefined) {
+          this._marker.setLngLat([e.lngLat.lng, e.lngLat.lat]);
+        }else{
+          this._marker = new mapboxgl.Marker()
+            .setLngLat([e.lngLat.lng,e.lngLat.lat])
+            .addTo(this)
+        }
+      }
+      this.resize();
+      localStorage.setItem("ubicacion",JSON.stringify(e.lngLat));
+    });
+    this.map.on('load', function(e) {
+      if (localStorage.getItem("ubicacion")!="undefined") {
+        this._marker = new mapboxgl.Marker()
+          .setLngLat([JSON.parse(localStorage.getItem("ubicacion"))['lng'],JSON.parse(localStorage.getItem("ubicacion"))['lat']])
+          .addTo(this)
+          this.resize();
+      }
+    });
+  }
+  // UbicacionGuarda()
+  //   {
+  //     this.llamarAPi();
+  //   }
+  // async loadMap() {
+  //   const loading = await this.loadingCtrl.create();
+  //   loading.present();
+  //   const myLatLng = await this.getLocation();
+  //   const mapEle: HTMLElement = document.getElementById('map');
+  //   this.mapRef = new google.maps.Map(mapEle, {
+  //     center: myLatLng,
+  //     zoom: 12
+  //   });
+  //   google.maps.event
+  //   .addListenerOnce(this.mapRef, 'idle', () => {
+  //     loading.dismiss();
+  //     this.addMaker(myLatLng.lat, myLatLng.lng);
+  //   });
+  //   google.maps.event
+  //   .addListener(this.mapRef, 'click', (e) => {
+  //     loading.dismiss();
+  //     this.addMaker(e.latLng.lat(), e.latLng.lng());
+  //   });
+  // }
+  // latitud:number=0;
+  // longitud:number=0;
+  // listaMarker:any[]=[];
+  // private addMaker(lat: number, lng: number) {
+  //   this.listaMarker.map(item=>{
+  //     item.setMap(null);
+  //   });
+  //   const marker = new google.maps.Marker({
+  //     position: { lat, lng },
+  //     map: this.mapRef,
+  //     title: 'Hello World!'
+  //   });
+  //   this.listaMarker.push(marker);
+  //   this.longitud = lng;
+  //   this.latitud = lat;
+  //   console.log("latitud",this.latitud);
+  //   console.log("longitud",this.longitud);
+  // }
+  //  llamarAPi(){
+  //     this.rutaService.guardarUbicacion(
+  //       '2y10kuJotplmz7rJALTZhnVazeLMPXN6PIExs2LTInVRZqGJfDqUQa',
+  //       this.latitud,this.longitud,
+  //       '').then(data=>{
+  //         console.log(data)
+  //       }).catch(error=>{
+  //         console.log(error)
+  //       })
+  //   }
 
-//   private async getLocation() {
-//     const rta = await this.geolocation.getCurrentPosition();
-//     return {
-//       lat: rta.coords.latitude,
-//       lng: rta.coords.longitude
-//     };
-//   }
-//   async hola(){
-//     console.log('hola');
-//   }
-
-  @ViewChild('listaTPagos',{static:false}) listaTPagos: ElementRef;
-
+  //   private async getLocation() {
+  //     const rta = await this.geolocation.getCurrentPosition();
+  //     return {
+  //       lat: rta.coords.latitude,
+  //       lng: rta.coords.longitude
+  //     };
+  //   }
+  //   async hola(){
+  //     console.log('hola');
+  //   }
+  @ViewChild('listaTPagos', { static: false }) listaTPagos: ElementRef;
   async presentAlertPrompt() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Comprobante',
-      mode:'ios',
+      mode: 'ios',
 
       inputs: [
         {
@@ -239,7 +244,7 @@ posicion() {
           label: 'Camara',
           value: 'value1',
           checked: true,
-          handler:()=>{
+          handler: () => {
             console.log('hoohohoh');
             this.takePicture();
           }
@@ -249,7 +254,7 @@ posicion() {
           type: 'radio',
           label: 'galeria',
           value: 'value2',
-          handler:()=>{
+          handler: () => {
             console.log('hoohohoh');
             this.AccessGallery();
           }
@@ -265,7 +270,7 @@ posicion() {
           }
         }, {
           text: 'Ok',
-           cssClass: 'alertButton',
+          cssClass: 'alertButton',
           handler: () => {
             console.log('Confirm Ok');
 
@@ -282,7 +287,6 @@ posicion() {
 
     await alert.present();
   }
-
   takePicture() {
     const options: CameraOptions = {
       quality: 100,
@@ -292,50 +296,47 @@ posicion() {
       sourceType: this.camera.PictureSourceType.CAMERA
     };
     this.camera.getPicture(options)
-    .then((imageData) => {
-      this.image = 'data:image/jpeg;base64,' + imageData;
-    }, (err) => {
-      console.log(err);
-    });
+      .then((imageData) => {
+        this.image = 'data:image/jpeg;base64,' + imageData;
+      }, (err) => {
+        console.log(err);
+      });
   }
-
-  AccessGallery(){
+  AccessGallery() {
     this.camera.getPicture({
       sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
-       destinationType: this.camera.DestinationType.DATA_URL
+      destinationType: this.camera.DestinationType.DATA_URL
 
-      }).then((imageData) => {
+    }).then((imageData) => {
 
-        this.image= 'data:image/jpeg;base64,'+imageData;
+      this.image = 'data:image/jpeg;base64,' + imageData;
 
-           }, (err) => {
+    }, (err) => {
 
-        console.log(err);
+      console.log(err);
 
-      });
+    });
 
-   }
-
-  @ViewChild('mapa' ,{static:false}) mapa : ElementRef;
-  ocultarMapa(){
+  }
+  @ViewChild('mapa', { static: false }) mapa: ElementRef;
+  ocultarMapa() {
     let mapap = document.getElementById('map');
     mapap.hidden = true;
   }
-
-  guardarDocumentoTransaccion(_imagen:string){
+  guardarDocumentoTransaccion(_imagen: string) {
     this.compraServi.guardarDocumentoTransaccion(_imagen)
-        .then(data=>{
-          if (data['code']=='200') {
-            console.log('se guardo la imagen');
-          } else {
-            console.log(data);
+      .then(data => {
+        if (data['code'] == '200') {
+          console.log('se guardo la imagen');
+        } else {
+          console.log(data);
 
-          }
+        }
 
-        }).catch(error=>{
-          console.log(error);
+      }).catch(error => {
+        console.log(error);
 
-        }).finally(()=>{});
+      }).finally(() => { });
   }
 
 
