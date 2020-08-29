@@ -28,9 +28,11 @@ export class CompraPage implements OnInit {
             this.CompraProducto=data['items'];
           this.nombre=data['items'][0].usuarios.name;
           this.cedula=data['items'][0].usuarios.cedula;
+        
           }
           console.log(this.CompraProducto);
         }
+
 
       })
       .catch((error) => {

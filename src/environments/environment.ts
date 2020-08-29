@@ -19,4 +19,4 @@ export const environment = {
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
 
-export const server ="http://192.168.1.2:8000/api";
+export const server ="http://127.0.0.1:8000/api";

@@ -93,9 +93,11 @@ export class PromocionPage implements OnInit {
       }
     }
   }
+
   agregarCarritoPromociones(item){
     if(JSON.parse(localStorage.getItem("carritoPromociones")) == null){
       localStorage.setItem("carritoPromociones",JSON.stringify(item));
+
     }else{
       var myJsonPromociones=[];
       var carritoPromociones=[];
@@ -110,6 +112,8 @@ export class PromocionPage implements OnInit {
       myJsonPromociones.push(item);
       localStorage.removeItem("carritoPromociones");
       localStorage.setItem("carritoPromociones",JSON.stringify(myJsonPromociones));
+     
+ 
     }
   }
   async presentAlertPromocion(item) {

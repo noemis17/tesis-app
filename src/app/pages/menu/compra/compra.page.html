@@ -23,36 +23,56 @@
   <ion-card  (click)="expandItem(item)" *ngFor="let item of  CompraProducto">
    <ion-card-header >
     <b>Pedidos</b>
-    <div *ngIf="item.estado.cod == '002';else boton"  mode="ios">
-      <ion-buttons >
-        <!-- <ion-button ><img src="/assets/mapa.png" class="compra1" routerLink ="/menu/ubicacion"> </ion-button> -->
-        <ion-button (click)="abrirModal(item)"><img src="/assets/mapa.png" class="compra1"> </ion-button>
+  
+    <ion-row  *ngIf="item.estado.cod == '002';else boton"  mode="ios">
+      <ion-col  (click)="abrirModal(item)">
+       <img src="/assets/mapa.png" class="compra1"> 
+      </ion-col>
+      <ion-col  >
         <ion-button  size="small" shape="round"  [ngClass]="item.estado.cod == '001' ? 'positivo': item.estado.cod == '004'? 'negativo':item.estado.cod == '002'? 'proceso':item.estado.cod == '003'? 'positivo':item.estado.cod == '006'? 'negativo':'positivo'" >{{item.estado.descripcion}}</ion-button>
-      </ion-buttons>
-    </div>
-
-      <ng-template   #boton>
-       <ion-button size="small" shape="round"  [ngClass]="item.estado.cod == '001' ? 'positivo': item.estado.cod == '004'? 'negativo':item.estado.cod == '002'? 'proceso':item.estado.cod == '003'? 'positivo':item.estado.cod == '006'? 'negativo':'positivo'" >{{item.estado.descripcion}}</ion-button>
-      </ng-template>
-      <h5 class="compa">{{item.Orden}} </h5>
+      </ion-col>
+    </ion-row>
+    <ion-row  >
+      <ion-col  >
+        <ng-template   #boton>
+          <ion-button   size="small" shape="round"  [ngClass]="item.estado.cod == '001' ? 'positivo': item.estado.cod == '004'? 'negativo':item.estado.cod == '002'? 'proceso':item.estado.cod == '003'? 'positivo':item.estado.cod == '006'? 'negativo':'positivo'" >{{item.estado.descripcion}}</ion-button>
+         </ng-template>
+      </ion-col>
+      
+    </ion-row>
+      
+      <h5 class="compaorden">{{item.Orden}} </h5>
      <p class="compa">Fecha: &nbsp;{{item.fechaOrden}} </p>
      <p class="compa" >Pago:&nbsp;{{item.tipo_pago.descricion}}</p>
     </ion-card-header>
    <ion-card-content class="cass" *ngFor="let item1 of   item.compras">
-    <ion-row >
 
-      <ion-col *ngIf=" item1.id_Productos != null" >
-        <p >{{item1.producto.NAME}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item1.producto.PRICE |number}} </p>
+    <ion-row  *ngIf=" item1.id_Productos != null">
+      
+      <ion-col >
+          <p >{{item1.producto.NAME}} </p>
       </ion-col>
-      <ion-col *ngIf=" item1.idPromocionProducto != null" >
-        <p  >{{item1.promocion.productos_promocion1.NAME}}</p>
+      <ion-col style="text-align-last: end;" >
+          <p >{{item1.producto.PRICE |number}} </p>
       </ion-col>
-      <ion-col *ngIf=" item1.idRegistros != null"  >
-        <p  >{{item1.registro.descripcion}}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item1.registro.descuento}}</p>
-
-      </ion-col>
-
     </ion-row>
+    
+    <ion-row  *ngIf=" item1.idPromocionProducto != null" >
+      
+      <ion-col >
+        <p>{{item1.promocion.productos_promocion1.NAME}}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row  *ngIf=" item1.idRegistros != null"  >
+      
+      <ion-col >
+        <p  >{{item1.registro.descripcion}}  </p>
+      </ion-col>
+      <ion-col style="text-align-last: end;" >
+        <p>{{item1.registro.descuento}}</p>
+      </ion-col>
+    </ion-row>
+   
 
  </ion-card-content>
  <hr>

@@ -3,9 +3,10 @@ import { LoginService } from '../../Servicios/login.service';
 import {Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import {UsuarioService } from '../../Servicios/usuario.service';
-import { AlertController, IonInput } from '@ionic/angular';
+import { AlertController,LoadingController,ToastController, IonInput } from '@ionic/angular';
 import { Camera,CameraOptions} from '@ionic-native/camera/ngx';
-import { PayPal, PayPalPayment, PayPalConfiguration } from '@ionic-native/paypal/ngx';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -21,8 +22,9 @@ export class LoginPage implements OnInit {
     private loginService:LoginService,
     private formBuilder: FormBuilder,
     public alertController: AlertController,
-    private router:Router, private camera: Camera,
-    private payPal: PayPal
+    private router:Router,
+    private toastController: ToastController,
+    private localNotifications:LocalNotifications,
     ) {
       this.todo = this.formBuilder.group({
         Usuario: ['', Validators.required],
@@ -49,10 +51,12 @@ export class LoginPage implements OnInit {
       this.signupView = !this.signupView
     }
   login(){
+   
+  
     this.loginService.getlogin(this.todo.controls['Usuario'].value, this.todo.controls['Contrasena'].value)
       .then((ok) => {
         if(ok['items'] == null){
-          console.log('error')
+          this.presentToast("El usuario o la contraceña son incorrectos",3000);
         }else{
           this.router.navigateByUrl("menu/vista-producto");
           localStorage.setItem("nomeToken",ok['items'].nome_token);
@@ -72,6 +76,23 @@ export class LoginPage implements OnInit {
       });
       
       
+  }
+
+  async presentToast(_mensaje:string,_duracion:number) {
+    const toast = await this.toastController.create({
+      message: _mensaje,
+      duration: _duracion,
+      buttons: [
+        {
+          text: 'Cerrar',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ],
+    });
+    toast.present();
   }
   
   passwordTypeInput  =  'password';
@@ -110,7 +131,18 @@ export class LoginPage implements OnInit {
   }
  
 
+  schedule(){
   
+    // Schedule a single notification
+        this.localNotifications.schedule({
+          id: 1,
+          text: 'Noemy y Dolo',
+          // sound: isAndroid? 'file://sound.mp3': 'file://beep.caf',
+          data: { secret: "key" }
+        });
+        console.log("message");
+        
+      }
 
 
 }

@@ -8,6 +8,17 @@
     
   
 }
+.compaorden{
+
+    font-size: medium;
+    margin-top: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-bottom: 8px;
+    margin-top: 10px;
+  
+}
+
 .cass{
   padding-top: 0px;
   padding-bottom: 0px;
@@ -29,43 +40,47 @@ hr {
 
 .negativo {
    
-    font-size: small;
+    font-size: medium;
     text-transform: none;
     --background:rgb(235, 222, 222);
     color: red;
-    margin-left: 180px;
-    margin-right: 0px;
-    margin-bottom: 10px;
+    position: absolute; 
+    right: 0;
+    
   }
 
   .positivo {
    
-    font-size: small;
+    font-size: medium;
     --background:rgb(235, 222, 222);
     text-transform: none;
     color: rgb(76, 158, 38);
-    margin-left: 180px;
-    margin-right: 0px;
-    margin-bottom: 10px;
+    position: absolute; 
+    right: 0;
+ 
+  
   }
   .proceso {
-    font-size: small;
+    font-size: medium;
     text-transform: none;
     --background:rgb(235, 222, 222);
-    color: rgb(228, 215, 32);
-    margin-left: 120px;
-    margin-top: 8px;
-    margin-bottom: 10px;
-    margin-right: 0px;
+    color: rgb(8, 8, 8);
+      position: absolute; 
+    right: 0;
+    padding-bottom: 0px;
+    padding-top: 0px;
+   
   }
-  .estado{
-    margin-left: 120px;
-    margin-top: 8px;
-    margin-bottom: 10px;
-    margin-right: 0px;
-  }
+  // .estado{
+  //   margin-left: 120px;
+  //   margin-top: 8px;
+  //   margin-bottom: 10px;
+  //   margin-right: 0px;
+  // }
   .compra1{
-    height: 102%;
+    height: 45px;
+    padding-bottom: 0px;
+    padding-top: 0px;
   }
   .producto1{
 

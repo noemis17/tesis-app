@@ -17,7 +17,7 @@ import { PipesModule } from './pipes/pipes.module';
 import { PayPal } from '@ionic-native/paypal/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
-
+import { LocalNotifications} from '@ionic-native/local-notifications/ngx'
 
 @NgModule({
   declarations: [
@@ -49,8 +49,10 @@ import { WebView } from '@ionic-native/ionic-webview/ngx';
     PayPal,
     Camera,
     WebView,
+    
   
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    LocalNotifications,
   ],
   bootstrap: [AppComponent]
 })

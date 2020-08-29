@@ -22,7 +22,8 @@
   <ion-row>
     <ion-col size="6" *ngFor="let  item of producto |filtro: textoBuscar:'NAME' ">
       <ion-card class="card-image ">
-      <img  src="/assets/fruta.jpg" class="img">
+        <ion-img class="ESTILO "  *ngIf="item.file_name == null" src="/assets/SUPERCITO.png"></ion-img>
+        <ion-img class="ESTILOIMAGEN" *ngIf="item.file_name != null" src="http://localhost:8000/img/items/{{item.file_name}}.{{item.file_extension}}"></ion-img>
     
     <h3 class="text" lines="full"><b>{{item.NAME}}</b></h3>
     <p class="text1" *ngIf=" item.promocionesdel_producto == null">Precio: {{ item.PRICE | currency:"USD":true}}</p>
