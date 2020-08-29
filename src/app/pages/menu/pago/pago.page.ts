@@ -276,9 +276,7 @@ export class PagoPage implements OnInit {
 
             let listaTPagosPorId = document.getElementById('listaTPagos');
             listaTPagosPorId.hidden = true;
-            this.guardarDocumentoTransaccion(`data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUA
-            AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
-                9TXL0Y4OHwAAAABJRU5ErkJggg==`);
+            this.guardarDocumentoTransaccion(this.image);
 
           }
         }
