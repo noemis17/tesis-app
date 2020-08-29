@@ -5,7 +5,14 @@ import { CarritoService } from '../../../Servicios/carrito.service'
 import { AlertController, NavController} from '@ionic/angular'
 import { ModalController,NavParams  } from '@ionic/angular';
 import { PagoPage } from '../pago/pago.page';
-
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import * as  mapboxgl from 'mapbox-gl';
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+// import MapboxDirections from 'mapbox-gl-directions';
+import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions'
+import 'mapbox-gl/dist/mapbox-gl.css' // Updating node module will keep css up to date.
+import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css' // Updating node module will keep css up to date
+import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
 @Component({
   selector: 'app-carrito',
@@ -20,7 +27,7 @@ export class CarritoPage implements OnInit {
   constructor(private productoServi: ProductosService,
     private promocionServi: PromocionesService,
     private compraServi: CarritoService,
-    public alertController: AlertController, 
+    public alertController: AlertController,
     public navCtrl: NavController,
     private modalC:ModalController
   ) {
@@ -29,7 +36,7 @@ export class CarritoPage implements OnInit {
     this.setDatos();
     this.setDatos1();
     //this.consultarOrdenesCompra();
-  
+
   }
   //Permite abril una modal
   validarCarrito()
@@ -37,17 +44,20 @@ export class CarritoPage implements OnInit {
     if(this.carritoProducto.length==0 && this.carritoPromociones.length==0){
       this.showAlert("No tiene ningun producto en el carrito");
     }else{
-      this.abrirModal();
+      navigator.geolocation.getCurrentPosition(position => {
+        this.abrirModal(position);
+      });
     }
   }
-  async abrirModal(){
+  async abrirModal(posicion){
+
       const modal = await this.modalC.create({
       component:PagoPage ,
       componentProps: {
         "producto":this.carritoProducto,
         "promociones":this.carritoPromociones,
-        "total":this.totalAPagar
-        //aqui tiene que enviar a la modal los 2 array el de promocion y el de producto no se mardar eso
+        "total":this.totalAPagar,
+        "position":posicion
       }
     });
     modal.onDidDismiss().then(data => {
@@ -56,7 +66,6 @@ export class CarritoPage implements OnInit {
         this.carritoProducto = [];
         this.carritoPromociones = [];
       }
-        console.log('datos', data);
     });
     return await modal.present();
   }
@@ -274,7 +283,7 @@ export class CarritoPage implements OnInit {
   }
 
 
-  
+
 
 
 }
