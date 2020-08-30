@@ -12,10 +12,9 @@ const routes: Routes = [
       {
         path: 'producto',
         loadChildren: () => import('./producto/producto.module').then( m => m.ProductoPageModule)
-      },{
-        path: 'ubicacion',
-        loadChildren: () => import('./ubicacion/ubicacion.module').then( m => m.UbicacionPageModule)
-      }, {
+      },
+     
+      {
         path: 'usuario',
         loadChildren: () => import('./usuario/usuario.module').then( m => m.UsuarioPageModule)
       },{
@@ -52,6 +51,10 @@ const routes: Routes = [
       //   path: 'pago',
       //   loadChildren: () => import('./pago/pago.module').then( m => m.PagoPageModule)
       // }
+       // {
+      //   path: 'ubicacion',
+      //   loadChildren: () => import('./ubicacion/ubicacion.module').then( m => m.UbicacionPageModule)
+      // }, 
       
       ]
 

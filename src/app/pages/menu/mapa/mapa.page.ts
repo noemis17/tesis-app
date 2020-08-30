@@ -99,6 +99,7 @@ export class MapaPage implements OnInit {
       center: [this.navParams.data['orden'].longitud, this.navParams.data['orden'].latitud],
       zoom: 14,
     });
+    
     this.directions = new MapboxDirections({
       accessToken: mapboxgl.accessToken,
       unit: 'metric',

@@ -5,6 +5,7 @@ import { CarritoService } from '../../../Servicios/carrito.service'
 import { AlertController, NavController} from '@ionic/angular'
 import { ModalController,NavParams  } from '@ionic/angular';
 import { PagoPage } from '../pago/pago.page';
+import { UbicacionPage } from '../ubicacion/ubicacion.page';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import * as  mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
@@ -49,6 +50,7 @@ export class CarritoPage implements OnInit {
       });
     }
   }
+
   async abrirModal(posicion){
 
       const modal = await this.modalC.create({
@@ -69,6 +71,25 @@ export class CarritoPage implements OnInit {
     });
     return await modal.present();
   }
+  validarubicacion()
+  {
+    if(this.carritoProducto.length==0 && this.carritoPromociones.length==0){
+      this.showAlert("No tiene ningun producto en el carrito");
+    }else{
+      navigator.geolocation.getCurrentPosition(position => {
+        this.abrirModalubicacion(position);
+      });
+    }
+  }
+  async abrirModalubicacion(posicion){
+    const modal = await this.modalC.create({
+      component: UbicacionPage ,
+      componentProps: {
+        "position":posicion
+      }
+     });
+     return await modal.present();
+   }
   eliminar(carri) {
     let itemIndexProducto = this.carritoProducto.findIndex(item => item.id == carri.id);
     this.carritoProducto.splice(itemIndexProducto, 1);

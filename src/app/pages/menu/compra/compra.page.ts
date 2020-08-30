@@ -63,6 +63,7 @@ export class CompraPage implements OnInit {
    });
    return await modal.present();
   }
+  
   rutadelcarrito(){
     this.router.navigate(['/menu/carrito']);
   }

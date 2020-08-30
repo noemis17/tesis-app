@@ -38,6 +38,7 @@ export class CarritoService {
       .set("longitud",longitud)
       ;
     return new Promise((resolve, reject) => {
+      // this.http.post(server+"/v0/ComprarProducto/",_body.toString(),{headers:this._header})
       this.http.post(server+"/v0/ComprarProducto/",_body.toString(),{headers:this._header})
                 .subscribe(res=>{
                   resolve(res);
@@ -50,6 +51,7 @@ export class CarritoService {
     const _body = new HttpParams()
       .set("idUsuario",idUsuario)
       ;
+      // this.http.post(server+"/v0/OrdenesCompradas/",_body.toString(),{headers:this._header})
     return new Promise((resolve, reject) => {
       this.http.post(server+"/v0/OrdenesCompradas/",_body.toString(),{headers:this._header})
                 .subscribe(res=>{

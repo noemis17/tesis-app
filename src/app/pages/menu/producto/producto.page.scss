@@ -59,11 +59,13 @@ width: 80px;
 height: 80px;
 }
 .text1{
-  padding-left: 20px;
+
   margin-top: 2px;
   margin-bottom: 2px;
   font-size: small;
-  padding-left: 30px;
+  margin-left: 4px;
+ 
+
 }
 
 .card-image {
@@ -75,14 +77,15 @@ height: 80px;
   width: 100%;
   left: 8px;
  
+ 
 
 }
 
 .boton {
-  margin-right: 15px;
+
   border-left-width: 4px;
-  margin-left: 15px;
-  margin-top: 6px;
+  margin-top: 20px;
+
   margin-bottom: 10px;
   text-transform: none;
   font-size: small;
@@ -98,6 +101,13 @@ height: 80px;
     
 }
 
+.contenedor{
+  padding-top: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
 .text{
 
     font-weight: bold;
@@ -105,11 +115,12 @@ height: 80px;
     text-transform: none;
     padding-top: 6px;
     padding-bottom: 2px;
- 
+    padding-top: 0px;
     margin-bottom: 6px;
     display: table-cell;
-    padding-left: 20px;
-    font-size: small;
+  
+    font-size:medium;
+   
   
    
   }
@@ -148,7 +159,7 @@ height: 80px;
   .ESTILO{
  
    
-    width: 100px; 
+    width: 160px; 
     height: 100px;
     margin:10px auto;
     display:block;
@@ -157,8 +168,8 @@ height: 80px;
     }
     .ESTILOIMAGEN{
  
-      width: 115px; 
-      height: 115px;
+      width: 120px; 
+      height: 120px;
       margin:10px auto;
      display:block;
      margin-left: auto;

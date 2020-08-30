@@ -9,18 +9,20 @@ import { CarritoPageRoutingModule } from './carrito-routing.module';
 import { CarritoPage } from './carrito.page';
 import { PagoPage } from '../pago/pago.page';
 import { PagoPageModule } from '../pago/pago.module';
-
-
+import { UbicacionPage } from '../ubicacion/ubicacion.page';
+import { UbicacionPageModule } from '../ubicacion/ubicacion.module';
 @NgModule({
   entryComponents:[
-   PagoPage
+   PagoPage,
+   UbicacionPage
       ],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     CarritoPageRoutingModule,
-    PagoPageModule
+    PagoPageModule,
+    UbicacionPageModule
   ],
   declarations: [CarritoPage],
  

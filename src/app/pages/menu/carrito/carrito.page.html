@@ -2,6 +2,7 @@
   <ion-toolbar>
     <ion-menu-button slot="start"></ion-menu-button>
     <img src="/assets/SUPERCITO.png" class="icon1">
+
     <ion-buttons slot="end">
       <ion-button routerLink="/menu/vista-producto">
         <img src="/assets/mercado.png" class="producto1"> 
@@ -14,7 +15,7 @@
   <p class="text1">Precio:&nbsp;&nbsp;{{ totalAPagar | currency:"USD":true}}</p>
   <div class="row">
     
-      <ion-button class="shadow-red" color="warning"  (click)="validarCarrito()" expand="small" shape="round" fill="outline"><img src="/assets/mapa.png" class="compra1">
+      <ion-button class="shadow-red" color="warning"  (click)="validarubicacion()" expand="small" shape="round" fill="outline"><img src="/assets/mapa.png" class="compra1">
          <p style="color:black;font-weight:bold">
           &nbsp;&nbsp;Cambiar Ubicación
          </p>
@@ -23,7 +24,8 @@
   </div>
   <ion-list>
     <ion-item *ngFor="let  carri of  carritoProducto" [ngClass]="carri.PermitirVender ? 'positivo':'negativo'">
-      <img src="/assets/fruta.jpg" class="img">
+      <ion-img class="ESTILO "  *ngIf=" carri.file_name == null" src="/assets/SUPERCITO.png"></ion-img>
+      <ion-img class="ESTILOIMAGEN" *ngIf=" carri.file_name != null" src="http://localhost:8000/img/items/{{ carri.file_name}}.{{ carri.file_extension}}"></ion-img>
       <ion-label>
         <h3 class="text" lines="full">{{ carri.NAME}}</h3>
         <p class="text1">Precio:&nbsp;&nbsp;{{ carri.PRICE | currency:"USD":true}}</p>

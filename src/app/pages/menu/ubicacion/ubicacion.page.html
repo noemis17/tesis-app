@@ -1,11 +1,13 @@
 <ion-header class="ion-no-border" >
   <ion-toolbar >
-    <ion-buttons slot="end">
-      <!-- para regresar a lo anterior  -->
-      <ion-back-button  defaultHref="/menu/compra"></ion-back-button>
-    </ion-buttons>
+   
     <ion-menu-button slot="start"></ion-menu-button>
     <img src="/assets/SUPERCITO.png" class="icon1" >
+    <ion-buttons slot="end">
+      <ion-button  (click)="closeModal()">
+        <ion-icon name="close-circle-sharp"></ion-icon>
+      </ion-button>
+    </ion-buttons> 
   
   </ion-toolbar>
   
@@ -13,6 +15,6 @@
 
 <ion-content class="bodyn" >
   <div id="map"></div>
-  
+  <div  id="coordenadas"></div>
 </ion-content>
 
