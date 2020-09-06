@@ -6,7 +6,7 @@ import { PerfilService } from 'src/app/Servicios/perfil.service';
 import { Camera,CameraOptions} from '@ionic-native/camera/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { AlertController} from '@ionic/angular';
-
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 
 
 @Component({
@@ -25,17 +25,17 @@ export class PerfilPage implements OnInit {
     password2:any;
     nome_token_user:any;
     @ViewChild('passwordEyeRegister',{static:false}) passwordEye;
-    constructor( private perfilServi:PerfilService, 
-       private camera: Camera, 
+    constructor( private perfilServi:PerfilService,
+       private camera: Camera,
        public alertController: AlertController,
-       public webView: WebView) { 
-    
+       public webView: WebView) {
+
 
 
    }
 
   ngOnInit() {
- 
+
     this.nome_token_user = localStorage.getItem("nomeToken");
     this.nombres = localStorage.getItem("name");
     this.cedula= localStorage.getItem("cedula");
@@ -43,9 +43,9 @@ export class PerfilPage implements OnInit {
     this.email= localStorage.getItem("email");
   }
 
-  
 
-  
+
+
   @ViewChild('lista' ,{static:false}) lista : ElementRef;
   ocultarPerfil(){
     let listaOcultar = document.getElementById('list');
@@ -74,7 +74,7 @@ editar(){
       console.log(data);
     }else{
       console.log(data);
-      
+
     }
   }).catch(err=>{
 
@@ -124,7 +124,7 @@ async presentAlertPrompt() {
         }
       }
     ],
-    
+
   });
 
   await alert.present();
@@ -146,6 +146,7 @@ async presentAlertPrompt() {
 //     console.log(err);
 //   });
 // }
+transfer:any;
 takePicture() {
   const options: CameraOptions = {
     quality: 100,
@@ -159,6 +160,12 @@ takePicture() {
     // this.image = this.webView.convertFileSrc(imageData);
     this.image = 'data:image/jpeg;base64,' + imageData;
     // this.webView.convertFileSrc(imageData);
+    const fileTransfer: FileTransferObject = this.transfer.create();
+    let options1: FileUploadOptions = {
+       fileKey: 'file',
+       fileName: 'name.jpg',
+       headers: {}
+    }
   }, (err) => {
     console.log(err);
   });
@@ -168,16 +175,16 @@ AccessGallery(){
   this.camera.getPicture({
     sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
      destinationType: this.camera.DestinationType.DATA_URL
- 
+
     }).then((imageData) => {
- 
+
       this.image= 'data:image/jpeg;base64,'+imageData;
 
          }, (err) => {
- 
+
       console.log(err);
- 
+
     });
- 
+
  }
 }

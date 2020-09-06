@@ -20,8 +20,8 @@ iconoCargando = false;
   constructor( private productoServi:ProductosService,
     private modalC:ModalController,
     public alertController: AlertController,
-    private router:Router) { 
-     
+    private router:Router) {
+
   }
 
   ngOnInit() {
@@ -32,7 +32,7 @@ iconoCargando = false;
   mostrar(){
     this.iconoCargando=true;
     this.productoServi.mostrarProducto()
-    .then(data=>{ 
+    .then(data=>{
       if(data['code']=="200"){
         this.producto=data['items'];
       console.log('Muestra todos los productos:',this.producto);
@@ -41,14 +41,14 @@ iconoCargando = false;
     }).catch((error) => console.log('No se muestra los productos:',error))
       .finally(() => this.iconoCargando=false);
   }
-  
+
   verProducto(_item){
     console.log(_item);
     localStorage.setItem("IdItemProducto",_item.id);
-    if (localStorage.getItem("IdItemProducto")!=null) { //si se seteo bien 
-      this.router.navigateByUrl('/menu/producto-detalle');           
+    if (localStorage.getItem("IdItemProducto")!=null) { //si se seteo bien
+      this.router.navigateByUrl('/menu/producto-detalle');
     } else {
-      
+
     }
   }
 
@@ -56,8 +56,8 @@ iconoCargando = false;
     const texto=evento.target.value;
     this.textoBuscar=texto;
   }
- 
-  
+
+
   verificarExiste(item){
     var dato :any[]=[];
     dato = JSON.parse(localStorage.getItem("carrito"));
@@ -100,57 +100,74 @@ agregarCarrito(item){
     myJsonArrayObject = myJsonArrayObject.filter(e=>e!=null);
     localStorage.removeItem("carrito");
     localStorage.setItem("carrito",JSON.stringify(myJsonArrayObject));
-  
+
 }
-  
+
 }
 async presentAlertPrompt(item) {
-  const alert = await this.alertController.create({
-    mode:"ios" ,
-    header: 'Cantidad a comprar',
-    inputs: [
-      {
-        name:'cantidad',
-        type: 'number',
-        min: item.stock,
-        max: item.stock,
-        placeholder: 'cantidad'
-      },
-      
-    ],
-    buttons: [
-      {
-        text: 'Cancel',
-        handler: () => {
-          console.log('Confirm Cancel');
-        }
-      }, 
-      {
-        text: 'ok',
-        handler: (data) => {
           var stock = 0;
           if(item.promocionesdel_producto == null){
             stock = item.stock;
           }else{
             stock = item.promocionesdel_producto.stock;
           }
-          if (data.cantidad>stock) {
+          if (1>stock) {
             this.showAlert("No hay la cantidad necesaria")
           }
           else {
-            item["cantidad"]=data.cantidad;
+            item["cantidad"]=1;
             this.agregarCarrito(item);
             //this.showAlert("correcto")
             //console.log("correcto")
             //console.log('Confirm Ok',data);
           }
-          this.router.navigateByUrl('/menu/carrito'); 
-        }
-      }
-    ]
-  
-  });
-  await alert.present();
+          this.router.navigateByUrl('/menu/carrito');
+  // const alert = await this.alertController.create({
+  //   mode:"ios" ,
+  //   header: 'Cantidad a comprar',
+  //   inputs: [
+  //     {
+  //       name:'cantidad',
+  //       type: 'number',
+  //       min: item.stock,
+  //       max: item.stock,
+  //       placeholder: 'cantidad'
+  //     },
+  //
+  //   ],
+  //   buttons: [
+  //     {
+  //       text: 'Cancel',
+  //       handler: () => {
+  //         console.log('Confirm Cancel');
+  //       }
+  //     },
+  //     {
+  //       text: 'ok',
+  //       handler: (data) => {
+  //         var stock = 0;
+  //         if(item.promocionesdel_producto == null){
+  //           stock = item.stock;
+  //         }else{
+  //           stock = item.promocionesdel_producto.stock;
+  //         }
+  //         if (data.cantidad>stock) {
+  //           this.showAlert("No hay la cantidad necesaria")
+  //         }
+  //         else {
+  //           item["cantidad"]=data.cantidad;
+  //           this.agregarCarrito(item);
+  //           //this.showAlert("correcto")
+  //           //console.log("correcto")
+  //           //console.log('Confirm Ok',data);
+  //         }
+  //         this.router.navigateByUrl('/menu/carrito');
+  //       }
+  //     }
+  //   ]
+  //
+  // });
+  // await alert.present();
 }
 async showAlert (Mensaje) {
   const alert = await this.alertController.create({
@@ -162,7 +179,7 @@ async showAlert (Mensaje) {
 
 cargarproducto(event){
   setTimeout(() => {
- 
+
       if (this.producto.length ==10) {
         event.target.complete();
         this.infiniteScroll.disabled=true;
@@ -187,7 +204,7 @@ rutadelcarrito(){
 //         if($check !== false) {
 //             $uploadOk = 1;
 //             if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
-//                 $image=Users::where('id', $id)->first(); 
+//                 $image=Users::where('id', $id)->first();
 //                 $image->imagen = basename( $_FILES["file"]["name"]);
 //                 $image->save();
 //                 return response()->json(['message'=>'The file has been uploaded.'], 200);
@@ -200,4 +217,3 @@ rutadelcarrito(){
 //         }
 //     }
 }
-

@@ -17,20 +17,20 @@ export class PromocionPage implements OnInit {
 
   textoPromocion='';
    items: any = [];
- 
+
   constructor(private promocionServi:PromocionesService,private modalC:ModalController,
     public alertController: AlertController,
-    private router:Router) { 
-   
+    private router:Router) {
+
     }
 
   ngOnInit() {
     this.mostrar();
-   
+
   }
   mostrar(){
     this.promocionServi.mostrarPromociones()
-    .then(data=>{ 
+    .then(data=>{
       if(data['code']=="200"){
         this. promociones=data['items'];
       console.log(this.promociones);
@@ -38,7 +38,7 @@ export class PromocionPage implements OnInit {
 
     });
   }
- 
+
   async abrirModal(element?){
     const modal = await this.modalC.create({
     component: ModalPromocionesPage,
@@ -46,9 +46,9 @@ export class PromocionPage implements OnInit {
       "promociones":element
     }
    });
- 
+
    return await modal.present();
- 
+
 
   }
   buscar(evento){
@@ -112,45 +112,52 @@ export class PromocionPage implements OnInit {
       myJsonPromociones.push(item);
       localStorage.removeItem("carritoPromociones");
       localStorage.setItem("carritoPromociones",JSON.stringify(myJsonPromociones));
-     
- 
+
+
     }
   }
   async presentAlertPromocion(item) {
-    const alert = await this.alertController.create({
-      mode:"ios" ,
-      header: 'Cantidad a comprar',
-      inputs: [
-        {
-          name:'cantidad',
-          type: 'number',
-          placeholder: 'cantidad'
-        },
-        
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }, 
-        {
-          text: 'ok',
-          handler: (data) => {
-            if(data.cantidad<= item.cantidad){
-              item["cantidad"]=data.cantidad;
-              this.agregarCarritoPromociones(item);
-            }else {
-              this.showAlert("No hay la cantidad necesaria")
-            }
-            this.router.navigateByUrl('/menu/carrito');
-
-          }
-        }
-      ]
-    });
-    await alert.present();
+    if(1<= item.cantidad){
+      item["cantidad"]=1;
+      this.agregarCarritoPromociones(item);
+    }else {
+      this.showAlert("No hay la cantidad necesaria")
+    }
+    this.router.navigateByUrl('/menu/carrito');
+    // const alert = await this.alertController.create({
+    //   mode:"ios" ,
+    //   header: 'Cantidad a comprar',
+    //   inputs: [
+    //     {
+    //       name:'cantidad',
+    //       type: 'number',
+    //       placeholder: 'cantidad'
+    //     },
+    //
+    //   ],
+    //   buttons: [
+    //     {
+    //       text: 'Cancel',
+    //       handler: () => {
+    //         console.log('Confirm Cancel');
+    //       }
+    //     },
+    //     {
+    //       text: 'ok',
+    //       handler: (data) => {
+    //         if(data.cantidad<= item.cantidad){
+    //           item["cantidad"]=data.cantidad;
+    //           this.agregarCarritoPromociones(item);
+    //         }else {
+    //           this.showAlert("No hay la cantidad necesaria")
+    //         }
+    //         this.router.navigateByUrl('/menu/carrito');
+    //
+    //       }
+    //     }
+    //   ]
+    // });
+    // await alert.present();
   }
 
   async showAlert (Mensaje) {

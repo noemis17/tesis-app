@@ -5,7 +5,7 @@
 
     <ion-buttons slot="end">
       <ion-button routerLink="/menu/vista-producto">
-        <img src="/assets/mercado.png" class="producto1"> 
+        <img src="/assets/mercado.png" class="producto1">
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -14,13 +14,13 @@
   <ion-button class="boton" color="danger"  (click)="validarCarrito()" expand="block" shape="round" fill="outline">Proceso de pago</ion-button>
   <p class="text1">Precio:&nbsp;&nbsp;{{ totalAPagar | currency:"USD":true}}</p>
   <div class="row">
-    
+
       <ion-button class="shadow-red" color="warning"  (click)="validarubicacion()" expand="small" shape="round" fill="outline"><img src="/assets/mapa.png" class="compra1">
          <p style="color:black;font-weight:bold">
           &nbsp;&nbsp;Verificar o Cambiar Ubicación De Entrega
          </p>
       </ion-button>
-     
+
   </div>
   <ion-list>
     <ion-item *ngFor="let  carri of  carritoProducto" [ngClass]="carri.PermitirVender ? 'positivo':'negativo'">

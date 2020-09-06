@@ -18,15 +18,15 @@ import { PayPal } from '@ionic-native/paypal/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { LocalNotifications} from '@ionic-native/local-notifications/ngx'
-
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 @NgModule({
   declarations: [
     AppComponent
-   
-   
+
+
   ],
   entryComponents: [
-  
+
   ],
   imports: [
     BrowserModule,
@@ -37,9 +37,9 @@ import { LocalNotifications} from '@ionic-native/local-notifications/ngx'
     ComponentsModule,
     ReactiveFormsModule,
     PipesModule
-    
-  
-   
+
+
+
   ],
   providers: [
     StatusBar,
@@ -49,8 +49,8 @@ import { LocalNotifications} from '@ionic-native/local-notifications/ngx'
     PayPal,
     Camera,
     WebView,
-    
-  
+
+
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     LocalNotifications,
   ],
