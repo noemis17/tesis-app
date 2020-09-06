@@ -47,9 +47,11 @@ export class CarritoService {
                 });
     });
   }
-  ConsultarOrdenesCompradas(idUsuario){
+  ConsultarOrdenesCompradas(idUsuario,fechaInicio,fechafinal){
     const _body = new HttpParams()
       .set("idUsuario",idUsuario)
+      .set("fechaInicio",fechaInicio )
+      .set("fechafinal",fechafinal)
       ;
       // this.http.post(server+"/v0/OrdenesCompradas/",_body.toString(),{headers:this._header})
     return new Promise((resolve, reject) => {

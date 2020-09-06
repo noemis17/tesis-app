@@ -12,13 +12,12 @@
   
 </ion-header>
 <ion-content class="ion-padding ">
-
+    <ion-title> Ordenes de Entrega</ion-title>
   <ion-list *ngFor="let item of  Orden">
-    <div class="estado">
-      <ion-button color= "light" size="small" shape="round" (click)="abrirModal(item)">{{item.estado.descripcion}}</ion-button>
-     </div>
+    
     <ion-item >
-      <ion-label>{{item.Orden}}</ion-label>
+      <ion-label> <b>Orden:</b>&nbsp;{{item.Orden}}</ion-label>
+      <ion-button color= "light" size="small" shape="round" (click)="abrirModal(item)">{{item.estado.descripcion}}</ion-button>
     </ion-item>
 
     

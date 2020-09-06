@@ -39,7 +39,7 @@ export class UbicacionPage implements OnInit {
   longitud = 0;
   _marker:any;
   map: any;
-  addMarker(longitud, latitud, nombre) {
+  addMarker(longitud:number, latitud:number, nombre) {
     this._marker = new mapboxgl.Marker()
       .setLngLat([longitud, latitud])
       .setHTML('<h3>' + longitud, latitud + '</h3>')
@@ -102,6 +102,6 @@ export class UbicacionPage implements OnInit {
 
   async closeModal() {
     await this.modalC.dismiss();
-  }
+  }    
   
 }
