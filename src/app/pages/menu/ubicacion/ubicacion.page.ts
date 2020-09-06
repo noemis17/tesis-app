@@ -5,7 +5,7 @@ import * as  mapboxgl  from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import { RutaService, Feature } from '../../../Servicios/Rutas/ruta.service';
-
+import * as MapboxDraw from '@mapbox/mapbox-gl-draw';
 
 
 
@@ -23,7 +23,7 @@ export class UbicacionPage implements OnInit {
     private navParams: NavParams,
     private modalC: ModalController,
    ) {
-    
+
   }
   posicion_: any[] = [];
   dataPosicionCenter: any;
@@ -33,7 +33,6 @@ export class UbicacionPage implements OnInit {
       localStorage.setItem("ubicacion",JSON.stringify(this._marker));
     }
     this.posicion();
-  
   }
   latitud = 0;
   longitud = 0;
@@ -67,16 +66,23 @@ export class UbicacionPage implements OnInit {
     //     mapboxgl: mapboxgl
     //   })
     // );
-    
+
     this.map.addControl(new mapboxgl.NavigationControl());
     this.map.addControl(new mapboxgl.FullscreenControl());
+    const geolocate = new mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true
+      },
+      trackUserLocation: true
+    })
+    this.map.addControl(geolocate)
     // this.map.addControl(new mapboxgl.GeolocateControl({
     //   positionOptions: {
     //     enableHighAccuracy: true
     //   },
     //   trackUserLocation: true
     // }));
-    
+
     this.map.on('click', function(e) {
       if (localStorage.getItem("ubicacion")!="undefined") {
         if (this._marker!= undefined) {
@@ -98,10 +104,28 @@ export class UbicacionPage implements OnInit {
           this.resize();
       }
     });
+    var _map:any;
+    _map = this.map;
+    geolocate.on('geolocate', function()
+    {
+      var userlocation = geolocate._lastKnownPosition;
+      console.log(userlocation);
+      // if (localStorage.getItem("ubicacion")!="undefined") {
+      //   if (this._marker!= undefined) {
+      //     this._marker.setLngLat([userlocation.coords.longitude, userlocation.coords.latitude]);
+      //   }else{
+      //     this._marker = new mapboxgl.Marker()
+      //       .setLngLat([userlocation.coords.longitude, userlocation.coords.latitude])
+      //       .addTo(_map)
+      //   }
+      // }
+      // var posicionActual = {"lng":userlocation.coords.longitude,"lat":userlocation.coords.latitude};
+      // localStorage.setItem("ubicacion",JSON.stringify(posicionActual));
+    });
   }
 
   async closeModal() {
     await this.modalC.dismiss();
   }
-  
+
 }

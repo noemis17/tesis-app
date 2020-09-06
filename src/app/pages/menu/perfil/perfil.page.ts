@@ -5,6 +5,7 @@ import { Component, OnInit,ViewChild, ElementRef } from '@angular/core';
 import { PerfilService } from 'src/app/Servicios/perfil.service';
 import { Camera,CameraOptions} from '@ionic-native/camera/ngx';
 import { AlertController} from '@ionic/angular';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 
 
 
@@ -23,16 +24,16 @@ export class PerfilPage implements OnInit {
     password2:any;
     nome_token_user:any;
     @ViewChild('passwordEyeRegister',{static:false}) passwordEye;
-    constructor( private perfilServi:PerfilService, 
-       private camera: Camera, 
-       public alertController: AlertController) { 
-    
+    constructor( private perfilServi:PerfilService,
+       private camera: Camera,
+       public alertController: AlertController) {
+
 
 
    }
 
   ngOnInit() {
- 
+
     this.nome_token_user = localStorage.getItem("nomeToken");
     this.nombres = localStorage.getItem("name");
     this.cedula= localStorage.getItem("cedula");
@@ -40,9 +41,9 @@ export class PerfilPage implements OnInit {
     this.email= localStorage.getItem("email");
   }
 
-  
 
-  
+
+
   @ViewChild('lista' ,{static:false}) lista : ElementRef;
   ocultarPerfil(){
     let listaOcultar = document.getElementById('list');
@@ -69,7 +70,7 @@ editar(){
       console.log(data);
     }else{
       console.log(data);
-      
+
     }
   }).catch(err=>{
 
@@ -119,7 +120,7 @@ async presentAlertPrompt() {
         }
       }
     ],
-    
+
   });
 
   await alert.present();
@@ -145,16 +146,16 @@ AccessGallery(){
   this.camera.getPicture({
     sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
      destinationType: this.camera.DestinationType.DATA_URL
- 
+
     }).then((imageData) => {
- 
+
       this.image= 'data:image/jpeg;base64,'+imageData;
 
          }, (err) => {
- 
+
       console.log(err);
- 
+
     });
- 
+
  }
 }

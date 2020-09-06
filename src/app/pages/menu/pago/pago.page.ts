@@ -63,7 +63,6 @@ export class PagoPage implements OnInit {
           this.tipoPago = data['items'];
         }
       });
-
   }
   latitud = 0;
   longitud = 0;
@@ -167,14 +166,13 @@ export class PagoPage implements OnInit {
   //     }
   //   });
   // }
- 
+
   @ViewChild('listaTPagos', { static: false }) listaTPagos: ElementRef;
   async presentAlertPrompt() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Comprobante',
       mode: 'ios',
-
       inputs: [
         {
           name: 'radio1',
@@ -211,11 +209,9 @@ export class PagoPage implements OnInit {
           cssClass: 'alertButton',
           handler: () => {
             console.log('Confirm Ok');
-
             let listaTPagosPorId = document.getElementById('listaTPagos');
             listaTPagosPorId.hidden = true;
             this.guardarDocumentoTransaccion(this.image);
-
           }
         }
       ]
