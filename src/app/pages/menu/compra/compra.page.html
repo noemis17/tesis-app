@@ -8,26 +8,6 @@
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
-  <!-- <ion-searchbar  displayFormat="MM DD YY" placeholder="Compras"  color="warning"  (ionChange)="buscar( $event )"animated  style="padding-top: 0px;" mode="ios" >
-    <ion-datetime displayFormat="MM DD YY" ></ion-datetime>
-  </ion-searchbar> -->
-  <!-- <ion-row size="12">
-    <ion-col  style="margin-left: 8px;">
-      <input type="date"   class="redondeadonorelieve" >
-    </ion-col >
-    <ion-col >
-      <input type="date"   class="redondeadonorelieve" >
-    </ion-col>
-     <ion-col  >
-      <ion-buttons >
-        <ion-button > 
-          <ion-icon slot="icon-only" name="search-circle-outline"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-col> 
-  </ion-row> -->
- 
-  
 </ion-header>
 
 <ion-content >
@@ -63,7 +43,7 @@
       <p ><b>Cedula</b> &nbsp;&nbsp; {{cedula}}</p>
   </ion-card-content>
   </ion-card>
-  <ion-card  (click)="expandItem(item)" *ngFor="let item of  CompraProducto | filtro:textoBuscar:'fechaOrden'">
+  <ion-card  (click)="expandItem(item)" *ngFor="let item of  CompraProducto ">
    <ion-card-header >
     <b>Pedidos</b>
   
