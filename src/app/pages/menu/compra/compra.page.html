@@ -3,8 +3,8 @@
     <ion-menu-button slot="start"></ion-menu-button>
     <img src="/assets/SUPERCITO.png" class="icon1">
     <ion-buttons slot="end" >
-      <ion-button routerLink="/menu/vista-producto"> 
-        <img src="/assets/mercado.png" class="producto1">  
+      <ion-button routerLink="/menu/vista-producto">
+        <img src="/assets/mercado.png" class="producto1">
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -20,14 +20,14 @@
     </ion-col>
      <ion-col  >
       <ion-buttons >
-        <ion-button > 
+        <ion-button >
           <ion-icon slot="icon-only" name="search-circle-outline"></ion-icon>
         </ion-button>
       </ion-buttons>
-    </ion-col> 
+    </ion-col>
   </ion-row> -->
- 
-  
+
+
 </ion-header>
 
 <ion-content >
@@ -36,23 +36,23 @@
       <ion-col  style="margin-left: 8px;">
         <b>Fecha Inicio &nbsp;:</b>
         <input type="date"[(ngModel)]="fechaInicio" class="redondeadonorelieve" >
-      
+
       </ion-col >
       <ion-col >
         <b>Fecha Final &nbsp;:</b>
         <input type="date" [(ngModel)]="fechaFin" class="redondeadonorelieve" >
-       
+
       </ion-col>
        <ion-col  >
          <br>
         <ion-buttons >
-          <ion-button (click)="consultarOrdenesCompra()"> 
-            <img src="/assets/lupa.png"   class="producto1"> 
+          <ion-button (click)="consultarOrdenesCompra()">
+            <img src="/assets/lupa.png"   class="producto1">
           </ion-button>
         </ion-buttons>
       </ion-col>
     </ion-row>
-   
+
   </ion-card>
   <ion-card>
     <ion-card-content>
@@ -63,13 +63,13 @@
       <p ><b>Cedula</b> &nbsp;&nbsp; {{cedula}}</p>
   </ion-card-content>
   </ion-card>
-  <ion-card  (click)="expandItem(item)" *ngFor="let item of  CompraProducto | filtro:textoBuscar:'fechaOrden'">
+  <ion-card  (click)="expandItem(item)" *ngFor="let item of  CompraProducto">
    <ion-card-header >
     <b>Pedidos</b>
-  
+
     <ion-row  *ngIf="item.estado.cod == '002';else boton"  mode="ios">
       <ion-col  (click)="abrirModal(item)">
-       <img src="/assets/mapa.png" class="compra1"> 
+       <img src="/assets/mapa.png" class="compra1">
       </ion-col>
       <ion-col  >
         <ion-button  size="small" shape="round"  [ngClass]="item.estado.cod == '001' ? 'positivo': item.estado.cod == '004'? 'negativo':item.estado.cod == '002'? 'proceso':item.estado.cod == '003'? 'positivo':item.estado.cod == '006'? 'negativo':'positivo'" >{{item.estado.descripcion}}</ion-button>
@@ -81,16 +81,16 @@
           <ion-button   size="small" shape="round"  [ngClass]="item.estado.cod == '001' ? 'positivo': item.estado.cod == '004'? 'negativo':item.estado.cod == '002'? 'proceso':item.estado.cod == '003'? 'positivo':item.estado.cod == '006'? 'negativo':'positivo'" >{{item.estado.descripcion}}</ion-button>
          </ng-template>
       </ion-col>
-      
+
     </ion-row>
-      
+
       <h5 class="compaorden"> Orden:&nbsp;{{item.Orden}} </h5>
      <p class="compa">Fecha: &nbsp;{{item.fechaOrden}} </p>
      <p class="compa" >Pago:&nbsp;{{item.tipo_pago.descricion}}</p>
     </ion-card-header>
    <ion-card-content class="cass" *ngFor="let item1 of item.compras">
 
-    <ion-row  *ngIf=" item1.id_Productos != null">  
+    <ion-row  *ngIf=" item1.id_Productos != null">
       <ion-col >
           <p >{{item1.producto.NAME}} </p>
       </ion-col>
@@ -98,7 +98,7 @@
           <p >{{item1.producto.PRICE |number}} </p>
       </ion-col>
     </ion-row>
-    
+
     <ion-row  *ngIf=" item1.idPromocionProducto != null" >
       <ion-col >
         <p>{{item1.promocion.productos_promocion1.NAME}}</p>
