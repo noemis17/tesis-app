@@ -7,7 +7,8 @@ import { FiltroPipe } from './filtro.pipe';
 @NgModule({
   declarations: [FiltroPipe],
   exports: [
-    FiltroPipe
+    FiltroPipe,
+
   ]
 })
 export class PipesModule { }

@@ -28,16 +28,17 @@ iconoCargando = false;
    this.mostrar();
 
   }
+
   mostrar(){
     this.iconoCargando=true;
     this.productoServi.mostrarProducto()
     .then(data=>{ 
       if(data['code']=="200"){
         this.producto=data['items'];
-      console.log(this.producto);
+      console.log('Muestra todos los productos:',this.producto);
       }
 
-    }).catch((error) => console.log(error))
+    }).catch((error) => console.log('No se muestra los productos:',error))
       .finally(() => this.iconoCargando=false);
   }
   
@@ -56,6 +57,7 @@ iconoCargando = false;
     this.textoBuscar=texto;
   }
  
+  
   verificarExiste(item){
     var dato :any[]=[];
     dato = JSON.parse(localStorage.getItem("carrito"));
@@ -176,6 +178,26 @@ cargarproducto(event){
 rutadelcarrito(){
   this.router.navigate(['/menu/carrito']);
 }
-
+// public function changeimage(Request $request, $id){
+//         $target_dir = public_path()."/imagenes/";
+//         $target_file = $target_dir . basename($_FILES["file"]["name"]);
+//         $uploadOk = 1;
+//         $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+//         $check = getimagesize($_FILES["file"]["tmp_name"]);
+//         if($check !== false) {
+//             $uploadOk = 1;
+//             if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
+//                 $image=Users::where('id', $id)->first(); 
+//                 $image->imagen = basename( $_FILES["file"]["name"]);
+//                 $image->save();
+//                 return response()->json(['message'=>'The file has been uploaded.'], 200);
+//             } else {
+//                 return response()->json(['message'=>'Error al subir imagen'], 400);
+//             }
+//         } else {
+//             return response()->json(['message'=>'File is not an image.'], 400);
+//             $uploadOk = 0;
+//         }
+//     }
 }
 

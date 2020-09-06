@@ -12,7 +12,7 @@ export class LoginService {
   getlogin(Usuario,Contrasena){
     const _body = new HttpParams()
     .set("email",Usuario)
-    //  .set("password",Contrasena)
+     .set("password",Contrasena)
     ;
     return new Promise((resolve, reject) => {
       this.http.get(server+"/v0/login",{headers:this._header,params:_body})

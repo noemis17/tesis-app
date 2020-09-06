@@ -29,7 +29,7 @@
     <p class="text1" *ngIf=" item.promocionesdel_producto == null">Precio: {{ item.PRICE | currency:"USD":true}}</p>
     <p class="text1" *ngIf=" item.promocionesdel_producto == null">Cantidad: {{item.stock}}</p>
     <div  *ngIf=" item.promocionesdel_producto != null" >
-        <p class="text1" >Precio: {{ ((item.promocionesdel_producto.descuento)/100 *item.PRICE) | currency:"USD":true}}     <s style="font-size: x-small;">{{ item.PRICE | currency:"USD":true}}</s></p> 
+        <p class="text1" >Precio: {{ item.PRICE - (item.PRICE * (item.promocionesdel_producto.descuento/100)) }}     <s style="font-size: x-small;">{{ item.PRICE | currency:"USD":true}}</s></p> 
         <p class="text1"  > Cantidad: {{item.promocionesdel_producto.stock}}</p>
     </div>
    

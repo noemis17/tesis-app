@@ -19,25 +19,29 @@ export class CompraPage implements OnInit {
   ngOnInit() {
     this.consultarOrdenesCompra();
   }
+  fechaInicio="";
+  fechaFin="";
   consultarOrdenesCompra() {
-    this.compraServi.ConsultarOrdenesCompradas(localStorage.getItem("nomeToken"))
+    this.compraServi.ConsultarOrdenesCompradas(localStorage.getItem("nomeToken"),this.fechaInicio,this.fechaFin)
       .then((data) =>{
+        console.log(data);
         if(data['code']==""){
-
+          this.CompraProducto = [];
           if(data['items'].length>0){
-            this.CompraProducto=data['items'];
+          this.CompraProducto=data['items'];
           this.nombre=data['items'][0].usuarios.name;
           this.cedula=data['items'][0].usuarios.cedula;
-        
           }
-          console.log(this.CompraProducto);
         }
-
-
       })
       .catch((error) => {
         console.log(error);
       });
+  }
+  textoBuscar='';
+  buscar(evento){
+    const texto=evento.target.value;
+    this.textoBuscar=texto;
   }
   expandItem(item): void {
     if (item.expanded) {

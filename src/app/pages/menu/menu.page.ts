@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 @Component({
   selector: 'app-menu',
@@ -12,16 +14,12 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 export class MenuPage implements OnInit {
 
   public selectedIndex = 0;
-
+  email:any;
+  
   public appPages = [
     
     
-    {
-      title: 'Cerrar sesión',
-      url: '/login',
-      icon: 'close',
-     
-    },
+    
     
     // {
     //   title: 'Producto',
@@ -36,7 +34,8 @@ export class MenuPage implements OnInit {
     ,{
       title: 'Producto',
       url: '/menu/vista-producto/product',
-      icon: 'card'
+      icon: 'nutrition'
+     
     }, {
       title: 'Carrito',
       url: '/menu/carrito',
@@ -45,12 +44,13 @@ export class MenuPage implements OnInit {
     , {
       title: 'Compra',
       url: '/menu/compra',
-      icon: 'archive'
+      icon: 'basket'
     }
     , {
       title: 'Perfil',
       url: '/menu/perfil',
-      icon: 'archive'
+      icon: 'person-circle'
+      
     }
     // , {
     //   title: 'Pago',
@@ -61,7 +61,15 @@ export class MenuPage implements OnInit {
       title: 'Orden',
       url: '/menu/orden',
       icon: 'archive'
-    }
+    },
+    {
+     
+      title: 'Cerrar sesión',
+      url: '/login',
+      icon: 'close-circle',
+     
+     
+    },
     
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
@@ -69,7 +77,9 @@ export class MenuPage implements OnInit {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private camera: Camera,
+    private webView: WebView
   ) {
     this.initializeApp();
   }
@@ -82,10 +92,27 @@ export class MenuPage implements OnInit {
   }
 
   ngOnInit() {
+    this.email= localStorage.getItem("email");
     const path = window.location.pathname.split('folder/')[1];
     if (path !== undefined) {
       this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
     }
+  }
+  image: string;
+  takePicture() {
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType: this.camera.PictureSourceType.CAMERA
+    };
+    this.camera.getPicture(options)
+    .then((imageData) => {
+      this.image = this.webView.convertFileSrc(imageData);
+    }, (err) => {
+      console.log(err);
+    });
   }
 
 }

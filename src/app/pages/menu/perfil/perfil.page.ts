@@ -4,8 +4,8 @@ import { Component, OnInit,ViewChild, ElementRef } from '@angular/core';
 // import {EditarPerilPage } from '../editar-peril/editar-peril.page';
 import { PerfilService } from 'src/app/Servicios/perfil.service';
 import { Camera,CameraOptions} from '@ionic-native/camera/ngx';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { AlertController} from '@ionic/angular';
-import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 
 
 
@@ -18,22 +18,24 @@ export class PerfilPage implements OnInit {
     nombres: any ;
     cedula: any;
     image:string;
+    image1:string;
     celular: any;
     email: any;
     password:any;
     password2:any;
     nome_token_user:any;
     @ViewChild('passwordEyeRegister',{static:false}) passwordEye;
-    constructor( private perfilServi:PerfilService,
-       private camera: Camera,
-       public alertController: AlertController) {
-
+    constructor( private perfilServi:PerfilService, 
+       private camera: Camera, 
+       public alertController: AlertController,
+       public webView: WebView) { 
+    
 
 
    }
 
   ngOnInit() {
-
+ 
     this.nome_token_user = localStorage.getItem("nomeToken");
     this.nombres = localStorage.getItem("name");
     this.cedula= localStorage.getItem("cedula");
@@ -41,9 +43,9 @@ export class PerfilPage implements OnInit {
     this.email= localStorage.getItem("email");
   }
 
+  
 
-
-
+  
   @ViewChild('lista' ,{static:false}) lista : ElementRef;
   ocultarPerfil(){
     let listaOcultar = document.getElementById('list');
@@ -55,9 +57,10 @@ export class PerfilPage implements OnInit {
 
 editar(){
   this.password2=this.password;
-  debugger
- this.perfilServi.modificarperfil(this.nombres,this.email,this.cedula,this.celular,this.password,this.password2,this.nome_token_user)
+
+ this.perfilServi.modificarperfil(this.nombres,this.email,this.cedula,this.celular,this.password,this.password2,this.nome_token_user,this.image)
   .then(data=>{
+     console.log(data);
     if(data['code']=='200'){
       this.nombres=data['items']['name'];
       this.email=data['items']['email'];
@@ -66,11 +69,12 @@ editar(){
       this.password=data['items']['password'];
       this.password2=data['items']['password2'];
       this.nome_token_user=localStorage.getItem("nomeToken");
-      console.log("datosmodificados");
+
+      console.log("Datos Modificados");
       console.log(data);
     }else{
       console.log(data);
-
+      
     }
   }).catch(err=>{
 
@@ -120,23 +124,41 @@ async presentAlertPrompt() {
         }
       }
     ],
-
+    
   });
 
   await alert.present();
 }
 
+
+// takePicture() {
+//   const options: CameraOptions = {
+//     quality: 100,
+//     destinationType: this.camera.DestinationType.DATA_URL,
+//     encodingType: this.camera.EncodingType.JPEG,
+//     mediaType: this.camera.MediaType.PICTURE,
+//     sourceType: this.camera.PictureSourceType.CAMERA
+//   };
+//   this.camera.getPicture(options)
+//   .then((imageData) => {
+//     this.image = 'data:image/jpeg;base64,' + imageData;
+//   }, (err) => {
+//     console.log(err);
+//   });
+// }
 takePicture() {
   const options: CameraOptions = {
     quality: 100,
-    destinationType: this.camera.DestinationType.DATA_URL,
+    destinationType: this.camera.DestinationType.FILE_URI,
     encodingType: this.camera.EncodingType.JPEG,
     mediaType: this.camera.MediaType.PICTURE,
     sourceType: this.camera.PictureSourceType.CAMERA
   };
   this.camera.getPicture(options)
   .then((imageData) => {
+    // this.image = this.webView.convertFileSrc(imageData);
     this.image = 'data:image/jpeg;base64,' + imageData;
+    // this.webView.convertFileSrc(imageData);
   }, (err) => {
     console.log(err);
   });
@@ -146,16 +168,16 @@ AccessGallery(){
   this.camera.getPicture({
     sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
      destinationType: this.camera.DestinationType.DATA_URL
-
+ 
     }).then((imageData) => {
-
+ 
       this.image= 'data:image/jpeg;base64,'+imageData;
 
          }, (err) => {
-
+ 
       console.log(err);
-
+ 
     });
-
+ 
  }
 }

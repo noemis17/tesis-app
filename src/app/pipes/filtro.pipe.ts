@@ -14,5 +14,6 @@ export class FiltroPipe implements PipeTransform {
       return item[columna].toLocaleLowerCase().includes(texto);
     });
   }
+  
 
 }
