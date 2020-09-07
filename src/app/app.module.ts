@@ -18,6 +18,10 @@ import { PayPal } from '@ionic-native/paypal/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { LocalNotifications} from '@ionic-native/local-notifications/ngx'
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
+// import { File } from '@ionic-native/file';
+// import { CargarImgProvider } from '../providers/cargar-img/cargar-img';
+// import { ServiceProvider } from '../providers/service/service';
 
 @NgModule({
   declarations: [
@@ -49,10 +53,11 @@ import { LocalNotifications} from '@ionic-native/local-notifications/ngx'
     PayPal,
     Camera,
     WebView,
-    
-  
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     LocalNotifications,
+    ImagePicker,
+    // File,
+   
   ],
   bootstrap: [AppComponent]
 })

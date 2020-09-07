@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import {UsuarioService } from '../../Servicios/usuario.service';
 import { AlertController,LoadingController,ToastController, IonInput } from '@ionic/angular';
 import { Camera,CameraOptions} from '@ionic-native/camera/ngx';
-import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +23,6 @@ export class LoginPage implements OnInit {
     public alertController: AlertController,
     private router:Router,
     private toastController: ToastController,
-    private localNotifications:LocalNotifications,
     ) {
       this.todo = this.formBuilder.group({
         Usuario: ['', Validators.required],
@@ -51,8 +49,8 @@ export class LoginPage implements OnInit {
       this.signupView = !this.signupView
     }
   login(){
-   
-  
+
+
     this.loginService.getlogin(this.todo.controls['Usuario'].value, this.todo.controls['Contrasena'].value)
       .then((ok) => {
         if(ok['items'] == null){
@@ -96,7 +94,7 @@ export class LoginPage implements OnInit {
     });
     toast.present();
   }
-  
+
   passwordTypeInput  =  'password';
   iconpassword  =  'eye-off';
   togglePasswordMode() {
@@ -127,23 +125,6 @@ export class LoginPage implements OnInit {
     await alert.present();
   };
   ngOnInit() {
-
-   this.login();
-
   }
-
-  schedule(){
   
-    // Schedule a single notification
-        this.localNotifications.schedule({
-          id: 1,
-          text: 'Noemy y Dolo',
-          // sound: isAndroid? 'file://sound.mp3': 'file://beep.caf',
-          data: { secret: "key" }
-        });
-        console.log("message");
-        
-      }
-
-
 }

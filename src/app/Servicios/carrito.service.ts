@@ -10,9 +10,9 @@ import { resolve } from 'url';
 export class CarritoService {
   constructor(private http:HttpClient) { }
   private _header = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-  
-  
-  
+
+
+
   agregarCarrito(nome_token_user){
     const _body = new HttpParams();
     return new Promise((resolve, reject) => {
@@ -26,7 +26,7 @@ export class CarritoService {
   }
 
 
- 
+
   guardarCompra(idPromocionProducto,idUsuario,producto,idTipoPago,total,latitud,longitud){
     const _body = new HttpParams()
       .set("idPromociones",idPromocionProducto)
@@ -65,7 +65,7 @@ export class CarritoService {
 
   }
 
-  
+
 
 
   guardarDocumentoTransaccion(imagen:string){
@@ -84,5 +84,3 @@ export class CarritoService {
 
 
 }
-
-
