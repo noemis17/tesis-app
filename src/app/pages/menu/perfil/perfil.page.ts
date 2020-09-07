@@ -3,12 +3,17 @@ import { Component, OnInit,ViewChild, ElementRef,Injectable } from '@angular/cor
 import { PerfilService } from 'src/app/Servicios/perfil.service';
 import { Camera,CameraOptions} from '@ionic-native/camera/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
+<<<<<<< HEAD
 import { AlertController,ToastController, ActionSheetController} from '@ionic/angular';
 import { ImagePicker, ImagePickerOptions } from '@ionic-native/image-picker/ngx';
 //Providers
 // import { CargarImgProvider }  from '../../providers/cargar-img/cargar-img';
 // import { ServiceProvider }  from '../../providers/service/service';
 
+=======
+import { AlertController} from '@ionic/angular';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+>>>>>>> 39db52d2e4061890f6dc5b9b02f81c9a8b24fb78
 
 
 @Component({
@@ -28,6 +33,7 @@ export class PerfilPage implements OnInit {
     password2:any;
     nome_token_user:any;
     @ViewChild('passwordEyeRegister',{static:false}) passwordEye;
+<<<<<<< HEAD
     constructor( private perfilServi:PerfilService, 
       public camera: Camera, 
        public alertController: AlertController,
@@ -36,12 +42,19 @@ export class PerfilPage implements OnInit {
        public imagePicker: ImagePicker,
        public toastCtrl: ToastController) { 
     
+=======
+    constructor( private perfilServi:PerfilService,
+       private camera: Camera,
+       public alertController: AlertController,
+       public webView: WebView) {
+
+>>>>>>> 39db52d2e4061890f6dc5b9b02f81c9a8b24fb78
 
 
    }
 
   ngOnInit() {
- 
+
     this.nome_token_user = localStorage.getItem("nomeToken");
     this.nombres = localStorage.getItem("name");
     this.cedula= localStorage.getItem("cedula");
@@ -49,9 +62,9 @@ export class PerfilPage implements OnInit {
     this.email= localStorage.getItem("email");
   }
 
-  
 
-  
+
+
   @ViewChild('lista' ,{static:false}) lista : ElementRef;
   ocultarPerfil(){
     let listaOcultar = document.getElementById('list');
@@ -80,7 +93,7 @@ editar(){
       console.log(data);
     }else{
       console.log(data);
-      
+
     }
   }).catch(err=>{
 
@@ -116,11 +129,36 @@ async presentAlertPrompt() {
           this.AccessGallery();
         }
       }
+<<<<<<< HEAD
     ]
+=======
+    ],
+
+>>>>>>> 39db52d2e4061890f6dc5b9b02f81c9a8b24fb78
   });
   actionsheet.present();
 }
 
+<<<<<<< HEAD
+=======
+
+// takePicture() {
+//   const options: CameraOptions = {
+//     quality: 100,
+//     destinationType: this.camera.DestinationType.DATA_URL,
+//     encodingType: this.camera.EncodingType.JPEG,
+//     mediaType: this.camera.MediaType.PICTURE,
+//     sourceType: this.camera.PictureSourceType.CAMERA
+//   };
+//   this.camera.getPicture(options)
+//   .then((imageData) => {
+//     this.image = 'data:image/jpeg;base64,' + imageData;
+//   }, (err) => {
+//     console.log(err);
+//   });
+// }
+transfer:any;
+>>>>>>> 39db52d2e4061890f6dc5b9b02f81c9a8b24fb78
 takePicture() {
   const options: CameraOptions = {
     quality: 100,
@@ -134,7 +172,17 @@ takePicture() {
     this.camaraData=imageData,
    
     this.image = 'data:image/jpeg;base64,' + imageData;
+<<<<<<< HEAD
   
+=======
+    // this.webView.convertFileSrc(imageData);
+    const fileTransfer: FileTransferObject = this.transfer.create();
+    let options1: FileUploadOptions = {
+       fileKey: 'file',
+       fileName: 'name.jpg',
+       headers: {}
+    }
+>>>>>>> 39db52d2e4061890f6dc5b9b02f81c9a8b24fb78
   }, (err) => {
     console.log(err);
   });
@@ -144,16 +192,22 @@ AccessGallery(){
   this.camera.getPicture({
     sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
      destinationType: this.camera.DestinationType.DATA_URL
+<<<<<<< HEAD
     }).then((imageData) => {
     this.camaraData=imageData,
+=======
+
+    }).then((imageData) => {
+
+>>>>>>> 39db52d2e4061890f6dc5b9b02f81c9a8b24fb78
       this.image= 'data:image/jpeg;base64,'+imageData;
 
          }, (err) => {
- 
+
       console.log(err);
- 
+
     });
- 
+
  }
 
 

@@ -18,19 +18,23 @@ import { PayPal } from '@ionic-native/paypal/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { LocalNotifications} from '@ionic-native/local-notifications/ngx'
+<<<<<<< HEAD
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 // import { File } from '@ionic-native/file';
 // import { CargarImgProvider } from '../providers/cargar-img/cargar-img';
 // import { ServiceProvider } from '../providers/service/service';
 
+=======
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+>>>>>>> 39db52d2e4061890f6dc5b9b02f81c9a8b24fb78
 @NgModule({
   declarations: [
     AppComponent
-   
-   
+
+
   ],
   entryComponents: [
-  
+
   ],
   imports: [
     BrowserModule,
@@ -41,9 +45,9 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
     ComponentsModule,
     ReactiveFormsModule,
     PipesModule
-    
-  
-   
+
+
+
   ],
   providers: [
     StatusBar,
@@ -53,6 +57,11 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
     PayPal,
     Camera,
     WebView,
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 39db52d2e4061890f6dc5b9b02f81c9a8b24fb78
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     LocalNotifications,
     ImagePicker,
