@@ -18,12 +18,12 @@ import { PayPal } from '@ionic-native/paypal/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { LocalNotifications} from '@ionic-native/local-notifications/ngx'
-<<<<<<< HEAD
+
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 // import { File } from '@ionic-native/file';
 // import { CargarImgProvider } from '../providers/cargar-img/cargar-img';
 // import { ServiceProvider } from '../providers/service/service';
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+//import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 
 @NgModule({
   declarations: [
@@ -58,7 +58,11 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     LocalNotifications,
     ImagePicker,
+    // FileTransfer, 
+    // FileUploadOptions,
+    // FileTransferObject
     // File,
+
    
   ],
   bootstrap: [AppComponent]
