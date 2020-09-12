@@ -25,6 +25,14 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
 // import { ServiceProvider } from '../providers/service/service';
 //import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 
+// import { AngularFireModule } from '@angular/fire';
+// import { AngularFireDatabaseModule } from '@angular/fire/database'; //realtime
+// import { AngularFireAuthModule } from "@angular/fire/auth";
+// import { AngularFireStorageModule } from "@angular/fire/storage";
+
+// import { environment } from '../environments/environment.prod';
+
+
 @NgModule({
   declarations: [
     AppComponent
@@ -43,8 +51,10 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
     ComponentsModule,
     ReactiveFormsModule,
     PipesModule
-
-
+    // ,AngularFireModule.initializeApp(environment.firebaseConfig)
+    // ,AngularFireDatabaseModule
+    // ,AngularFireAuthModule
+    // ,AngularFireStorageModule
 
   ],
   providers: [
