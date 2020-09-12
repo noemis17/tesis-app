@@ -13,14 +13,14 @@
 <ion-content class="ion-padding ">
   <ion-button class="boton" color="danger"  (click)="validarCarrito()" expand="block" shape="round" fill="outline">Proceso de pago</ion-button>
   <p class="text1">Precio:&nbsp;&nbsp;{{ totalAPagar | currency:"USD":true}}</p>
+  <!-- <ion-input style="border:1px solid #68d636" type="number" inputmode="numeric" maxlength="3" placeholder="Tempo de Entrega" [required]="true" appInputInteger>
+  </ion-input> -->
   <div class="row">
-
       <ion-button class="shadow-red" color="warning"  (click)="validarubicacion()" expand="small" shape="round" fill="outline"><img src="/assets/mapa.png" class="compra1">
          <p style="color:black;font-weight:bold">
           &nbsp;&nbsp;Verificar o Cambiar Ubicación De Entrega
          </p>
       </ion-button>
-
   </div>
   <ion-list>
     <ion-item *ngFor="let  carri of  carritoProducto" [ngClass]="carri.PermitirVender ? 'positivo':'negativo'">
@@ -29,9 +29,11 @@
       <ion-label>
         <h3 class="text" lines="full">{{ carri.NAME}}</h3>
         <p class="text1">Precio:&nbsp;&nbsp;{{ carri.PRICE | currency:"USD":true}}</p>
-        <p class="text1">Cantidad:&nbsp;&nbsp;{{carri.cantidad}} &nbsp;
-          <ion-icon (click)="modificarCantidad(carri)" class="icongrande" slot=" icon-only end" name="add-circle-outline"></ion-icon>
-        </p>
+        <div class="row">
+          <div class="col-12">
+            <input (change)="modificarCantidad(carri,$event)" style="border: 1px solid white;width: -webkit-fill-available;margin-left: 15px;" type="number" name="" [(ngModel)]="carri.cantidad" min="1" max="carri.cantidad">
+          </div>
+        </div>
         <ion-buttons>
           <ion-button (click)="eliminar(carri.id)" class="boton">
             <ion-icon slot="start" name="trash-outline"> </ion-icon>
@@ -44,9 +46,14 @@
       <ion-label>
         <h3 class="text" lines="full">{{carripro.descripcion}}</h3>
         <p class="text1">Precio:&nbsp;&nbsp;${{carripro.PrecioPromocionConDescuento |number}}</p>
-        <p class="text1">Cantidad:&nbsp;&nbsp;{{carripro.Carritocantidad}} &nbsp;
-          <ion-icon (click)="modificarCantidadKit(carripro)" class="icongrande" slot=" icon-only end" name="add-circle-outline"></ion-icon>
-        </p>
+        <!-- <p class="text1">Cantidad:&nbsp;&nbsp;{{carripro.Carritocantidad}} &nbsp;
+          <ion-icon (click)="modificarCantidadKit(carripro,$event)" class="icongrande" slot=" icon-only end" name="add-circle-outline"></ion-icon>
+        </p> -->
+        <div class="row">
+          <div class="col-12">
+            <input (change)="modificarCantidadKit(carripro,$event)" style="border: 1px solid white;width: -webkit-fill-available;margin-left: 15px;" type="number" name="" [(ngModel)]="carripro.Carritocantidad" min="1" max="carripro.cantidad">
+          </div>
+        </div>
         <ion-buttons>
           <ion-button (click)="eliminarPromocion(carripro.id)" class="boton">
             <ion-icon slot="start" name="trash-outline"> </ion-icon>

@@ -194,97 +194,49 @@ export class CarritoPage implements OnInit {
     //console.log(this.carritoProducto);
     //console.log(this.carritoPromociones);
   }
-  async modificarCantidad(carri) {
-    const alert = await this.alertController.create({
-      mode: "ios",
-      header: 'Ingrese la Cantidad a comprar',
-      inputs: [
-        {
-          name: 'cantidad',
-          type: 'number',
-          value: carri.cantidad,
-          placeholder: 'cantidad'
-        },
-
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          handler: () => {
-            console.log('Confirm Cancel');
-          }
-        },
-        {
-          text: 'ok',
-          handler: (data) => {
-            if (carri.promocionesdel_producto == null) {
-              if (data.cantidad <= carri.stock) {
-                let itemIndexProducto = this.carritoProducto.findIndex(item => item.id == carri.id);
-                this.carritoProducto[itemIndexProducto]['cantidad'] = data.cantidad;
-                localStorage.setItem("carrito", JSON.stringify(this.carritoProducto));
-                this.setValor()
-                this.showAlert(" Ingreso de cantidad existosa");
-              } else {
-                this.showAlert("No hay la cantidad necesaria");
-              }
-
-            } else {
-              if (data.cantidad <= carri.promocionesdel_producto.stock) {
-                let itemIndexProducto = this.carritoProducto.findIndex(item => item.id == carri.id);
-                this.carritoProducto[itemIndexProducto]['cantidad'] = data.cantidad;
-                localStorage.setItem("carrito", JSON.stringify(this.carritoProducto));
-                this.showAlert(" Ingreso de cantidad existosa");
-              } else {
-                this.showAlert("No hay la cantidad necesaria");
-              }
-            }
-          }
+  async modificarCantidad(carri,event) {
+    let itemIndexProducto = this.carritoProducto.findIndex(item => item.id == carri.id);
+    if (event.target.value <= 0) {
+      this.carritoProducto[itemIndexProducto]['cantidad'] = 1;
+    }else{
+      if (carri.promocionesdel_producto == null) {
+        if (event.target.value <= carri.stock) {
+          this.carritoProducto[itemIndexProducto]['cantidad'] = event.target.value;
+          // localStorage.setItem("carrito", JSON.stringify(this.carritoProducto));
+          // this.setValor();
+        } else {
+          this.carritoProducto[itemIndexProducto]['cantidad'] = 1;
+          this.showAlert("No hay la cantidad necesaria");
         }
-      ]
-
-    });
-    await alert.present();
+      } else {
+        if (event.target.value <= carri.promocionesdel_producto.stock) {
+          this.carritoProducto[itemIndexProducto]['cantidad'] = event.target.value;
+          // localStorage.setItem("carrito", JSON.stringify(this.carritoProducto));
+        } else {
+          this.carritoProducto[itemIndexProducto]['cantidad'] = 1;
+          this.showAlert("No hay la cantidad necesaria");
+        }
+      }
+    }
+    localStorage.setItem("carrito", JSON.stringify(this.carritoProducto));
+    this.setValor();
   }
-  async modificarCantidadKit(carripro) {
-
-    const alert = await this.alertController.create({
-      mode: "ios",
-      header: 'Ingrese la Cantidad a comprar',
-      inputs: [
-        {
-          name: 'cantidad',
-          type: 'number',
-          value: carripro.Carritocantidad,
-          placeholder: 'cantidad'
-        },
-
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          handler: () => {
-            console.log('Confirm Cancel');
-          }
-        },
-        {
-          text: 'ok',
-          handler: (data) => {
-            if (data.cantidad <= carripro.cantidad) {
-              let itemIndex = this.carritoPromociones.findIndex(item => item.id == carripro.id);
-              this.carritoPromociones[itemIndex]['Carritocantidad'] = data.cantidad;
-              localStorage.setItem("carritoPromociones", JSON.stringify(this.carritoPromociones))
-              this.setValor()
-              this.showAlert("Ingreso de cantidad existosa");
-            } else {
-              this.showAlert("No hay la cantidad necesaria");
-            }
-          }
-        }
-      ]
-
-    });
-    await alert.present();
-
+  async modificarCantidadKit(carripro,event) {
+    let itemIndex = this.carritoPromociones.findIndex(item => item.id == carripro.id);
+    if (event.target.value <= 0) {
+      this.carritoProducto[itemIndex]['Carritocantidad'] = 1;
+    }else{
+      if (event.target.value <= carripro.cantidad) {
+        this.carritoPromociones[itemIndex]['Carritocantidad'] = event.target.value;
+        // localStorage.setItem("carritoPromociones", JSON.stringify(this.carritoPromociones))
+        // this.setValor()
+      } else {
+        this.carritoPromociones[itemIndex]['Carritocantidad'] = 1;
+        this.showAlert("No hay la cantidad necesaria");
+      }
+    }
+    localStorage.setItem("carritoPromociones", JSON.stringify(this.carritoPromociones))
+    this.setValor()
   }
   async showAlert(Mensaje) {
     const alert = await this.alertController.create({
