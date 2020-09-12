@@ -12,10 +12,10 @@
 
 <ion-content class="ion-padding ">
   <ion-list #lista id="list" >
-    <ion-item>
-      <ion-avatar (click)="takePicture()" slot="start" >
+    <ion-item >
+      <ion-avatar (click)="presentAlertPrompt()" slot="start" >
        <img *ngIf="image" [src]="image" > 
-        <!-- <img src="/assets/SUPERCITO.png"  > -->
+    
       </ion-avatar>
       <ion-label class="perfil">{{email}}</ion-label>
     </ion-item>

@@ -1,12 +1,17 @@
-import { Component, OnInit,ViewChild, ElementRef } from '@angular/core';
-// import {Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
-// import { NavController, NavParams } from '@ionic/angular';
-// import {EditarPerilPage } from '../editar-peril/editar-peril.page';
+import { Component, OnInit,ViewChild, ElementRef,Injectable } from '@angular/core';
+
 import { PerfilService } from 'src/app/Servicios/perfil.service';
 import { Camera,CameraOptions} from '@ionic-native/camera/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
-import { AlertController} from '@ionic/angular';
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { AlertController,ToastController, ActionSheetController} from '@ionic/angular';
+import { ImagePicker, ImagePickerOptions } from '@ionic-native/image-picker/ngx';
+//Providers
+// import { CargarImgProvider }  from '../../providers/cargar-img/cargar-img';
+// import { ServiceProvider }  from '../../providers/service/service';
+
+
+//import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+
 
 
 @Component({
@@ -14,6 +19,7 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
   templateUrl: './perfil.page.html',
   styleUrls: ['./perfil.page.scss'],
 })
+@Injectable()
 export class PerfilPage implements OnInit {
     nombres: any ;
     cedula: any;
@@ -25,12 +31,15 @@ export class PerfilPage implements OnInit {
     password2:any;
     nome_token_user:any;
     @ViewChild('passwordEyeRegister',{static:false}) passwordEye;
-    constructor( private perfilServi:PerfilService,
-       private camera: Camera,
+    constructor( private perfilServi:PerfilService, 
+      public camera: Camera, 
        public alertController: AlertController,
-       public webView: WebView) {
-
-
+       public actionController: ActionSheetController,
+       public webView: WebView,
+       public imagePicker: ImagePicker,
+       public toastCtrl: ToastController,
+      ) { 
+  
 
    }
 
@@ -94,59 +103,28 @@ togglePasswordMode() {
   this.passwordEye.el.setFocus();
 }
 
-
 async presentAlertPrompt() {
-  const alert = await this.alertController.create({
-    cssClass: 'my-custom-class',
-    header: 'Comprobante',
-    mode:'ios',
-
-    inputs: [
+  const actionsheet = await this.actionController.create({
+    buttons: [
       {
-        name: 'radio1',
-        type: 'radio',
-        label: 'Camara',
-        value: 'value1',
-        checked: true,
-        handler:()=>{
-          console.log('hoohohoh');
+        text: 'Camara',
+        icon: 'camera-outline',
+        handler: () => {
           this.takePicture();
         }
-      },
-      {
-        name: 'radio2',
-        type: 'radio',
-        label: 'galeria',
-        value: 'value2',
-        handler:()=>{
-          console.log('hoohohoh');
+      }, {
+        text: 'Galeria',
+        icon: 'image-outline',
+        handler: () => {
           this.AccessGallery();
         }
       }
     ],
 
   });
-
-  await alert.present();
+  actionsheet.present();
 }
 
-
-// takePicture() {
-//   const options: CameraOptions = {
-//     quality: 100,
-//     destinationType: this.camera.DestinationType.DATA_URL,
-//     encodingType: this.camera.EncodingType.JPEG,
-//     mediaType: this.camera.MediaType.PICTURE,
-//     sourceType: this.camera.PictureSourceType.CAMERA
-//   };
-//   this.camera.getPicture(options)
-//   .then((imageData) => {
-//     this.image = 'data:image/jpeg;base64,' + imageData;
-//   }, (err) => {
-//     console.log(err);
-//   });
-// }
-transfer:any;
 takePicture() {
   const options: CameraOptions = {
     quality: 100,
@@ -157,27 +135,27 @@ takePicture() {
   };
   this.camera.getPicture(options)
   .then((imageData) => {
-    // this.image = this.webView.convertFileSrc(imageData);
+    this.camaraData=imageData,
+   
     this.image = 'data:image/jpeg;base64,' + imageData;
     // this.webView.convertFileSrc(imageData);
-    const fileTransfer: FileTransferObject = this.transfer.create();
-    let options1: FileUploadOptions = {
-       fileKey: 'file',
-       fileName: 'name.jpg',
-       headers: {}
-    }
+    // const fileTransfer: FileTransferObject = this.transfer.create();
+    // let options1: FileUploadOptions = {
+    //    fileKey: 'file',
+    //    fileName: 'name.jpg',
+    //    headers: {}
+    // }
   }, (err) => {
     console.log(err);
   });
 }
-
+camaraData: string;
 AccessGallery(){
   this.camera.getPicture({
     sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
      destinationType: this.camera.DestinationType.DATA_URL
-
     }).then((imageData) => {
-
+    this.camaraData=imageData,
       this.image= 'data:image/jpeg;base64,'+imageData;
 
          }, (err) => {
@@ -187,4 +165,14 @@ AccessGallery(){
     });
 
  }
+
+
+// mostrar_mensaje(msj){
+//   let toast = this.toastCtrl.create({
+//       message: msj,
+//       duration: 3000,
+//       // position: 'buttom'
+//   });
+//   toast.present();
+//   }
 }
