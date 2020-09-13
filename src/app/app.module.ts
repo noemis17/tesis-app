@@ -28,8 +28,6 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
 @NgModule({
   declarations: [
     AppComponent
-
-
   ],
   entryComponents: [
 
@@ -43,9 +41,6 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
     ComponentsModule,
     ReactiveFormsModule,
     PipesModule
-
-
-
   ],
   providers: [
     StatusBar,

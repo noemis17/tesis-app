@@ -37,6 +37,28 @@ export class PerfilService {
                 });
     });
   }
+  // modificarperfil(name,email,cedula,celular,password,password2,nome_token_user,imagen:File) {
+  //   const fd = new FormData();
+  //   fd.append('name', name);
+  //   fd.append('email', email);
+  //   fd.append('cedula', cedula);
+  //   fd.append('celular', celular);
+  //   fd.append('password', password);
+  //   fd.append('password2', password2);
+  //   fd.append('nome_token_user', nome_token_user);
+  //   fd.append('imagen',imagen);
+  //   return new Promise((resolve, reject) => {
+  //     this.http.post(server+ '/v0/usuarios_update/'+nome_token_user, fd)
+  //       .subscribe(
+  //         (res) => {
+  //           resolve(res);
+  //         },
+  //         (err) => {
+  //           reject(err);
+  //         }
+  //       );
+  //   });
+  // }
   mostrarPerfil(id:string){
     const registro=server+"/v0/usuarios_filtro"+id;
          return new Promise((resolve, reject) => {

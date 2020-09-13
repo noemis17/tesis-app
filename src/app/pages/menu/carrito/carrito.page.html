@@ -13,46 +13,65 @@
 <ion-content class="ion-padding ">
   <ion-button class="boton" color="danger"  (click)="validarCarrito()" expand="block" shape="round" fill="outline">Proceso de pago</ion-button>
   <p class="text1">Precio:&nbsp;&nbsp;{{ totalAPagar | currency:"USD":true}}</p>
+  <br>
   <div class="row">
 
       <ion-button class="shadow-red" color="warning"  (click)="validarubicacion()" expand="small" shape="round" fill="outline"><img src="/assets/mapa.png" class="compra1">
          <p style="color:black;font-weight:bold">
-          &nbsp;&nbsp;Verificar o Cambiar Ubicación De Entrega
+          &nbsp;&nbsp;Verificar Ubicación De Entrega
          </p>
       </ion-button>
 
   </div>
-  <ion-list>
-    <ion-item *ngFor="let  carri of  carritoProducto" [ngClass]="carri.PermitirVender ? 'positivo':'negativo'">
+  <br>
+  <ion-list >
+
+    <ion-row *ngFor="let  carri of  carritoProducto" [ngClass]="carri.PermitirVender ? 'positivo':'negativo'">
       <ion-img class="ESTILO "  *ngIf=" carri.file_name == null" src="/assets/SUPERCITO.png"></ion-img>
       <ion-img class="ESTILOIMAGEN" *ngIf=" carri.file_name != null" src="http://localhost:8000/img/items/{{ carri.file_name}}.{{ carri.file_extension}}"></ion-img>
-      <ion-label>
-        <h3 class="text" lines="full">{{ carri.NAME}}</h3>
-        <p class="text1">Precio:&nbsp;&nbsp;{{ carri.PRICE | currency:"USD":true}}</p>
-        <p class="text1">Cantidad:&nbsp;&nbsp;{{carri.cantidad}} &nbsp;
-          <ion-icon (click)="modificarCantidad(carri)" class="icongrande" slot=" icon-only end" name="add-circle-outline"></ion-icon>
-        </p>
-        <ion-buttons>
-          <ion-button (click)="eliminar(carri.id)" class="boton">
-            <ion-icon slot="start" name="trash-outline"> </ion-icon>
-          </ion-button>
-        </ion-buttons>
-      </ion-label>
-    </ion-item>
+     
+        <ion-col size="6" >
+            <h3 class="text" lines="full">{{ carri.NAME}}</h3>
+            <p class="text1">Precio:&nbsp;&nbsp;{{ carri.PRICE | currency:"USD":true}}</p>
+            <p class="text1">Cantidad:&nbsp;&nbsp;{{carri.cantidad}} &nbsp;</p>
+            <ion-buttons>
+              <ion-button (click)="eliminar(carri.id)" >
+                <ion-icon  name="trash-outline"> </ion-icon>
+              </ion-button>
+            </ion-buttons>
+         
+        </ion-col >
+        <ion-col >
+        
+         
+           
+        
+     
+        </ion-col>
+       </ion-row>
+    
+   
     <ion-item *ngFor="let carripro of carritoPromociones" [ngClass]="carripro.PermitirVender ? 'positivo':'negativo'">
-      <img src="/assets/fruta.jpg" class="img">
+      <ion-img class="ESTILO "  *ngIf="  carripro.file_name == null" src="/assets/SUPERCITO.png"></ion-img>
+
       <ion-label>
         <h3 class="text" lines="full">{{carripro.descripcion}}</h3>
         <p class="text1">Precio:&nbsp;&nbsp;${{carripro.PrecioPromocionConDescuento |number}}</p>
         <p class="text1">Cantidad:&nbsp;&nbsp;{{carripro.Carritocantidad}} &nbsp;
           <ion-icon (click)="modificarCantidadKit(carripro)" class="icongrande" slot=" icon-only end" name="add-circle-outline"></ion-icon>
         </p>
+       
         <ion-buttons>
           <ion-button (click)="eliminarPromocion(carripro.id)" class="boton">
             <ion-icon slot="start" name="trash-outline"> </ion-icon>
           </ion-button>
         </ion-buttons>
       </ion-label>
+    
     </ion-item>
+    
+    
+    
   </ion-list>
+
 </ion-content>

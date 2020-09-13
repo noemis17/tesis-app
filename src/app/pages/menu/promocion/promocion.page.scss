@@ -36,14 +36,8 @@
   
     .text{
 
-        font-weight: bold;
-        text-transform: capitalize;
-        text-transform: none;
-        margin-top: 0px;
-        margin-left: 10px;
-        margin-bottom: 6px;
-        display: table-cell;
-        padding-left: 10px;
+     
+        font-size: larger;
       
        
       }
@@ -52,3 +46,14 @@
         margin-top: 3px;
         font-size: small;
       }
+      .combo{
+        flex: 0 0 calc(calc(2 / var(--ion-grid-columns, 12)) * 100%);
+        width: calc(calc(2 / var(--ion-grid-columns, 12)) * 100%);
+        max-width: calc(calc(2 / var(--ion-grid-columns, 12)) * 100%);
+        top: 30px;
+      }
+      .ESTILO {
+        width: 100%;
+        margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;}

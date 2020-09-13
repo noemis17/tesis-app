@@ -1,7 +1,7 @@
 .text1{
-    padding-left: 15px;
-    margin-top: 4px;
-    font-size: small;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-left: 8px;
   }
   label {
     margin: 1em auto;
@@ -16,10 +16,12 @@
         text-transform: capitalize;
         text-transform: none;
         margin-top: 0px;
-        margin-left: 20px;
+        padding-bottom: 2px;
         margin-bottom: 6px;
         display: table-cell;
-        padding-left: 10px;
+       
+        font-size: small;
+        padding-left: 0px;
       }
       .boton {
         margin-left: 0px;
@@ -69,3 +71,24 @@
          margin-right: auto;
          
           }
+          #input_container {
+            position:relative;
+            padding:0 0 0 20px;
+            margin:0 20px;
+            background:#ddd;
+            direction: rtl;
+            width: 200px;
+        }
+        #input {
+            height:20px;
+            margin:0;
+            padding-right: 30px;
+            width: 100%;
+        }
+        #input_img {
+            position:absolute;
+            bottom:2px;
+            right:5px;
+            width:24px;
+            height:24px;
+        }

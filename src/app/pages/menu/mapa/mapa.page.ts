@@ -22,6 +22,7 @@ export class MapaPage implements OnInit {
     private loadingCtrl: LoadingController, private navParams: NavParams, private transportistaServe: TransportistaService, private modalC: ModalController, ) {
   }
 
+  
   ngOnInit() {
     this.cargarMapa();
     if (this.navParams.data.identificador != 2) {
@@ -89,6 +90,7 @@ export class MapaPage implements OnInit {
     this.map.resize();
   }
 
+  
   map: any;
   directions: any;
   cargarMapa() {

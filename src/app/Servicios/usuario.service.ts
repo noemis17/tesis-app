@@ -10,13 +10,15 @@ export class UsuarioService {
   constructor(private http:HttpClient) { }
   private _header = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
   
-  guardarUsuario(name,email,cedula,celular,password,password2){
+  guardarUsuario(name,email,cedula,celular,direccion,referencia,password,password2){
     const _body = new HttpParams()
      
       .set("name",name)
       .set("email",email)
       .set("cedula",cedula)
       .set("celular",celular)
+      .set("direccion",direccion)
+      .set("referencia",referencia)
       .set("password",password)
       .set("password2",password2)
     ;

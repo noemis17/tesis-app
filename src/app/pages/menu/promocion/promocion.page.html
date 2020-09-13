@@ -10,10 +10,10 @@
     </ion-buttons> 
     
   </ion-toolbar>
-  <ion-searchbar placeholder="Promociones" animated style="padding-top: 0px;" mode="ios" ></ion-searchbar>
+  <ion-searchbar   placeholder="Promociones"  color="warning"  (ionChange)="buscar( $event )"animated  style="padding-top: 0px;" mode="ios" ></ion-searchbar>
 </ion-header>
 <ion-content >
- <ion-card  (click)="expandItem(item)" *ngFor="let item of  promociones">
+ <ion-card  (click)="expandItem(item)" *ngFor="let item of  promociones |filtro: textoPromocion:'descripcion'">
   <ion-card-header >
     <ion-card-title ><h5 > {{item.descripcion}}</h5> 
      </ion-card-title>
@@ -22,7 +22,29 @@
   <ion-card-content>
 <app-promociones-com  expandHeight="200%" [expanded]="item.expanded">
  <div class="container">
-    <ion-list >
+  <ion-list >
+  <ion-row  *ngFor="let  item1 of item.registro2 "  mode="ios">
+    <ion-col size="3"  >
+        <ion-img class="ESTILO "  *ngIf="item.file_name == null" src="/assets/SUPERCITO.png"></ion-img>
+    </ion-col>
+    <ion-col (click)="abrirModal(item1)" >
+      <ion-label >
+       
+        <h3 class="text" ><b>{{item1.descripcion}}</b></h3> 
+        <p class="">Fecha:{{item1.fecha_inicio}}</p>
+        <p class="">Precio: {{item1.PrecioPromocionConDescuento |currency:"USD":true}}  <s style="margin-left: 6px;" >{{ item1.PrecioSinDescuento|number|currency:"USD":true}}</s></p> 
+    </ion-label>
+
+    </ion-col>
+    <ion-col class="combo" size="2">
+      <ion-buttons>
+        <ion-button  (click)="verificarExistePromociones(item1)"  > 
+          <ion-icon  slot="icon-only" name="cart-outline"></ion-icon> 
+        </ion-button>
+      </ion-buttons>
+    </ion-col>
+  </ion-row>
+    <!-- <ion-list >
      
       <ion-item  *ngFor="let  item1 of item.registro2 ">
         <ion-label (click)="abrirModal(item1)">
@@ -36,10 +58,11 @@
             <ion-icon  slot="end" name="cart-outline"></ion-icon> 
           </ion-button>
         </ion-buttons>
-      </ion-item>
+      </ion-item> -->
      
     </ion-list>
   </div>
+
 
 </app-promociones-com>
 </ion-card-content>

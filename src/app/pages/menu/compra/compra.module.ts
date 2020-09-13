@@ -6,7 +6,6 @@ import { IonicModule } from '@ionic/angular';
 import {MapaPage } from '../mapa/mapa.page';
 import { CompraPageRoutingModule } from './compra-routing.module';
 import {  ComponentsModule} from '../../../components/components.module';
-
 import { CompraPage } from './compra.page';
 import { MapaPageModule } from '../mapa/mapa.module';
 import { PipesModule } from 'src/app/pipes/pipes.module';

@@ -27,6 +27,7 @@ export class OrdenPage implements OnInit {
       .finally(
       )
   }
+
   async abrirModal(element?){
     const modal = await this.modalC.create({
     component: MapaPage ,
@@ -41,6 +42,20 @@ export class OrdenPage implements OnInit {
 
 
   }
+  textoBuscar: string = '002';
+  segmentChanged(event){
+    // if (event.target.value==="pedidos") {
+    //   this.textoBuscar = '001';
+    // } else 
+    if(event.target.value==="en_proceso") {
+      this.textoBuscar = '002';
+    } else if(event.target.value==="finalizados") {
+      this.textoBuscar = '003';
+    }
+    console.log(event.target.value);
+    
+  }
+ 
 
 rutadelUsuario(){
   this.router.navigate(['/menu/perfil']);

@@ -23,7 +23,7 @@ import { ImagePicker, ImagePickerOptions } from '@ionic-native/image-picker/ngx'
 export class PerfilPage implements OnInit {
     nombres: any ;
     cedula: any;
-    image:string;
+    image:any;
     image1:string;
     celular: any;
     email: any;
@@ -77,6 +77,7 @@ editar(){
       this.celular = data['items']['celular'];
       this.password=data['items']['password'];
       this.password2=data['items']['password2'];
+      this.image=data['items']['imagen'];
       this.nome_token_user=localStorage.getItem("nomeToken");
 
       console.log("Datos Modificados");
@@ -127,37 +128,37 @@ async presentAlertPrompt() {
 
 takePicture() {
   const options: CameraOptions = {
-    quality: 100,
+    quality: 50,
     destinationType: this.camera.DestinationType.FILE_URI,
-    encodingType: this.camera.EncodingType.JPEG,
-    mediaType: this.camera.MediaType.PICTURE,
-    sourceType: this.camera.PictureSourceType.CAMERA
+    sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+    saveToPhotoAlbum:true,
+    targetWidth:500,
+    targetHeight:500,
   };
-  this.camera.getPicture(options)
-  .then((imageData) => {
-    this.camaraData=imageData,
-   
-    this.image = 'data:image/jpeg;base64,' + imageData;
-    // this.webView.convertFileSrc(imageData);
-    // const fileTransfer: FileTransferObject = this.transfer.create();
-    // let options1: FileUploadOptions = {
-    //    fileKey: 'file',
-    //    fileName: 'name.jpg',
-    //    headers: {}
-    // }
+  this.camera.getPicture(options).then((imageData) => {
+    this.image =imageData;
+    // this.uploadFile()
+    //this.webView.convertFileSrc(imageData);
+  
   }, (err) => {
     console.log(err);
   });
 }
-camaraData: string;
+cancelar()
+{
+this.camaraData=new Date().getTime()+".jpg";
+
+}
+
+camaraData: any;
 AccessGallery(){
   this.camera.getPicture({
     sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
      destinationType: this.camera.DestinationType.DATA_URL
     }).then((imageData) => {
-    this.camaraData=imageData,
-      this.image= 'data:image/jpeg;base64,'+imageData;
-
+ 
+      let base64Image = 'data:image/jpeg;base64,' + imageData;
+      this.image = base64Image;
          }, (err) => {
 
       console.log(err);

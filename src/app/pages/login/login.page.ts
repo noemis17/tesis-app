@@ -38,7 +38,9 @@ export class LoginPage implements OnInit {
         Confirmar: [''],
         cedula: new FormControl({value:"",disabled:false},[Validators.maxLength(10),Validators.pattern('^[0-9]+$')]),
         celular:new FormControl({value:"",disabled:false},[Validators.maxLength(10),Validators.pattern('^[0-9]+$')]),
-      });
+        direccion: ['', Validators.required],
+        referencia: ['', Validators.required],
+      })
 
      }
      image:string;
@@ -104,7 +106,7 @@ export class LoginPage implements OnInit {
   }
 
  registroUsuario(){
-  this.usuarioService.guardarUsuario(this.user.controls['Nombre'].value, this.user.controls['email'].value,this.user.controls['cedula'].value,this.user.controls['celular'].value,this.user.controls['Contrasena'].value,this.user.controls['Confirmar'].value)
+  this.usuarioService.guardarUsuario(this.user.controls['Nombre'].value, this.user.controls['email'].value,this.user.controls['cedula'].value,this.user.controls['celular'].value,this.user.controls['direccion'].value,this.user.controls['referencia'].value,this.user.controls['Contrasena'].value,this.user.controls['Confirmar'].value)
     .then((ok) => {
       if(ok['code']=="200"){
         this.showAlert("Datos Registrado")

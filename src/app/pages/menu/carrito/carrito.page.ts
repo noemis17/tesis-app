@@ -45,13 +45,14 @@ export class CarritoPage implements OnInit {
     if(this.carritoProducto.length==0 && this.carritoPromociones.length==0){
       this.showAlert("No tiene ningun producto en el carrito");
     }else{
-      navigator.geolocation.getCurrentPosition(position => {
-        this.abrirModal(position);
-      });
+      this.abrirModal();
+      // navigator.geolocation.getCurrentPosition(position => {
+      //   this.abrirModal();
+      // });
     }
   }
 
-  async abrirModal(posicion){
+  async abrirModal(){
 
       const modal = await this.modalC.create({
       component:PagoPage ,
@@ -59,7 +60,7 @@ export class CarritoPage implements OnInit {
         "producto":this.carritoProducto,
         "promociones":this.carritoPromociones,
         "total":this.totalAPagar,
-        "position":posicion
+        // "position":posicion
       }
     });
     modal.onDidDismiss().then(data => {
@@ -81,14 +82,16 @@ export class CarritoPage implements OnInit {
       });
     }
   }
-  async abrirModalubicacion(posicion){
+  async abrirModalubicacion(ubicacion?){
     const modal = await this.modalC.create({
       component: UbicacionPage ,
       componentProps: {
-        "position":posicion
+        "position":ubicacion
       }
+     
      });
      return await modal.present();
+     console.log(ubicacion);
    }
   eliminar(carri) {
     let itemIndexProducto = this.carritoProducto.findIndex(item => item.id == carri.id);
@@ -171,6 +174,7 @@ export class CarritoPage implements OnInit {
       });
     }
   }
+  
   eliminarPromocion(carripro) {
     this.carritoPromociones = this.carritoPromociones.filter(option => option['id'] != carripro);
     localStorage.setItem("carritoPromociones", JSON.stringify(this.carritoPromociones))
