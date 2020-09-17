@@ -1,19 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalController, NavParams, AlertController, ActionSheetController } from '@ionic/angular';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { ModalController, NavParams, AlertController,ActionSheetController, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { TipoPagoService } from '../../../Servicios/tipo-pago.service';
 import { CarritoService } from '../../../Servicios/carrito.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { LoadingController } from '@ionic/angular';
+//import { PostProvider } from '@ionic/angular';
 import { RutaService } from '../../../Servicios/Rutas/ruta.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-// import { WebView } from '@ionic-native/ionic-webview/ngx';
-// import * as  mapboxgl from 'mapbox-gl';
-// import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
-
-
-
-
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+import * as  mapboxgl from 'mapbox-gl';
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import { FileUploadOptions, FileTransfer,FileTransferObject } from '@ionic-native/file-transfer/ngx';
+//import { File } from '@ionic-native/file';
+interface datos{
+  nombre:string,
+  apellido:string
+}
 declare var google;
 @Component({
   selector: 'app-pago',
@@ -37,8 +40,8 @@ export class PagoPage implements OnInit {
     private geolocation: Geolocation,
     private loadingCtrl: LoadingController,
     private rutaService: RutaService,
-    public actionController: ActionSheetController,
-    private camera: Camera
+    private camera: Camera,
+    private transfer: FileTransfer
 
   ) { }
   posicion_: any[] = [];
@@ -49,11 +52,10 @@ export class PagoPage implements OnInit {
     this.carritoPromociones = this.navParams.data['promociones'];
     this.totalAPagar = this.navParams.data['total'];
     this.mostrarTipoPago();
-    // this.dataPosicionCenter = this.navParams.data['position'];
-    // if (localStorage.getItem("ubicacion")==null) {
-    //   localStorage.setItem("ubicacion",JSON.stringify(this._marker));
-    // }
-
+    this.dataPosicionCenter = this.navParams.data['position'];
+    if (localStorage.getItem("ubicacion")==null) {
+      localStorage.setItem("ubicacion",JSON.stringify(this._marker));
+    }
     // this.posicion();
     //this.obtenerlocalizacion();
     //this.addMarker(posicion_[1],posicion_[0],"");
@@ -69,6 +71,7 @@ export class PagoPage implements OnInit {
   latitud = 0;
   longitud = 0;
   _marker:any;
+
   registroPago(item) {
     if (item.identificador == 2) {
       if (this.carritoProducto.find(e => e['PermitirVender'] == false) == undefined && this.carritoPromociones.find(e => e['PermitirVender'] == false) == undefined) {
@@ -110,9 +113,66 @@ export class PagoPage implements OnInit {
   rutadelcarrito() {
     this.router.navigate(['/menu/carrito']);
   }
- 
+  // map: any;
+  // addMarker(longitud, latitud, nombre) {
+  //   this._marker = new mapboxgl.Marker()
+  //     .setLngLat([longitud, latitud])
+  //     .addTo(this.map);
+  //     // this._marker = marker;
+  // }
+  // obtenerlocalizacion() {
+  //   var posicionamiento: any[] = [];
+  //   navigator.geolocation.getCurrentPosition(position => {
+  //     this.posicion_.push(position.coords.latitude);
+  //     this.posicion_.push(position.coords.longitude);
+  //   });
+  // }
+  // posicion() {
+  //   mapboxgl.accessToken = 'pk.eyJ1Ijoibm9lbWkxNyIsImEiOiJja2U0eDlmbXUweGVlMnptdzhyMmhxY3NqIn0.pdK5JCeAlWgpAXIfQIKovQ';
+  //   this.map = new mapboxgl.Map({
+  //     container: 'map',
+  //     style: 'mapbox://styles/mapbox/streets-v9',
+  //     center: [this.navParams.data['position'].coords.longitude, this.navParams.data['position'].coords.latitude],
+  //     zoom: 15,
+  //   });
+  //   // this.map.addControl(
+  //   //   new MapboxGeocoder({
+  //   //     accessToken: mapboxgl.accessToken,
+  //   //     mapboxgl: mapboxgl
+  //   //   })
+  //   // );
+  //   this.map.addControl(new mapboxgl.NavigationControl());
+  //   this.map.addControl(new mapboxgl.FullscreenControl());
+  //   this.map.addControl(new mapboxgl.GeolocateControl({
+  //     positionOptions: {
+  //       enableHighAccuracy: true
+  //     },
+  //     trackUserLocation: true
+  //   }));
+  //   this.map.on('click', function(e) {
+  //     if (localStorage.getItem("ubicacion")!="undefined") {
+  //       if (this._marker!= undefined) {
+  //         this._marker.setLngLat([e.lngLat.lng, e.lngLat.lat]);
+  //       }else{
+  //         this._marker = new mapboxgl.Marker()
+  //           .setLngLat([e.lngLat.lng,e.lngLat.lat])
+  //           .addTo(this)
+  //       }
+  //     }
+  //     this.resize();
+  //     localStorage.setItem("ubicacion",JSON.stringify(e.lngLat));
+  //   });
+  //   this.map.on('load', function(e) {
+  //     if (localStorage.getItem("ubicacion")!="undefined") {
+  //       this._marker = new mapboxgl.Marker()
+  //         .setLngLat([JSON.parse(localStorage.getItem("ubicacion"))['lng'],JSON.parse(localStorage.getItem("ubicacion"))['lat']])
+  //         .addTo(this)
+  //         this.resize();
+  //     }
+  //   });
+  // }
 
-  // @ViewChild('listaTPagos', { static: false }) listaTPagos: ElementRef;
+  @ViewChild('listaTPagos', { static: false }) listaTPagos: ElementRef;
   async presentAlertPrompt() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
@@ -153,9 +213,6 @@ export class PagoPage implements OnInit {
           text: 'Ok',
           cssClass: 'alertButton',
           handler: () => {
-            console.log('Confirm Ok');
-            // let listaTPagosPorId = document.getElementById('listaTPagos');
-            // listaTPagosPorId.hidden = true;
             this.guardarDocumentoTransaccion(this.image);
           }
         }
@@ -164,42 +221,16 @@ export class PagoPage implements OnInit {
 
     await alert.present();
   }
-  
-// async presentAlertPrompt() {
-//   const actionsheet = await this.actionController.create({
-//     buttons: [
-//       {
-//         text: 'Camara',
-//         icon: 'camera-outline',
-//         handler: () => {
-//           this.takePicture();
-//         }
-//       }, {
-//         text: 'Galeria',
-//         icon: 'image-outline',
-//         handler: () => {
-//           this.AccessGallery();
-//         }
-//       }
-//     ],
-
-//   });
-//   actionsheet.present();
-// }
   takePicture() {
-    const options: CameraOptions = {
-      quality: 100,
+    this.camera.getPicture({
       destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      sourceType: this.camera.PictureSourceType.CAMERA
-    };
-    this.camera.getPicture(options)
-      .then((imageData) => {
+      sourceType     : this.camera.PictureSourceType.PHOTOLIBRARY,
+      mediaType: this.camera.MediaType.PICTURE
+    }).then((imageData) => {
         this.image = 'data:image/jpeg;base64,' + imageData;
       }, (err) => {
         console.log(err);
-      });
+    });
   }
   AccessGallery() {
     this.camera.getPicture({
@@ -209,7 +240,7 @@ export class PagoPage implements OnInit {
     }).then((imageData) => {
 
       this.image = 'data:image/jpeg;base64,' + imageData;
-
+     
     }, (err) => {
 
       console.log(err);
@@ -219,19 +250,43 @@ export class PagoPage implements OnInit {
   }
 
   guardarDocumentoTransaccion(_imagen: string) {
-    this.compraServi.guardarDocumentoTransaccion(_imagen)
-      .then(data => {
-        if (data['code'] == '200') {
-          console.log('se guardo la imagen');
-        } else {
-          console.log(data);
+    // debugger
+    const fileTransfer: FileTransferObject = this.transfer.create();
+  //  let params:datos[]=[]; 
+    
+   // params.push({nombre:'tomas', apellido:'loor'});
+    let options: FileUploadOptions = {
+      fileKey: 'file',
+      fileName: 'pipo.jpg',
+      chunkedMode: false,
+      httpMethod: 'post',
+      mimeType: 'image/jpeg',
+      //params : params,
+       headers: {}
+   }
+// var params = {nombre:'tomas', apellido:'loor'};
 
-        }
 
-      }).catch(error => {
-        console.log(error);
+/*   options.params = {
+    Value: JSON.stringify({
+      nombre: 'toma',
+      apellido: 'loor'
+    })
+  }; */
+ //  options.params = params;
+   //fileTransfer.upload(this.image, 'http://192.168.0.104:8000/upload.php', options)
+   fileTransfer.upload(_imagen, 'http://25.39.0.74:8000/api/v0/guardarDocumentoTransaccion/45', options)
+    .then((data) => {
+      debugger
+      // success
+      alert("Comprobante enviado ");
+    }, (err) => {
+      // error
+       debugger
+      alert("error"+JSON.stringify(err));
+    });
 
-      }).finally(() => { });
+  
   }
 
 

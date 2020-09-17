@@ -77,21 +77,22 @@ export class CarritoPage implements OnInit {
     if(this.carritoProducto.length==0 && this.carritoPromociones.length==0){
       this.showAlert("No tiene ningun producto en el carrito");
     }else{
-      navigator.geolocation.getCurrentPosition(position => {
-        this.abrirModalubicacion(position);
-      });
+      // navigator.geolocation.getCurrentPosition(position => {
+      //   this.abrirModalubicacion(position);
+      // });
+      this.abrirModalubicacion();
     }
   }
-  async abrirModalubicacion(ubicacion?){
+  async abrirModalubicacion(){
     const modal = await this.modalC.create({
       component: UbicacionPage ,
       componentProps: {
-        "position":ubicacion
+        // "position":ubicacion
       }
      
      });
      return await modal.present();
-     console.log(ubicacion);
+    //  console.log(ubicacion);
    }
   eliminar(carri) {
     let itemIndexProducto = this.carritoProducto.findIndex(item => item.id == carri.id);

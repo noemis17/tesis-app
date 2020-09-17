@@ -19,20 +19,11 @@ import { Camera } from '@ionic-native/camera/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { LocalNotifications} from '@ionic-native/local-notifications/ngx'
 
+
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
-// import { File } from '@ionic-native/file';
-// import { CargarImgProvider } from '../providers/cargar-img/cargar-img';
-// import { ServiceProvider } from '../providers/service/service';
-//import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
-
-// import { AngularFireModule } from '@angular/fire';
-// import { AngularFireDatabaseModule } from '@angular/fire/database'; //realtime
-// import { AngularFireAuthModule } from "@angular/fire/auth";
-// import { AngularFireStorageModule } from "@angular/fire/storage";
-
-// import { environment } from '../environments/environment.prod';
-
-
+import { PagoPageModule } from './pages/menu/pago/pago.module';
 @NgModule({
   declarations: [
     AppComponent
@@ -48,7 +39,9 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
     FormsModule,
     ComponentsModule,
     ReactiveFormsModule,
-    PipesModule
+    PipesModule,
+    PagoPageModule,
+     
   ],
   providers: [
     StatusBar,
@@ -61,9 +54,9 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     LocalNotifications,
     ImagePicker,
-    // FileTransfer, 
+    FileTransfer, 
     // FileUploadOptions,
-    // FileTransferObject
+    FileTransferObject
     // File,
 
    
