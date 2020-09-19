@@ -29,7 +29,7 @@ export const environment = {
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
 
 // export const server ="https://cryptic-journey-10931.herokuapp.com/api";
-export const server ="http://25.39.0.74:8000/api";
-// export const server ="http://127.0.0.1:8000/api";
+// export const server ="http://25.39.0.74:8000/api";
+export const server ="http://127.0.0.1:8000/api";
 
 

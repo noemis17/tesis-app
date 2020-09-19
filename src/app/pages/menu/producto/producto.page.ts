@@ -5,7 +5,7 @@ import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { NotificacionesService } from 'src/app/Servicios/notificaciones.service';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
-
+import { TransportistaService } from '../../../Servicios/transportista.service'
 @Component({
   selector: 'app-producto',
   templateUrl: './producto.page.html',
@@ -24,14 +24,31 @@ iconoCargando = false;
     public alertController: AlertController,
     private router:Router
     ,private _notificacionesService: NotificacionesService  //servicio de notificaciones
-    ,private localNotifications: LocalNotifications
+    ,private localNotifications: LocalNotifications,
+    private transportistaServe: TransportistaService,
     ) {
 
   }
 
   ngOnInit() {
-   this.mostrar();
 
+   this.mostrar();
+        if(localStorage.getItem("cod")=='002'){
+            setInterval(() => {
+             
+              navigator.geolocation.getCurrentPosition(position => {
+                
+                this.transportistaServe.guardarUbicacionTransportista(position.coords.longitude, position.coords.latitude, localStorage.getItem("id"))
+                .then((ok) => {
+                 })
+                 .catch((error) => {
+                   console.log(error);
+                  });
+                
+              });
+             
+            },60000);
+          }
     setInterval(() => {
       this._notificacionesService.getNotificaciones(localStorage.getItem('id')).then(data=>{
         

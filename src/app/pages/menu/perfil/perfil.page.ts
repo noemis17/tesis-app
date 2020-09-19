@@ -5,6 +5,7 @@ import { Camera,CameraOptions} from '@ionic-native/camera/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { AlertController,ToastController, ActionSheetController} from '@ionic/angular';
 import { ImagePicker, ImagePickerOptions } from '@ionic-native/image-picker/ngx';
+import { TransportistaService } from 'src/app/Servicios/transportista.service';
 //Providers
 // import { CargarImgProvider }  from '../../providers/cargar-img/cargar-img';
 // import { ServiceProvider }  from '../../providers/service/service';
@@ -38,13 +39,32 @@ export class PerfilPage implements OnInit {
        public webView: WebView,
        public imagePicker: ImagePicker,
        public toastCtrl: ToastController,
+       private transportistaServe: TransportistaService,
       ) { 
   
 
    }
 
   ngOnInit() {
-
+   
+    if(localStorage.getItem("cod")=='002'){
+      
+      setInterval(() => {
+        
+        navigator.geolocation.getCurrentPosition(position => {
+          
+          this.transportistaServe.guardarUbicacionTransportista(position.coords.longitude, position.coords.latitude, localStorage.getItem("id"))
+          .then((ok) => {
+            
+           })
+           .catch((error) => {
+             console.log(error);
+            });
+          
+        });
+       
+      },60000);
+    }
     this.nome_token_user = localStorage.getItem("nomeToken");
     this.nombres = localStorage.getItem("name");
     this.cedula= localStorage.getItem("cedula");

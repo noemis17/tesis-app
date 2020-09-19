@@ -15,7 +15,7 @@ export class NotificacionesService {
     ;
 
     return new Promise((resolve, reject) => {
-      this.http.get(server+"/v0/log/v0/notificaciones_ordenes",{headers:this._header,params:_body})
+      this.http.get(server+"/v0/notificaciones_ordenes",{headers:this._header,params:_body})
                 .subscribe(res=>{
                   resolve(res);
                 },(err)=>{
