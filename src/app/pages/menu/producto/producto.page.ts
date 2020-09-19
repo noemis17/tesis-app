@@ -3,6 +3,8 @@ import { ProductosService} from '../../../Servicios/productos.service';
 import { ModalController, IonInfiniteScroll } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { NotificacionesService } from 'src/app/Servicios/notificaciones.service';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 
 @Component({
   selector: 'app-producto',
@@ -20,14 +22,56 @@ iconoCargando = false;
   constructor( private productoServi:ProductosService,
     private modalC:ModalController,
     public alertController: AlertController,
-    private router:Router) {
+    private router:Router
+    ,private _notificacionesService: NotificacionesService  //servicio de notificaciones
+    ,private localNotifications: LocalNotifications
+    ) {
 
   }
 
   ngOnInit() {
    this.mostrar();
 
+    setInterval(() => {
+      this._notificacionesService.getNotificaciones(localStorage.getItem('id')).then(data=>{
+        
+        if (data['code']=='200') {
+          this.localNotifications.schedule({
+            id: 1,
+            text: data['items']['mensaje'],
+            // sound: isAndroid? 'file://sound.mp3': 'file://beep.caf',
+            data: { secret:  "key" }
+          });
+        } else {
+          
+        }
+
+
+      });
+    },20000);
+    
   }
+
+  notificacion (_mensaje:string){
+
+    this.localNotifications.schedule({
+      id: 1,
+      text: _mensaje,
+      // sound: isAndroid? 'file://sound.mp3': 'file://beep.caf',
+      data: { secret:  "key" }
+    });
+
+  }
+  
+
+  // mostrarNotificaciones(){
+  //   if (localStorage.getItem('id')!=null) {
+  //     setInterval(() => {
+        
+  //     },60000);
+  //   }
+  // }
+
 
   mostrar(){
     this.iconoCargando=true;
