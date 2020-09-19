@@ -13,10 +13,7 @@ import * as  mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import { FileUploadOptions, FileTransfer,FileTransferObject } from '@ionic-native/file-transfer/ngx';
 //import { File } from '@ionic-native/file';
-interface datos{
-  nombre:string,
-  apellido:string
-}
+
 declare var google;
 @Component({
   selector: 'app-pago',
@@ -71,7 +68,7 @@ export class PagoPage implements OnInit {
   latitud = 0;
   longitud = 0;
   _marker:any;
-
+  idTipoPago = '';
   registroPago(item) {
     if (item.identificador == 2) {
       if (this.carritoProducto.find(e => e['PermitirVender'] == false) == undefined && this.carritoPromociones.find(e => e['PermitirVender'] == false) == undefined) {
@@ -95,6 +92,7 @@ export class PagoPage implements OnInit {
       }
     } else {
       // aqui va el codigo donde accede a la camara o a la galeria del telefono
+      this.idTipoPago = item.id;
       this.presentAlertPrompt();
 
     }
@@ -224,7 +222,7 @@ export class PagoPage implements OnInit {
   takePicture() {
     this.camera.getPicture({
       destinationType: this.camera.DestinationType.DATA_URL,
-      sourceType     : this.camera.PictureSourceType.PHOTOLIBRARY,
+      sourceType     : this.camera.PictureSourceType.CAMERA,
       mediaType: this.camera.MediaType.PICTURE
     }).then((imageData) => {
         this.image = 'data:image/jpeg;base64,' + imageData;
@@ -275,14 +273,15 @@ export class PagoPage implements OnInit {
   }; */
  //  options.params = params;
    //fileTransfer.upload(this.image, 'http://192.168.0.104:8000/upload.php', options)
-   fileTransfer.upload(_imagen, 'http://25.39.0.74:8000/api/v0/guardarDocumentoTransaccion/45', options)
+   fileTransfer.upload(_imagen, 'http://25.39.0.74:8000/api/v0/guardarDocumentoTransaccion/'+localStorage.getItem("nomeToken")+"/"+this.idTipoPago+"/"+this.totalAPagar+"/"+JSON.parse(localStorage.getItem("ubicacion"))['lat']+"/"+JSON.parse(localStorage.getItem("ubicacion"))['lng'], options)
     .then((data) => {
-      debugger
+      //debugger
       // success
-      alert("Comprobante enviado ");
+      alert(data);
+      console.log(data)
     }, (err) => {
       // error
-       debugger
+      //  debugger
       alert("error"+JSON.stringify(err));
     });
 

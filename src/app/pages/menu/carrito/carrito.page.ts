@@ -14,7 +14,6 @@ import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-direct
 import 'mapbox-gl/dist/mapbox-gl.css' // Updating node module will keep css up to date.
 import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css' // Updating node module will keep css up to date
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
-
 @Component({
   selector: 'app-carrito',
   templateUrl: './carrito.page.html',
@@ -30,7 +29,8 @@ export class CarritoPage implements OnInit {
     private compraServi: CarritoService,
     public alertController: AlertController,
     public navCtrl: NavController,
-    private modalC:ModalController
+    private modalC:ModalController,
+    private geolocation: Geolocation
   ) {
   }
   ngOnInit() {
@@ -77,22 +77,15 @@ export class CarritoPage implements OnInit {
     if(this.carritoProducto.length==0 && this.carritoPromociones.length==0){
       this.showAlert("No tiene ningun producto en el carrito");
     }else{
-      // navigator.geolocation.getCurrentPosition(position => {
-      //   this.abrirModalubicacion(position);
-      // });
       this.abrirModalubicacion();
     }
   }
   async abrirModalubicacion(){
     const modal = await this.modalC.create({
       component: UbicacionPage ,
-      componentProps: {
-        // "position":ubicacion
-      }
-     
+      componentProps: {}
      });
      return await modal.present();
-    //  console.log(ubicacion);
    }
   eliminar(carri) {
     let itemIndexProducto = this.carritoProducto.findIndex(item => item.id == carri.id);

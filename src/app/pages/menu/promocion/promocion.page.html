@@ -20,7 +20,7 @@
   </ion-card-header>
 
   <ion-card-content>
-<app-promociones-com  expandHeight="200%" [expanded]="item.expanded">
+  <app-promociones-com  expandHeight="200%" [expanded]="item.expanded">
  <div class="container">
   <ion-list >
   <ion-row  *ngFor="let  item1 of item.registro2 "  mode="ios">
@@ -44,22 +44,6 @@
       </ion-buttons>
     </ion-col>
   </ion-row>
-    <!-- <ion-list >
-     
-      <ion-item  *ngFor="let  item1 of item.registro2 ">
-        <ion-label (click)="abrirModal(item1)">
-            <h3 class="text" ><b>{{item1.descripcion}}</b></h3> 
-            <p class="preciotex">Fecha:{{item1.fecha_inicio}}</p>
-            <p class="preciotex">Precio: {{item1.PrecioPromocionConDescuento |currency:"USD":true}}  <s style="margin-left: 6px;" >{{ item1.PrecioSinDescuento|number|currency:"USD":true}}</s></p> 
-        </ion-label>
-        <br>
-        <ion-buttons>
-          <ion-button  (click)="verificarExistePromociones(item1)"  class="boton" > 
-            <ion-icon  slot="end" name="cart-outline"></ion-icon> 
-          </ion-button>
-        </ion-buttons>
-      </ion-item> -->
-     
     </ion-list>
   </div>
 

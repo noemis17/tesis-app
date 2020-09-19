@@ -19,6 +19,7 @@ import { Camera } from '@ionic-native/camera/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { LocalNotifications} from '@ionic-native/local-notifications/ngx'
 
+import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
 
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 
@@ -56,9 +57,9 @@ import { PagoPageModule } from './pages/menu/pago/pago.module';
     ImagePicker,
     FileTransfer, 
     // FileUploadOptions,
-    FileTransferObject
+    FileTransferObject,
     // File,
-
+    NativeGeocoder
    
   ],
   bootstrap: [AppComponent]
