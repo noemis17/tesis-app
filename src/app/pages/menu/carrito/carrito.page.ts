@@ -243,15 +243,7 @@ export class CarritoPage implements OnInit {
     });
     await alert.present();
   };
-  // consultarOrdenesCompra() {
-  //   this.compraServi.ConsultarOrdenesCompradas(localStorage.getItem("nomeToken"))
-  //     .then((ok) => {
-  //       console.log("Ordenes ",ok);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }
+
 
 
 

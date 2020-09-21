@@ -67,10 +67,9 @@ export class UbicacionPage implements OnInit {
           container: 'map',
           style: 'mapbox://styles/mapbox/streets-v11',
           center: [pos_Longitud, pos_Latitud],
-          zoom: 15,
+          zoom: 13,
         });
-        this.map.addControl(
-          new MapboxGeocoder({
+        this.map.addControl(new MapboxGeocoder({
             accessToken: mapboxgl.accessToken,
             mapboxgl: mapboxgl
           })
@@ -84,6 +83,17 @@ export class UbicacionPage implements OnInit {
         //   },
         //   trackUserLocation: true
         // }));
+    
+        // this.map.on('mousemove', function (e) {
+        //   document.getElementById('coordenadas').innerHTML =
+        // JSON.stringify(e.lngLat);
+        //  });
+      
+        // this.map.addControl(new MapboxGeocoder({
+        //   accessToken: mapboxgl.accessToken
+        //  }));
+
+
         
         this.map.on('click', function(e) {
           if (localStorage.getItem("ubicacion")!="undefined") {

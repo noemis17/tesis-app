@@ -65,6 +65,7 @@ export class LoginPage implements OnInit {
           localStorage.setItem("email",ok['items'].email);
           localStorage.setItem("cedula",ok['items'].cedula);
           localStorage.setItem("celular",ok['items'].celular);
+          localStorage.setItem("imagen",ok['items'].imagen);
           var setDato:any[]=[];
           var setUbicacion:any;
           localStorage.setItem("carrito",JSON.stringify(setDato));
@@ -108,8 +109,10 @@ export class LoginPage implements OnInit {
  registroUsuario(){
   this.usuarioService.guardarUsuario(this.user.controls['Nombre'].value, this.user.controls['email'].value,this.user.controls['cedula'].value,this.user.controls['celular'].value,this.user.controls['direccion'].value,this.user.controls['referencia'].value,this.user.controls['Contrasena'].value,this.user.controls['Confirmar'].value)
     .then((ok) => {
+      console.log(ok);
       if(ok['code']=="200"){
-        this.showAlert("Datos Registrado")
+        this.user.reset();
+        this.showAlert("Datos Registrado");
       }else{
         this.showAlert("No se pueden guardar datos")
       }

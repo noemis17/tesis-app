@@ -64,13 +64,13 @@ iconoCargando = false;
   }
   
 
-  // mostrarNotificaciones(){
-  //   if (localStorage.getItem('id')!=null) {
-  //     setInterval(() => {
+  mostrarNotificaciones(){
+    if (localStorage.getItem('id')!=null) {
+      setInterval(() => {
         
-  //     },60000);
-  //   }
-  // }
+      },60000);
+    }
+  }
 
 
   mostrar(){

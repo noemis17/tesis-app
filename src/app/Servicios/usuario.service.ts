@@ -25,7 +25,7 @@ export class UsuarioService {
     //return this.http.post(server+"/v0/ubicacion_store/"+token,_body.toString(),{headers:this._header});
     // this.http.post(server+"/v0/register/",_body.toString(),{headers:this._header})
     return new Promise((resolve, reject) => {
-      this.http.post(server+"/v0/register/",_body.toString(),{headers:this._header})
+      this.http.post(server+"/v0/register",_body.toString(),{headers:this._header})
                 .subscribe(res=>{
                   resolve(res);
                 },(err)=>{

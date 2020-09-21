@@ -1,10 +1,11 @@
 import { Component, OnInit,ViewChild, ElementRef,Injectable } from '@angular/core';
-
+import {DomSanitizer}from '@angular/platform-browser';
 import { PerfilService } from 'src/app/Servicios/perfil.service';
 import { Camera,CameraOptions} from '@ionic-native/camera/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { AlertController,ToastController, ActionSheetController} from '@ionic/angular';
 import { ImagePicker, ImagePickerOptions } from '@ionic-native/image-picker/ngx';
+import { FileUploadOptions, FileTransfer,FileTransferObject } from '@ionic-native/file-transfer/ngx';
 //Providers
 // import { CargarImgProvider }  from '../../providers/cargar-img/cargar-img';
 // import { ServiceProvider }  from '../../providers/service/service';
@@ -38,6 +39,8 @@ export class PerfilPage implements OnInit {
        public webView: WebView,
        public imagePicker: ImagePicker,
        public toastCtrl: ToastController,
+       private transfer: FileTransfer,
+       private DomSanitizer: DomSanitizer
       ) { 
   
 
@@ -50,6 +53,7 @@ export class PerfilPage implements OnInit {
     this.cedula= localStorage.getItem("cedula");
     this.celular= localStorage.getItem("celular");
     this.email= localStorage.getItem("email");
+    this.image = this.DomSanitizer.bypassSecurityTrustUrl("http://25.39.0.74:8000/"+localStorage.getItem("imagen"));
   }
 
 
@@ -67,7 +71,7 @@ export class PerfilPage implements OnInit {
 editar(){
   this.password2=this.password;
 
- this.perfilServi.modificarperfil(this.nombres,this.email,this.cedula,this.celular,this.password,this.password2,this.nome_token_user,this.image)
+ this.perfilServi.modificarperfil(this.nombres,this.email,this.cedula,this.celular,this.password,this.password2,this.nome_token_user)
   .then(data=>{
      console.log(data);
     if(data['code']=='200'){
@@ -77,7 +81,7 @@ editar(){
       this.celular = data['items']['celular'];
       this.password=data['items']['password'];
       this.password2=data['items']['password2'];
-      this.image=data['items']['imagen'];
+      
       this.nome_token_user=localStorage.getItem("nomeToken");
 
       console.log("Datos Modificados");
@@ -94,6 +98,38 @@ editar(){
 
 
 }
+editarContrasena(){
+  this.password2=this.password;
+
+ this.perfilServi.modificarContrasena(this.password,this.password2,this.nome_token_user)
+  .then(data=>{
+     console.log(data);
+    if(data['code']=='200'){
+      this.password=data['items']['password'];
+      this.password2=data['items']['password2'];
+      this.nome_token_user=localStorage.getItem("nomeToken");
+
+     this.showAlert("Contraseña Modificada");
+    }else{
+      console.log(data);
+
+    }
+  }).catch(err=>{
+
+  }).finally(()=>{
+
+  });
+
+
+}
+async showAlert(Mensaje) {
+  const alert = await this.alertController.create({
+    message: Mensaje,
+    buttons: ['ok']
+  });
+  await alert.present();
+};
+
 
 
 passwordTypeInput  =  'password';
@@ -125,29 +161,17 @@ async presentAlertPrompt() {
   });
   actionsheet.present();
 }
-
 takePicture() {
-  const options: CameraOptions = {
-    quality: 50,
-    destinationType: this.camera.DestinationType.FILE_URI,
-    sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-    saveToPhotoAlbum:true,
-    targetWidth:500,
-    targetHeight:500,
-  };
-  this.camera.getPicture(options).then((imageData) => {
-    this.image =imageData;
-    // this.uploadFile()
-    //this.webView.convertFileSrc(imageData);
-  
-  }, (err) => {
-    console.log(err);
+  this.camera.getPicture({
+    destinationType: this.camera.DestinationType.DATA_URL,
+    sourceType     : this.camera.PictureSourceType.CAMERA,
+    mediaType: this.camera.MediaType.PICTURE
+  }).then((imageData) => {
+      this.image = 'data:image/jpeg;base64,' + imageData;
+      this.guardarDocumentoTransaccion(this.image);
+    }, (err) => {
+      console.log(err);
   });
-}
-cancelar()
-{
-this.camaraData=new Date().getTime()+".jpg";
-
 }
 
 camaraData: any;
@@ -159,6 +183,7 @@ AccessGallery(){
  
       let base64Image = 'data:image/jpeg;base64,' + imageData;
       this.image = base64Image;
+      this.guardarDocumentoTransaccion(this.image);
          }, (err) => {
 
       console.log(err);
@@ -166,6 +191,46 @@ AccessGallery(){
     });
 
  }
+ guardarDocumentoTransaccion(_imagen: string) {
+  // debugger
+  const fileTransfer: FileTransferObject = this.transfer.create();
+//  let params:datos[]=[]; 
+  
+ // params.push({nombre:'tomas', apellido:'loor'});
+  let options: FileUploadOptions = {
+    fileKey: 'file',
+    fileName: 'pipo.jpg',
+    chunkedMode: false,
+    httpMethod: 'post',
+    mimeType: 'image/jpeg',
+    //params : params,
+     headers: {}
+ }
+// var params = {nombre:'tomas', apellido:'loor'};
+
+
+/*   options.params = {
+  Value: JSON.stringify({
+    nombre: 'toma',
+    apellido: 'loor'
+  })
+}; */
+//  options.params = params;
+ //fileTransfer.upload(this.image, 'http://192.168.0.104:8000/upload.php', options)
+ fileTransfer.upload(_imagen, 'http://25.39.0.74:8000/api/v0/guardarImagenUsuario/'+localStorage.getItem("nomeToken"), options)
+  .then((data) => {
+    //debugger
+    // success
+   
+  }, (err) => {
+    // error
+    //  debugger
+    alert("error"+JSON.stringify(err));
+    console.log("error"+JSON.stringify(err))
+  });
+
+
+}
 
 
 // mostrar_mensaje(msj){
