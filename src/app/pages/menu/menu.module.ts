@@ -8,7 +8,8 @@ import { MenuPageRoutingModule } from './menu-routing.module';
 
 import { MenuPage } from './menu.page';
 import { ComponentsModule } from 'src/app/components/components.module';
-import { LocalNotifications} from '@ionic-native/local-notifications/ngx'
+import { LocalNotifications} from '@ionic-native/local-notifications/ngx';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -20,6 +21,6 @@ import { LocalNotifications} from '@ionic-native/local-notifications/ngx'
   providers: [
     LocalNotifications,
   ],
-  declarations: [MenuPage]
+  declarations: [MenuPage,]
 })
 export class MenuPageModule {}

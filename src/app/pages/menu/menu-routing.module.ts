@@ -46,12 +46,17 @@ const routes: Routes = [
       {
         path: 'orden',
         loadChildren: () => import('./orden/orden.module').then( m => m.OrdenPageModule)
+      },
+      {
+        path: 'inicio',
+        loadChildren: () => import('./inicio/inicio.module').then( m => m.InicioPageModule)
       }
       
       
       ]
 
   }
+
   // ,
   // {
   //   path: 'mapa',

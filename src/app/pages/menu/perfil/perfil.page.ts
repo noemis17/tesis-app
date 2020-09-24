@@ -6,11 +6,11 @@ import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { AlertController,ToastController, ActionSheetController} from '@ionic/angular';
 import { ImagePicker, ImagePickerOptions } from '@ionic-native/image-picker/ngx';
 import { FileUploadOptions, FileTransfer,FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { TransportistaService } from 'src/app/Servicios/transportista.service';
+
 //Providers
 // import { CargarImgProvider }  from '../../providers/cargar-img/cargar-img';
-// import { ServiceProvider }  from '../../providers/service/service';
-
-
+// import { ServiceProvider }  from '../../providers/service/service',
 //import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 
 
@@ -39,21 +39,40 @@ export class PerfilPage implements OnInit {
        public webView: WebView,
        public imagePicker: ImagePicker,
        public toastCtrl: ToastController,
-       private transfer: FileTransfer,
-       private DomSanitizer: DomSanitizer
-      ) { 
-  
 
+       private transfer: FileTransfer,
+       private DomSanitizer: DomSanitizer,
+       private transportistaServe: TransportistaService,
+
+      ) { 
    }
 
   ngOnInit() {
-
+   
+    if(localStorage.getItem("cod")=='002'){
+      
+      setInterval(() => {
+        
+        navigator.geolocation.getCurrentPosition(position => {
+          
+          this.transportistaServe.guardarUbicacionTransportista(position.coords.longitude, position.coords.latitude, localStorage.getItem("id"))
+          .then((ok) => {
+            
+           })
+           .catch((error) => {
+             console.log(error);
+            });
+          
+        });
+       
+      },60000);
+    }
     this.nome_token_user = localStorage.getItem("nomeToken");
     this.nombres = localStorage.getItem("name");
     this.cedula= localStorage.getItem("cedula");
     this.celular= localStorage.getItem("celular");
     this.email= localStorage.getItem("email");
-    this.image = this.DomSanitizer.bypassSecurityTrustUrl("http://25.39.0.74:8000/"+localStorage.getItem("imagen"));
+    this.image = this.DomSanitizer.bypassSecurityTrustUrl("http://blooming-plateau-78501.herokuapp.com/"+localStorage.getItem("imagen"));
   }
 
 
@@ -217,7 +236,7 @@ AccessGallery(){
 }; */
 //  options.params = params;
  //fileTransfer.upload(this.image, 'http://192.168.0.104:8000/upload.php', options)
- fileTransfer.upload(_imagen, 'http://25.39.0.74:8000/api/v0/guardarImagenUsuario/'+localStorage.getItem("nomeToken"), options)
+ fileTransfer.upload(_imagen, 'http://blooming-plateau-78501.herokuapp.com/api/v0/guardarImagenUsuario/'+localStorage.getItem("nomeToken"), options)
   .then((data) => {
     //debugger
     // success

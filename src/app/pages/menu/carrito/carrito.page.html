@@ -30,7 +30,7 @@
     
     <ion-item>
       <ion-img class="ESTILO "  *ngIf=" carri.file_name == null" src="/assets/SUPERCITO.png"></ion-img>
-      <ion-img class="ESTILOIMAGEN" *ngIf=" carri.file_name != null" src="http://localhost:8000/img/items/{{ carri.file_name}}.{{ carri.file_extension}}"></ion-img>
+      <ion-img class="ESTILOIMAGEN" *ngIf=" carri.file_name != null" src="http://blooming-plateau-78501.herokuapp.com/img/items/{{ carri.file_name}}.{{ carri.file_extension}}"></ion-img>
       <ion-label>
         <h3 class="text" lines="full">{{ carri.NAME}}</h3>
         <p class="text1">Precio:&nbsp;&nbsp;{{ carri.PRICE | currency:"USD":true}}</p>

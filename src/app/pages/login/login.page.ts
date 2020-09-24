@@ -5,7 +5,9 @@ import { Router } from '@angular/router';
 import {UsuarioService } from '../../Servicios/usuario.service';
 import { AlertController,LoadingController,ToastController, IonInput } from '@ionic/angular';
 import { Camera,CameraOptions} from '@ionic-native/camera/ngx';
+import { TransportistaService } from '../../Servicios/transportista.service';
 
+import * as  mapboxgl from 'mapbox-gl';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -23,6 +25,7 @@ export class LoginPage implements OnInit {
     public alertController: AlertController,
     private router:Router,
     private toastController: ToastController,
+    private transportistaServe: TransportistaService,
     ) {
       this.todo = this.formBuilder.group({
         Usuario: ['', Validators.required],
@@ -58,9 +61,39 @@ export class LoginPage implements OnInit {
         if(ok['items'] == null){
           this.presentToast("El usuario o la contraceña son incorrectos",3000);
         }else{
-          this.router.navigateByUrl("menu/vista-producto");
+        console.log('hola',ok);
+          if(ok['items']['tipo']['cod']=='002'){
+            setInterval(() => {
+              
+              navigator.geolocation.getCurrentPosition(position => {
+                
+                this.transportistaServe.guardarUbicacionTransportista(position.coords.longitude, position.coords.latitude, localStorage.getItem("id"))
+                .then((ok) => {
+                 })
+                 .catch((error) => {
+                   console.log(error);
+                  });
+                
+              });
+             
+            },60000);
+          }
+          /*
+          
+           setInterval(() => {
+        navigator.geolocation.getCurrentPosition(position => {
+          this.lugar[1].setLngLat([position.coords.longitude, position.coords.latitude]);
+          this.directions.setDestination([position.coords.longitude, position.coords.latitude]);
+          this.guardarUbicacionTransportista(position.coords.longitude, position.coords.latitude);
+        });
+      },60000);
+          */
+        //  debugger
+          var hogo =ok['items']['tipo']['cod'];
+
           localStorage.setItem("nomeToken",ok['items'].nome_token);
           localStorage.setItem("id",ok['items'].id);
+          localStorage.setItem("cod",ok['items']['tipo']['cod']);
           localStorage.setItem("name",ok['items'].name);
           localStorage.setItem("email",ok['items'].email);
           localStorage.setItem("cedula",ok['items'].cedula);
@@ -71,6 +104,8 @@ export class LoginPage implements OnInit {
           localStorage.setItem("carrito",JSON.stringify(setDato));
           localStorage.setItem("carritoPromociones",JSON.stringify(setDato));
           localStorage.setItem("ubicacion",JSON.stringify(setUbicacion));
+          this.router.navigateByUrl("menu/inicio");
+          
         }
         console.log(ok);
       })

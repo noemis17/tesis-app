@@ -36,13 +36,16 @@ export class TransportistaService {
          });
   }
   guardarUbicacionTransportista(longitud,latitud,idUsuario){
+
+  
     const _body = new HttpParams()
       .set("longitud",longitud)
       .set("latitud",latitud)
       .set("idUsuario",idUsuario)
       ;
+
     return new Promise((resolve, reject) => {
-      this.http.post(server+"/v0/PosicionTrasnportista/",_body.toString(),{headers:this._header})
+      this.http.post(server+"/v0/PosicionTrasnportista",_body.toString(),{headers:this._header})
                 .subscribe(res=>{
                   resolve(res);
                 },(err)=>{

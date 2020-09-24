@@ -39,7 +39,7 @@ export class CarritoService {
       ;
     return new Promise((resolve, reject) => {
       // this.http.post(server+"/v0/ComprarProducto/",_body.toString(),{headers:this._header})
-      this.http.post(server+"/v0/ComprarProducto/",_body.toString(),{headers:this._header})
+      this.http.post(server+"/v0/ComprarProducto",_body.toString(),{headers:this._header})
                 .subscribe(res=>{
                   resolve(res);
                 },(err)=>{
