@@ -18,23 +18,32 @@
   <ion-list >
    
     <ion-item *ngFor="let item of  tipoPago" button (click)="registroPago(item)" >
+      <ion-row >
+        <ion-col>
      <ion-avatar slot="start">
         <ion-icon name="cash-outline"></ion-icon>
       </ion-avatar> 
       <ion-label>{{item.descricion}}</ion-label>
       <!-- <img *ngIf="image" [src]="image" >  -->
+    </ion-col> 
+  </ion-row>
+
     </ion-item>
   </ion-list>
-  <br>
-  <br>
-  <br>
-  <br>
+
+ 
 
    <!-- <img *ngIf="image" [src]="image" >   -->
+<br>
+    <div *ngIf="image">
+      <ion-button  color="danger"  (click)="abrirModaComprobante()" expand="block" shape="round" fill="outline">Ver Comprobante</ion-button>
+ 
+    </div> 
+     
 
-    <ion-button *ngIf="image" (click)="guardarDocumentoTransaccion(image)" color="warning"  size="small" shape="round" class="boton " > 
+     <!-- <ion-button *ngIf="image" (click)="guardarDocumentoTransaccion(image)" color="warning"  size="small" shape="round" class="boton " > 
         <ion-icon slot="start" name="cart-outline"></ion-icon> Agregar
-      </ion-button>
-      <img *ngIf="image" [src]="image" > 
+      </ion-button> -->
+     
 </ion-content>
 

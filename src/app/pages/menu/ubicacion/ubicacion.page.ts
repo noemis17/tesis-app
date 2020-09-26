@@ -69,11 +69,12 @@ export class UbicacionPage implements OnInit {
           center: [pos_Longitud, pos_Latitud],
           zoom: 13,
         });
-        this.map.addControl(new MapboxGeocoder({
-            accessToken: mapboxgl.accessToken,
-            mapboxgl: mapboxgl
+        this.map.addControl(
+          new MapboxGeocoder({
+          accessToken: mapboxgl.accessToken,
+          mapboxgl: mapboxgl
           })
-        );
+          );
         
         this.map.addControl(new mapboxgl.NavigationControl());
         this.map.addControl(new mapboxgl.FullscreenControl());

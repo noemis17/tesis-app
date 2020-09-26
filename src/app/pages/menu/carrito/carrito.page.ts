@@ -167,6 +167,7 @@ export class CarritoPage implements OnInit {
         }
       });
     }
+    console.log(this.carritoPromociones)
   }
   
   eliminarPromocion(carripro) {

@@ -1,0 +1,26 @@
+<ion-header class="ion-no-border" translucent>
+  <ion-toolbar >
+    <ion-title>Comprobante</ion-title>
+    <ion-buttons slot="end">
+      <ion-button  (click)="closeModal()">
+        <ion-icon name="close-circle-sharp"></ion-icon>
+      </ion-button>
+    </ion-buttons> 
+  
+  </ion-toolbar>
+  
+</ion-header>
+
+<ion-content>
+<ion-card  class="card-image">
+  
+  <img *ngIf="image" [src]="image" >
+  <br>
+  <br>
+  <div >
+    <ion-button  color="danger"  (click)="guardarDocumentoTransaccion(image)" expand="block" shape="round" fill="outline">Realizar Compra</ion-button>
+
+  </div>
+</ion-card>
+
+</ion-content>

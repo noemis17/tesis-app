@@ -118,7 +118,7 @@
 // }
 
 import { Component, OnInit } from '@angular/core';
-
+import {DomSanitizer}from '@angular/platform-browser';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -193,7 +193,8 @@ export class MenuPage implements OnInit {
     private statusBar: StatusBar,
     private camera: Camera,
     private UsuarioService:UsuarioService,
-    private webView: WebView
+    private webView: WebView,
+    private DomSanitizer: DomSanitizer,
   ) {
     this.initializeApp();
   }
@@ -208,12 +209,13 @@ export class MenuPage implements OnInit {
  
   ngOnInit() {
     this.email= localStorage.getItem("email");
+    this.image= this.DomSanitizer.bypassSecurityTrustUrl("http://blooming-plateau-78501.herokuapp.com/"+localStorage.getItem("imagen"));
     const path = window.location.pathname.split('folder/')[1];
     if (path !== undefined) {
       this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
     }
   }
-  image: string;
+  image: any;
   takePicture() {
     const options: CameraOptions = {
       quality: 100,

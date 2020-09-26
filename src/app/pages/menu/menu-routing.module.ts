@@ -56,6 +56,12 @@ const routes: Routes = [
       ]
 
   }
+  // ,
+  // {
+  //   path: 'comprobante',
+  //   loadChildren: () => import('./comprobante/comprobante.module').then( m => m.ComprobantePageModule)
+  // }
+
 
   // ,
   // {

@@ -96,8 +96,9 @@ export class PromocionPage implements OnInit {
 
   agregarCarritoPromociones(item){
     if(JSON.parse(localStorage.getItem("carritoPromociones")) == null){
-      localStorage.setItem("carritoPromociones",JSON.stringify(item));
-
+      var myJsonPromociones=[];
+      myJsonPromociones.push(item);
+      localStorage.setItem("carritoPromociones",JSON.stringify(myJsonPromociones));
     }else{
       var myJsonPromociones=[];
       var carritoPromociones=[];

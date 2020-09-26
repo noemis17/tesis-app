@@ -13,6 +13,7 @@ import * as  mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import { FileUploadOptions, FileTransfer,FileTransferObject } from '@ionic-native/file-transfer/ngx';
 //import { File } from '@ionic-native/file';
+import { ComprobantePage } from '../comprobante/comprobante.page';
 
 declare var google;
 @Component({
@@ -22,11 +23,13 @@ declare var google;
 })
 export class PagoPage implements OnInit {
   mapRef = null;
+  verTransferencia=false;
   carritoProducto: any[] = [];
   carritoPromociones: any[] = [];
   tipoPago: any = [];
   totalAPagar: any;
   image: string;
+ 
   constructor(
     public alertController: AlertController,
     private modalC: ModalController,
@@ -64,6 +67,7 @@ export class PagoPage implements OnInit {
       .then(data => {
         if (data['code'] == "200") {
           this.tipoPago = data['items'];
+          console.log( this.tipoPago );
         }
       });
   }
@@ -94,8 +98,10 @@ export class PagoPage implements OnInit {
       }
     } else {
       // aqui va el codigo donde accede a la camara o a la galeria del telefono
+
       this.idTipoPago = item.id;
       this.presentAlertPrompt();
+      
       
 
      }
@@ -136,61 +142,17 @@ export class PagoPage implements OnInit {
     });
     actionsheet.present();
   }
-  // async presentAlertPrompt() {
-  //   const alert = await this.alertController.create({
-  //     cssClass: 'my-custom-class',
-  //     header: 'Comprobante',
-  //     mode: 'ios',
-  //     inputs: [
-  //       {
-  //         name: 'radio1',
-  //         type: 'radio',
-  //         label: 'Camara',
-  //         value: 'value1',
-  //         checked: true,
-  //         handler: () => {
-  //           console.log('hoohohoh');
-  //           this.takePicture();
-  //         }
-  //       },
-  //       {
-  //         name: 'radio2',
-  //         type: 'radio',
-  //         label: 'galeria',
-  //         value: 'value2',
-  //         handler: () => {
-  //           console.log('hoohohoh');
-  //           this.AccessGallery();
-  //         }
-  //       }
-  //     ],
-  //     buttons: [
-  //       {
-  //         text: 'Cancel',
-  //         role: 'cancel',
-  //         cssClass: 'alertButton',
-  //         handler: () => {
-  //           console.log('Confirm Cancel');
-  //         }
-  //       }, {
-  //         text: 'Ok',
-  //         cssClass: 'alertButton',
-  //         handler: () => {
-  //           this.guardarDocumentoTransaccion(this.image);
-  //         }
-  //       }
-  //     ]
-  //   });
 
-  //   await alert.present();
-  // }
   takePicture() {
     this.camera.getPicture({
       destinationType: this.camera.DestinationType.DATA_URL,
       sourceType     : this.camera.PictureSourceType.CAMERA,
       mediaType: this.camera.MediaType.PICTURE
     }).then((imageData) => {
+  
         this.image = 'data:image/jpeg;base64,' + imageData;
+      //  this.guardarDocumentoTransaccion(this.image);
+        // this.abrirModaComprobante();
       }, (err) => {
         console.log(err);
     });
@@ -201,8 +163,9 @@ export class PagoPage implements OnInit {
       destinationType: this.camera.DestinationType.DATA_URL
 
     }).then((imageData) => {
-
+  
       this.image = 'data:image/jpeg;base64,' + imageData;
+      // this.guardarDocumentoTransaccion(this.image);
      
     }, (err) => {
 
@@ -212,55 +175,77 @@ export class PagoPage implements OnInit {
 
   }
 
-  guardarDocumentoTransaccion(_imagen: string) {
-    // debugger
-    const fileTransfer: FileTransferObject = this.transfer.create();
-  //  let params:datos[]=[]; 
+//   guardarDocumentoTransaccion(_imagen: string) {
+//     // debugger
+//     const fileTransfer: FileTransferObject = this.transfer.create();
+//   //  let params:datos[]=[]; 
     
-   // params.push({nombre:'tomas', apellido:'loor'});
-    let options: FileUploadOptions = {
-      fileKey: 'file',
-      fileName: 'pipo.jpg',
-      chunkedMode: false,
-      httpMethod: 'post',
-      mimeType: 'image/jpeg',
-      //params : params,
-       headers: {}
-   }
-// var params = {nombre:'tomas', apellido:'loor'};
+//    // params.push({nombre:'tomas', apellido:'loor'});
+//     let options: FileUploadOptions = {
+//       fileKey: 'file',
+//       fileName: 'pipo.jpg',
+//       chunkedMode: false,
+//       httpMethod: 'post',
+//       mimeType: 'image/jpeg',
+//       //params : params,
+//        headers: {}
+//    }
+// // var params = {nombre:'tomas', apellido:'loor'};
 
 
-/*   options.params = {
-    Value: JSON.stringify({
-      nombre: 'toma',
-      apellido: 'loor'
-    })
-  }; */
- //  options.params = params;
-   //fileTransfer.upload(this.image, 'http://192.168.0.104:8000/upload.php', options)
-  //  console.log(_imagen)
-  //  console.log(localStorage.getItem("nomeToken"))
-  //  console.log(this.idTipoPago)
-  //  console.log(this.totalAPagar)
-  //  console.log(JSON.parse(localStorage.getItem("ubicacion"))['lat'])
-  //  console.log(JSON.parse(localStorage.getItem("ubicacion"))['lng'])
-  //  console.log(JSON.stringify(this.carritoPromociones))
-  //  console.log(JSON.stringify(this.carritoProducto))
-   fileTransfer.upload(_imagen, 'http://blooming-plateau-78501.herokuapp.com/api/v0/guardarDocumentoTransaccion/'+localStorage.getItem("nomeToken")+"/"+this.idTipoPago+"/"+this.totalAPagar+"/"+JSON.parse(localStorage.getItem("ubicacion"))['lat']+"/"+JSON.parse(localStorage.getItem("ubicacion"))['lng']+"/"+JSON.stringify(this.carritoPromociones)+"/"+JSON.stringify(this.carritoProducto), options)
-    .then((data) => {
-       var setDato: any[] = [];
-              localStorage.setItem("carrito", JSON.stringify(setDato));
-              localStorage.setItem("carritoPromociones", JSON.stringify(setDato));
-      this.showAlertPago("Compra exitosa");
-    }, (err) => {
-      // error
-      //  debugger
-      alert("error"+JSON.stringify(err));
-      console.log("error"+JSON.stringify(err))
-    });
+// /*   options.params = {
+//     Value: JSON.stringify({
+//       nombre: 'toma',
+//       apellido: 'loor'
+//     })
+//   }; */
+//    console.log(_imagen)
+//     console.log(localStorage.getItem("nomeToken"))
+//     console.log(this.idTipoPago)
+//     console.log(this.totalAPagar)
+//     console.log(JSON.parse(localStorage.getItem("ubicacion"))['lat'])
+//     console.log(JSON.parse(localStorage.getItem("ubicacion"))['lng'])
+//     console.log(JSON.stringify(this.carritoPromociones))
+//     console.log(JSON.stringify(this.carritoProducto))
+//    fileTransfer.upload(_imagen,'https://blooming-plateau-78501.herokuapp.com/api/v0/guardarDocumentoTransaccion/'+localStorage.getItem("nomeToken")+"/"+this.idTipoPago+"/"+this.totalAPagar+"/"+JSON.parse(localStorage.getItem("ubicacion"))['lat']+"/"+JSON.parse(localStorage.getItem("ubicacion"))['lng']+"/"+JSON.stringify(this.carritoPromociones)+"/"+JSON.stringify(this.carritoProducto), options)
+//    .then((data) => {
+//     console.log(data)
+//     if (data['code'] == "200") {
+//       var setDato: any[] = [];
+//       localStorage.setItem("carrito", JSON.stringify(setDato));
+//       localStorage.setItem("carritoPromociones", JSON.stringify(setDato));
+//       this.showAlert("Compra realizada exitosamenete");
+      
+
+//     }
+//     debugger
+//     // success
+//     alert("success");
+//     }, (err) => {
+//       // error
+//       // debugger
+//       alert("error"+JSON.stringify(err));
+//       console.log("error"+JSON.stringify(err))
+//     });
 
   
-  }
+//   }
+
+
+  async abrirModaComprobante(){
+    const modal = await this.modalC.create({
+      component: ComprobantePage ,
+      componentProps: {
+        "comprobate": this.image,
+        "pago":this.totalAPagar,
+        "promo":this.carritoPromociones,
+        "product":this.carritoProducto,
+        "tipo":this.idTipoPago,
+        
+      }
+     });
+     return await modal.present();
+   }
   async showAlertPago(Mensaje) {
     const alert = await this.alertController.create({
       message: Mensaje,

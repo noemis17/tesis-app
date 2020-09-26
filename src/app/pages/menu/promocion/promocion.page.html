@@ -12,7 +12,7 @@
   </ion-toolbar>
   <ion-searchbar   placeholder="Promociones"  color="warning"  (ionChange)="buscar( $event )"animated  style="padding-top: 0px;" mode="ios" ></ion-searchbar>
 </ion-header>
-<ion-content >
+<ion-content *ngIf="promociones.length > 0">
  <ion-card  (click)="expandItem(item)" *ngFor="let item of  promociones |filtro: textoPromocion:'descripcion'">
   <ion-card-header >
     <ion-card-title ><h5 > {{item.descripcion}}</h5> 
@@ -50,6 +50,15 @@
 
 </app-promociones-com>
 </ion-card-content>
+
 </ion-card> 
 </ion-content>
-
+<ion-content *ngIf="promociones.length == 0">
+  
+  <ion-card>
+    
+    <ion-card-content>
+    NO HAY PROMOCIONES
+    </ion-card-content>
+  </ion-card>
+</ion-content>

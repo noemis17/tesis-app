@@ -102,7 +102,7 @@
         overflow: hidden;
 
         &.active {
-            height: calc(105% - 180px);
+            height: calc(110% - 180px);
         }
         
         .toggle-text {
@@ -126,8 +126,8 @@
     background-size: cover;
     font-family: sans-serif;
     height: 100vh;
-    --background: linear-gradient(180deg, rgb(255, 255, 255) 0%, rgb(224, 231, 231) 100%);
-    background: linear-gradient(180deg, rgb(255, 255, 255) 0%, rgb(224, 231, 231) 100%);
+    --background: linear-gradient(180deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 100%);
+    background: linear-gradient(180deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 100%);
 }
 
 .gradient-2 {

@@ -104,7 +104,16 @@ export class LoginPage implements OnInit {
           localStorage.setItem("carrito",JSON.stringify(setDato));
           localStorage.setItem("carritoPromociones",JSON.stringify(setDato));
           localStorage.setItem("ubicacion",JSON.stringify(setUbicacion));
-          this.router.navigateByUrl("menu/inicio");
+          
+          
+          const user_tipo=localStorage.getItem("cod");
+          if (user_tipo=="002") {
+            this.router.navigateByUrl("menu/orden");
+           
+          }
+          else{
+            this.router.navigateByUrl("menu/vista-producto");
+          }
           
         }
         console.log(ok);
