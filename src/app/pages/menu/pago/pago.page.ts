@@ -152,7 +152,7 @@ export class PagoPage implements OnInit {
   
         this.image = 'data:image/jpeg;base64,' + imageData;
       //  this.guardarDocumentoTransaccion(this.image);
-        // this.abrirModaComprobante();
+         this.abrirModaComprobante();
       }, (err) => {
         console.log(err);
     });
@@ -166,7 +166,7 @@ export class PagoPage implements OnInit {
   
       this.image = 'data:image/jpeg;base64,' + imageData;
       // this.guardarDocumentoTransaccion(this.image);
-     
+      this.abrirModaComprobante();
     }, (err) => {
 
       console.log(err);
