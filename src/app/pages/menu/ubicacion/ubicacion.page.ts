@@ -24,7 +24,7 @@ export class UbicacionPage implements OnInit {
     private modalC: ModalController,
     private geolocation: Geolocation
    ) {
-    
+
   }
   posicion_: any[] = [];
   //dataPosicionCenter: any;
@@ -34,7 +34,7 @@ export class UbicacionPage implements OnInit {
       localStorage.setItem("ubicacion",JSON.stringify(this._marker));
     }
     this.posicion();
-  
+
   }
   latitud = 0;
   longitud = 0;
@@ -55,7 +55,7 @@ export class UbicacionPage implements OnInit {
     });
   }
   posicion() {
-    
+
     mapboxgl.accessToken = 'pk.eyJ1Ijoibm9lbWkxNyIsImEiOiJja2U0eDlmbXUweGVlMnptdzhyMmhxY3NqIn0.pdK5JCeAlWgpAXIfQIKovQ';
     var pos_Latitud;
     var pos_Longitud;
@@ -69,33 +69,30 @@ export class UbicacionPage implements OnInit {
           center: [pos_Longitud, pos_Latitud],
           zoom: 13,
         });
-        this.map.addControl(
-          new MapboxGeocoder({
-          accessToken: mapboxgl.accessToken,
-          mapboxgl: mapboxgl
-          })
-          );
-        
+        // this.map.addControl(
+        //   new MapboxGeocoder({
+        //   accessToken: mapboxgl.accessToken,
+        //   mapboxgl: mapboxgl
+        //   })
+        //   );
+
         this.map.addControl(new mapboxgl.NavigationControl());
         this.map.addControl(new mapboxgl.FullscreenControl());
-        // this.map.addControl(new mapboxgl.GeolocateControl({
-        //   positionOptions: {
-        //     enableHighAccuracy: true
-        //   },
-        //   trackUserLocation: true
-        // }));
-    
+        this.map.addControl(new mapboxgl.GeolocateControl({
+          positionOptions: {
+            enableHighAccuracy: true
+          },
+          trackUserLocation: true
+        }));
+
         // this.map.on('mousemove', function (e) {
         //   document.getElementById('coordenadas').innerHTML =
         // JSON.stringify(e.lngLat);
         //  });
-      
+
         // this.map.addControl(new MapboxGeocoder({
         //   accessToken: mapboxgl.accessToken
         //  }));
-
-
-        
         this.map.on('click', function(e) {
           if (localStorage.getItem("ubicacion")!="undefined") {
             if (this._marker!= undefined) {
@@ -117,6 +114,28 @@ export class UbicacionPage implements OnInit {
               this.resize();
           }
         });
+        this.map.on('mousemove', function(e) {
+          var features = this.queryRenderedFeatures(e.point);
+          var displayProperties = [
+            'type',
+            'properties',
+            'id',
+            'layer',
+            'source',
+            'sourceLayer',
+            'state'
+            ];
+            var displayFeatures = features.map(function (feat) {
+              var displayFeat = {};
+              displayProperties.forEach(function (prop) {
+              displayFeat[prop] = feat[prop];
+              });
+              return displayFeat;
+            });
+            if (displayFeatures[0]!=undefined) {
+              document.getElementById('features').innerHTML = displayFeatures[0]['properties']['name'];
+            }
+        });
        }).catch((error) => {
          console.log('Error getting location', error);
       });
@@ -124,6 +143,6 @@ export class UbicacionPage implements OnInit {
 
   async closeModal() {
     await this.modalC.dismiss();
-  }    
-  
+  }
+
 }
