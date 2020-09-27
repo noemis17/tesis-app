@@ -56,7 +56,7 @@ export class ComprobantePage implements OnInit {
   //   console.log(JSON.parse(localStorage.getItem("ubicacion"))['lng'])
   //   console.log(JSON.stringify(this.carritoPromociones))
   //   console.log(JSON.stringify(this.carritoProducto))
-   fileTransfer.upload(_imagen, 'http://blooming-plateau-78501.herokuapp.com/api/v0/guardarDocumentoTransaccion/'+localStorage.getItem("nomeToken")+"/"+this.idTipoPago+"/"+this.totalAPagar+"/"+JSON.parse(localStorage.getItem("ubicacion"))['lat']+"/"+JSON.parse(localStorage.getItem("ubicacion"))['lng']+"/"+JSON.stringify(this.carritoPromociones)+"/"+JSON.stringify(this.carritoProducto), options)
+   fileTransfer.upload(_imagen, 'http://198.168.1.4:8000/api/v0/guardarDocumentoTransaccion/'+localStorage.getItem("nomeToken")+"/"+this.idTipoPago+"/"+this.totalAPagar+"/"+JSON.parse(localStorage.getItem("ubicacion"))['lat']+"/"+JSON.parse(localStorage.getItem("ubicacion"))['lng']+"/"+JSON.stringify(this.carritoPromociones)+"/"+JSON.stringify(this.carritoProducto), options)
     .then((data) => {
        var setDato: any[] = [];
               localStorage.setItem("carrito", JSON.stringify(setDato));

@@ -9,15 +9,14 @@ export class PerfilService {
 
   constructor(private http:HttpClient) { }
   private _header = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-  modificarperfil(name,email,cedula,celular,password,password2,nome_token_user){
+  modificarperfil(name,email,cedula,celular,nome_token_user){
     const _body = new HttpParams()
     .set("nome_token",nome_token_user)
     .set("name",name)
     .set("email",email)
     .set("cedula",cedula)
     .set("celular",celular)
-    .set("password",password)
-    .set("password2",password2)
+  
   ;
 
     return new Promise((resolve, reject) => {
@@ -35,7 +34,6 @@ export class PerfilService {
     .set("password",password)
     .set("password2",password2)
   ;
-
     return new Promise((resolve, reject) => {
       this.http.put(server+"/v0/contrasena_update/"+nome_token_user,_body)
                 .subscribe(res=>{

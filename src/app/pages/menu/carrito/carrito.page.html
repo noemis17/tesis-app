@@ -11,18 +11,30 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding ">
-  <ion-button class="boton" color="danger"  (click)="validarCarrito()" expand="block" shape="round" fill="outline">Proceso de pago</ion-button>
+
   <br>
-  <p class="text1">Precio:&nbsp;&nbsp;{{ totalAPagar | currency:"USD":true}}</p>
-  <!-- <ion-input style="border:1px solid #68d636" type="number" inputmode="numeric" maxlength="3" placeholder="Tempo de Entrega" [required]="true" appInputInteger>
-  </ion-input> -->
-  <!-- <div class="row">
-      <ion-button class="shadow-red" color="warning"  (click)="validarubicacion()" expand="small" shape="round" fill="outline"><img src="/assets/mapa.png" class="compra1">
-         <p style="color:black;font-weight:bold">
-          &nbsp;&nbsp;Verificar Ubicación De Entrega
-         </p>
-      </ion-button>
-  </div> -->
+  
+  <ion-row>
+    <ion-col style="align-self: center;
+    place-self: flex-end;" >
+    <label>ubicación de entrega</label>
+    </ion-col>
+    <ion-col (click)="abrirModalubicacion()" style="text-align-last: end;">
+      <img src="/assets/mapa.png" class="compra1">
+    </ion-col>
+  </ion-row>
+  <br>
+    <ion-row>
+      <ion-col style="align-self: center;
+      place-self: flex-end;" >
+        <p class="text1">Precio:&nbsp;&nbsp;{{ totalAPagar | currency:"USD":true}}</p>
+      </ion-col>
+      <ion-col>
+        <ion-button class="boton" color="danger"  (click)="validarCarrito()" expand="block" shape="round" fill="outline">Finalizar Pedido</ion-button>
+      </ion-col>
+    </ion-row>
+ 
+
   <br>
   <ion-list *ngFor="let  carri of  carritoProducto">
     <ion-row [ngClass]="carri.PermitirVender?'positivo':'negativo'">
@@ -34,7 +46,7 @@
         <p class="text1">Precio:&nbsp;&nbsp;{{ carri.PRICE | currency:"USD":true}}</p>
         <div class="row">
           <div class="col-12">
-            <input (change)="modificarCantidad(carri,$event)" style="border: 1px solid white;width: -webkit-fill-available;margin-left: 15px;" type="number" name="" [(ngModel)]="carri.cantidad" min="1" max="carri.cantidad">
+            <input (change)="modificarCantidad(carri,$event)" style="border: 1px solid rgb(240, 240, 240);width: -webkit-fill-available;margin-left: 15px;" type="number" name="" [(ngModel)]="carri.cantidad" min="1" max="carri.cantidad">
           </div>
         </div>
         <ion-buttons>
@@ -44,27 +56,7 @@
         </ion-buttons>
       </ion-label>
     </ion-item>
-    <!-- <ion-item *ngFor="let carripro of carritoPromociones" [ngClass]="carripro.PermitirVender?'positivo':'negativo'">
-      <ion-img class="ESTILO "  *ngIf="  carripro.file_name == null" src="/assets/SUPERCITO.png"></ion-img>
-      <ion-label>
-        <h3 class="text" lines="full">{{carripro.descripcion}}</h3>
-        <p class="text1">Precio:&nbsp;&nbsp;${{carripro.PrecioPromocionConDescuento |number}}</p>
-         <p class="text1">Cantidad:&nbsp;&nbsp;{{carripro.Carritocantidad}} &nbsp;
-          <ion-icon (click)="modificarCantidadKit(carripro,$event)" class="icongrande" slot=" icon-only end" name="add-circle-outline"></ion-icon>
-        </p>
-        <div class="row">
-          <div class="col-12">
-            <input (change)="modificarCantidadKit(carripro,$event)" style="border: 1px solid white;width: -webkit-fill-available;margin-left: 15px;" type="number" name="" [(ngModel)]="carripro.Carritocantidad" min="1" max="carripro.cantidad">
-          </div>
-        </div>
-        <ion-buttons>
-          <ion-button (click)="eliminarPromocion(carripro.id)" class="boton">
-            <ion-icon slot="start" name="trash-outline"> </ion-icon>
-          </ion-button>
-        </ion-buttons>
-      </ion-label>
-    
-    </ion-item> -->
+
     
     </ion-row>
     
@@ -100,9 +92,9 @@
   </ion-list>
 
 </ion-content>
-<ion-footer>
+<!-- <ion-footer>
   <ion-toolbar  (click)=" abrirModalubicacion()">
     <ion-title> Ubicación De Entrega</ion-title>
   </ion-toolbar>
-</ion-footer>
+</ion-footer> -->
 

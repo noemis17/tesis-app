@@ -90,7 +90,7 @@ export class PerfilPage implements OnInit {
 editar(){
   this.password2=this.password;
 
- this.perfilServi.modificarperfil(this.nombres,this.email,this.cedula,this.celular,this.password,this.password2,this.nome_token_user)
+ this.perfilServi.modificarperfil(this.nombres,this.email,this.cedula,this.celular,this.nome_token_user)
   .then(data=>{
      console.log(data);
     if(data['code']=='200'){
@@ -98,8 +98,7 @@ editar(){
       this.email=data['items']['email'];
       this.cedula=data['items']['cedula'];
       this.celular = data['items']['celular'];
-      this.password=data['items']['password'];
-      this.password2=data['items']['password2'];
+  
       
       this.nome_token_user=localStorage.getItem("nomeToken");
 
