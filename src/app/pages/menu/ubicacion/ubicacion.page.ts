@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { LoadingController,NavParams,  ModalController} from '@ionic/angular';
 import * as  mapboxgl  from 'mapbox-gl';
+import { Router } from '@angular/router';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import { RutaService, Feature } from '../../../Servicios/Rutas/ruta.service';
@@ -22,7 +23,8 @@ export class UbicacionPage implements OnInit {
   constructor(
     private navParams: NavParams,
     private modalC: ModalController,
-    private geolocation: Geolocation
+    private geolocation: Geolocation,
+    private router:Router
    ) {
 
   }
@@ -67,7 +69,8 @@ export class UbicacionPage implements OnInit {
           container: 'map',
           style: 'mapbox://styles/mapbox/streets-v11',
           center: [pos_Longitud, pos_Latitud],
-          zoom: 13,
+          minZoom: 2,
+          zoom: 13
         });
         // this.map.addControl(
         //   new MapboxGeocoder({
@@ -145,4 +148,7 @@ export class UbicacionPage implements OnInit {
     await this.modalC.dismiss();
   }
 
+  rutadelcarrito(){
+    this.router.navigate(['/menu/carrito']);
+  }
 }

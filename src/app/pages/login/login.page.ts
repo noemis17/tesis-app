@@ -23,6 +23,7 @@ export class LoginPage implements OnInit {
     private loginService:LoginService,
     private formBuilder: FormBuilder,
     public alertController: AlertController,
+    private loadingController: LoadingController,
     private router:Router,
     private toastController: ToastController,
     private transportistaServe: TransportistaService,
@@ -53,73 +54,79 @@ export class LoginPage implements OnInit {
      toggleSignUpView () {
       this.signupView = !this.signupView
     }
-  login(){
+    async login(){
 
-
+        const loading = await this.loadingController.create({
+          message: 'Espere un monento......',
+          spinner: 'bubbles'
+        });
+        await loading.present();
     this.loginService.getlogin(this.todo.controls['Usuario'].value, this.todo.controls['Contrasena'].value)
       .then((ok) => {
         if(ok['items'] == null){
           this.presentToast("El usuario o la contraceña son incorrectos",3000);
         }else{
-        console.log('hola',ok);
-          if(ok['items']['tipo']['cod']=='002'){
-            setInterval(() => {
-              
-              navigator.geolocation.getCurrentPosition(position => {
+        
+                if(ok['items']['tipo']['cod']=='002'){
+                  setInterval(() => {
+                    
+                    navigator.geolocation.getCurrentPosition(position => {
+                      
+                      this.transportistaServe.guardarUbicacionTransportista(position.coords.longitude, position.coords.latitude, localStorage.getItem("id"))
+                      .then((ok) => {
+                      })
+                      .catch((error) => {
+                        console.log(error);
+                        });
+                      
+                    });
+                  
+                  },60000);
+                }
+                /*
                 
-                this.transportistaServe.guardarUbicacionTransportista(position.coords.longitude, position.coords.latitude, localStorage.getItem("id"))
-                .then((ok) => {
-                 })
-                 .catch((error) => {
-                   console.log(error);
-                  });
-                
-              });
-             
-            },60000);
-          }
-          /*
-          
-           setInterval(() => {
-        navigator.geolocation.getCurrentPosition(position => {
-          this.lugar[1].setLngLat([position.coords.longitude, position.coords.latitude]);
-          this.directions.setDestination([position.coords.longitude, position.coords.latitude]);
-          this.guardarUbicacionTransportista(position.coords.longitude, position.coords.latitude);
-        });
-      },60000);
-          */
-        //  debugger
-          var hogo =ok['items']['tipo']['cod'];
+                      setInterval(() => {
+                    navigator.geolocation.getCurrentPosition(position => {
+                      this.lugar[1].setLngLat([position.coords.longitude, position.coords.latitude]);
+                      this.directions.setDestination([position.coords.longitude, position.coords.latitude]);
+                      this.guardarUbicacionTransportista(position.coords.longitude, position.coords.latitude);
+                    });
+                  },60000);
+                      */
+                    //  debugger
+                var hogo =ok['items']['tipo']['cod'];
 
-          localStorage.setItem("nomeToken",ok['items'].nome_token);
-          localStorage.setItem("id",ok['items'].id);
-          localStorage.setItem("cod",ok['items']['tipo']['cod']);
-          localStorage.setItem("name",ok['items'].name);
-          localStorage.setItem("email",ok['items'].email);
-          localStorage.setItem("cedula",ok['items'].cedula);
-          localStorage.setItem("celular",ok['items'].celular);
-          localStorage.setItem("imagen",ok['items'].imagen);
-          var setDato:any[]=[];
-          var setUbicacion:any;
-          localStorage.setItem("carrito",JSON.stringify(setDato));
-          localStorage.setItem("carritoPromociones",JSON.stringify(setDato));
-          localStorage.setItem("ubicacion",JSON.stringify(setUbicacion));
+                localStorage.setItem("nomeToken",ok['items'].nome_token);
+                localStorage.setItem("id",ok['items'].id);
+                localStorage.setItem("cod",ok['items']['tipo']['cod']);
+                localStorage.setItem("name",ok['items'].name);
+                localStorage.setItem("email",ok['items'].email);
+                localStorage.setItem("cedula",ok['items'].cedula);
+                localStorage.setItem("celular",ok['items'].celular);
+                localStorage.setItem("imagen",ok['items'].imagen);
+                var setDato:any[]=[];
+                var setUbicacion:any;
+                localStorage.setItem("carrito",JSON.stringify(setDato));
+                localStorage.setItem("carritoPromociones",JSON.stringify(setDato));
+                localStorage.setItem("ubicacion",JSON.stringify(setUbicacion));
+             
+                
+                const user_tipo=localStorage.getItem("cod");
+                if (user_tipo=="002") {
+                  this.router.navigateByUrl("menu/orden");
+                  loading.dismiss();
+                }
+                else{
+                  this.router.navigateByUrl("menu/vista-producto");
+                  loading.dismiss();
+                }
           
-          
-          const user_tipo=localStorage.getItem("cod");
-          if (user_tipo=="002") {
-            this.router.navigateByUrl("menu/orden");
-           
-          }
-          else{
-            this.router.navigateByUrl("menu/vista-producto");
-          }
-          
-        }
-        console.log(ok);
-      })
-      .catch((error) => {
-        console.log(error);
+              }
+         }).catch((error) => {
+          this.presentToast("El usuario o la contraceña son incorrectos",3000);
+          loading.dismiss();
+          this.router.navigateByUrl('/login');
+          console.log(error);
       });
 
 

@@ -15,6 +15,11 @@
 
 <ion-content class="bodyn" >
   <div id="map"></div>
-  <pre id="features"></pre>
-  <!-- <div  id="coordenadas"></div> -->
+  <div  id="features" ></div> 
+  <ion-fab   vertical="bottom" horizontal="start" slot="fixed" >
+    <ion-button (click)="closeModal()" color="danger"shape="round">
+      Agregar Ubicación
+    </ion-button>
+  </ion-fab>
+ 
 </ion-content>
