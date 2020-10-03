@@ -17,10 +17,13 @@
   <img class="card-image" *ngIf="image" [src]="image" >
   <br>
   <br>
-  <div >
-    <ion-button  color="danger"  (click)="guardarDocumentoTransaccion(image)"  shape="round" fill="outline">Realizar Compra</ion-button>
+
+  <div style="text-align-last: end;" >
+    <ion-button   color="danger" (click)="guardarDocumentoTransaccion(image)" shape="round" fill="outline">Finalizar Pedido</ion-button>
+
 
   </div>
+  <br>
 </ion-card>
 
 </ion-content>
