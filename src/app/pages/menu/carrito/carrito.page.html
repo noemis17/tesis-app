@@ -26,13 +26,14 @@
   <hr>
   <br>
     <ion-row >
-      <ion-col size="4" style="align-self: center;
+      <ion-col  style="align-self: center;
       place-self: flex-end;" >
-        <p class="text1">Precio:&nbsp;&nbsp;{{ totalAPagar | currency:"USD":true}}</p>
+        <p class="text1">Precio:&nbsp;&nbsp;&nbsp;{{ totalAPagar | currency:"USD":true}}</p>
       </ion-col>
-      <ion-col>
-        <ion-button *ngIf="ubicacion != 'undefined'" class="boton" color="danger"  (click)="validarCarrito()" expand="block" shape="round" fill="outline">Finalizar Pedido</ion-button>
-        
+      <ion-col style="text-align-last: end;">
+        <ion-buttons >
+        <ion-button *ngIf="ubicacion != 'undefined'" class="boton" color="danger"  (click)="validarCarrito()" shape="round" >Comprar</ion-button>
+        </ion-buttons>
       </ion-col>
      
     </ion-row>

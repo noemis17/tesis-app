@@ -72,7 +72,7 @@ export class PerfilPage implements OnInit {
     this.cedula= localStorage.getItem("cedula");
     this.celular= localStorage.getItem("celular");
     this.email= localStorage.getItem("email");
-    this.image = this.DomSanitizer.bypassSecurityTrustUrl("http://blooming-plateau-78501.herokuapp.com/"+localStorage.getItem("imagen"));
+    this.image = this.DomSanitizer.bypassSecurityTrustUrl("https://blooming-plateau-78501.herokuapp.com/"+localStorage.getItem("imagen"));
   }
 
 
@@ -217,7 +217,7 @@ AccessGallery(){
  // params.push({nombre:'tomas', apellido:'loor'});
   let options: FileUploadOptions = {
     fileKey: 'file',
-    fileName: 'pipo.jpg',
+    fileName: 'perfil.jpg',
     chunkedMode: false,
     httpMethod: 'post',
     mimeType: 'image/jpeg',
@@ -235,7 +235,7 @@ AccessGallery(){
 }; */
 //  options.params = params;
  //fileTransfer.upload(this.image, 'http://192.168.0.104:8000/upload.php', options)
- fileTransfer.upload(_imagen, 'http://blooming-plateau-78501.herokuapp.com/api/v0/guardarImagenUsuario/'+localStorage.getItem("nomeToken"), options)
+ fileTransfer.upload(_imagen, 'https://blooming-plateau-78501.herokuapp.com/api/v0/guardarImagenUsuario/'+localStorage.getItem("nomeToken"), options)
   .then((data) => {
     //debugger
     // success

@@ -41,7 +41,7 @@ export class ComprobantePage implements OnInit {
    // params.push({nombre:'tomas', apellido:'loor'});
     let options: FileUploadOptions = {
       fileKey: 'file',
-      fileName: 'pipo.jpg',
+      fileName: 'imagen.jpg',
       chunkedMode: false,
       httpMethod: 'post',
       mimeType: 'image/jpeg',
