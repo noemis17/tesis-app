@@ -84,7 +84,7 @@ iconoCargando = false;
   mostrarNotificaciones(){
     if (localStorage.getItem('id')!=null) {
       setInterval(() => {
-        
+        console.log('Producto despachado');
       },60000);
     }
   }

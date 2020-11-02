@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams, AlertController} from '@ionic/angular';
 import { FileUploadOptions, FileTransfer,FileTransferObject } from '@ionic-native/file-transfer/ngx';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-comprobante',
   templateUrl: './comprobante.page.html',
@@ -17,7 +17,8 @@ export class ComprobantePage implements OnInit {
 
   constructor( private modalC: ModalController, private navParams: NavParams,
     public alertController: AlertController,
-    private transfer: FileTransfer
+    private transfer: FileTransfer,
+    private router: Router,
 
     ) { }
 
@@ -62,8 +63,7 @@ export class ComprobantePage implements OnInit {
               localStorage.setItem("carrito", JSON.stringify(setDato));
               localStorage.setItem("carritoPromociones", JSON.stringify(setDato));
               this.showAlertPago("Compra exitosa");
-     
-      this.modalC.dismiss("1");
+  
     }, (err) => {
       // error
       //  debugger
@@ -81,6 +81,7 @@ export class ComprobantePage implements OnInit {
           text: 'Ok',
           // cssClass: 'alertButton',
           handler: () => {
+            this.router.navigate(['/menu/vista-producto/product']);
             this.modalC.dismiss("1");
                 }
               }

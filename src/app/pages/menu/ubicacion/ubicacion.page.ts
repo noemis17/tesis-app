@@ -137,6 +137,8 @@ export class UbicacionPage implements OnInit {
             });
             if (displayFeatures[0]!=undefined) {
               document.getElementById('features').innerHTML = displayFeatures[0]['properties']['name'];
+              localStorage.setItem("direcion",displayFeatures[0]['properties']['name']);
+        
             }
         });
        }).catch((error) => {

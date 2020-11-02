@@ -86,7 +86,9 @@ export class PagoPage implements OnInit {
               localStorage.setItem("carrito", JSON.stringify(setDato));
               localStorage.setItem("carritoPromociones", JSON.stringify(setDato));
               //this.showAlert("Compra realizada exitosamenete");
-              this.modalC.dismiss("1");
+           
+              this.showMensaje("Compra realizada con exito");
+              
 
             }
           })
@@ -110,7 +112,25 @@ export class PagoPage implements OnInit {
   async showAlert(Mensaje) {
     const alert = await this.alertController.create({
       message: Mensaje,
-      buttons: ['ok']
+      buttons: ['ok'
+    
+    ]
+    });
+    await alert.present();
+  };
+  async showMensaje(Mensaje) {
+    const alert = await this.alertController.create({
+      message: Mensaje,
+      buttons: [
+        {
+          text: 'Ok',
+          // cssClass: 'alertButton',
+          handler: () => {
+            this.router.navigate(['/menu/vista-producto/product']);
+            this.modalC.dismiss("1");
+                }
+              }
+        ]
     });
     await alert.present();
   };
@@ -175,63 +195,6 @@ export class PagoPage implements OnInit {
     });
 
   }
-
-//   guardarDocumentoTransaccion(_imagen: string) {
-//     // debugger
-//     const fileTransfer: FileTransferObject = this.transfer.create();
-//   //  let params:datos[]=[]; 
-    
-//    // params.push({nombre:'tomas', apellido:'loor'});
-//     let options: FileUploadOptions = {
-//       fileKey: 'file',
-//       fileName: 'pipo.jpg',
-//       chunkedMode: false,
-//       httpMethod: 'post',
-//       mimeType: 'image/jpeg',
-//       //params : params,
-//        headers: {}
-//    }
-// // var params = {nombre:'tomas', apellido:'loor'};
-
-
-// /*   options.params = {
-//     Value: JSON.stringify({
-//       nombre: 'toma',
-//       apellido: 'loor'
-//     })
-//   }; */
-//    console.log(_imagen)
-//     console.log(localStorage.getItem("nomeToken"))
-//     console.log(this.idTipoPago)
-//     console.log(this.totalAPagar)
-//     console.log(JSON.parse(localStorage.getItem("ubicacion"))['lat'])
-//     console.log(JSON.parse(localStorage.getItem("ubicacion"))['lng'])
-//     console.log(JSON.stringify(this.carritoPromociones))
-//     console.log(JSON.stringify(this.carritoProducto))
-//    fileTransfer.upload(_imagen,'https://blooming-plateau-78501.herokuapp.com/api/v0/guardarDocumentoTransaccion/'+localStorage.getItem("nomeToken")+"/"+this.idTipoPago+"/"+this.totalAPagar+"/"+JSON.parse(localStorage.getItem("ubicacion"))['lat']+"/"+JSON.parse(localStorage.getItem("ubicacion"))['lng']+"/"+JSON.stringify(this.carritoPromociones)+"/"+JSON.stringify(this.carritoProducto), options)
-//    .then((data) => {
-//     console.log(data)
-//     if (data['code'] == "200") {
-//       var setDato: any[] = [];
-//       localStorage.setItem("carrito", JSON.stringify(setDato));
-//       localStorage.setItem("carritoPromociones", JSON.stringify(setDato));
-//       this.showAlert("Compra realizada exitosamenete");
-      
-
-//     }
-//     debugger
-//     // success
-//     alert("success");
-//     }, (err) => {
-//       // error
-//       // debugger
-//       alert("error"+JSON.stringify(err));
-//       console.log("error"+JSON.stringify(err))
-//     });
-
-  
-//   }
-
 
   async abrirModaComprobante(){
     const modal = await this.modalC.create({
