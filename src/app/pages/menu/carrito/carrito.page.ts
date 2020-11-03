@@ -25,6 +25,7 @@ export class CarritoPage implements OnInit {
   productoid: any;
   totalAPagar: any;
   ubicacion:any;
+  direccion:any;
   constructor(private productoServi: ProductosService,
     private promocionServi: PromocionesService,
     private compraServi: CarritoService,
@@ -39,6 +40,7 @@ export class CarritoPage implements OnInit {
     this.setDatos1();
     //this.consultarOrdenesCompra();
     this.ubicacion=localStorage.getItem("ubicacion");
+    this.direccion=localStorage.getItem("direcion");
   }
   //Permite abril una modal
   validarCarrito()
@@ -89,6 +91,7 @@ export class CarritoPage implements OnInit {
      });
      modal.onDidDismiss().then(data => {
       this.ubicacion=localStorage.getItem("ubicacion");
+      this.direccion=localStorage.getItem("direcion");
     });
      return await modal.present();
    }
