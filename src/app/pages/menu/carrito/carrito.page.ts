@@ -5,6 +5,7 @@ import { CarritoService } from '../../../Servicios/carrito.service'
 import { AlertController, NavController} from '@ionic/angular'
 import { ModalController,NavParams  } from '@ionic/angular';
 import { PagoPage } from '../pago/pago.page';
+import { Router } from '@angular/router';
 import { UbicacionPage } from '../ubicacion/ubicacion.page';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import * as  mapboxgl from 'mapbox-gl';
@@ -32,6 +33,7 @@ export class CarritoPage implements OnInit {
     public alertController: AlertController,
     public navCtrl: NavController,
     private modalC:ModalController,
+    private router: Router,
     private geolocation: Geolocation
   ) {
   }
@@ -57,7 +59,6 @@ export class CarritoPage implements OnInit {
  
 
   async abrirModal(){
-
       const modal = await this.modalC.create({
       component:PagoPage ,
       componentProps: {
@@ -72,6 +73,7 @@ export class CarritoPage implements OnInit {
         this.totalAPagar = 0;
         this.carritoProducto = [];
         this.carritoPromociones = [];
+        this.router.navigate(['/menu/vista-producto/product']); 
       }
     });
     return await modal.present();

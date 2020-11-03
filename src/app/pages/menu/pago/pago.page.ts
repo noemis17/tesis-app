@@ -131,15 +131,20 @@ export class PagoPage implements OnInit {
           text: 'Ok',
           // cssClass: 'alertButton',
           handler: () => {
-            this.router.navigate(['/menu/vista-producto/product']);
+            //this.ionViewWillEnter();
             this.modalC.dismiss("1");
-           
-                }
-              }
-        ]
+          }
+        }
+      ]
     });
     await alert.present();
   };
+ 
+  //ionViewWillEnter(){
+    //this.router.navigate(['/menu/vista-producto/product']); 
+  //}
+  
+
   async closeModal() {
     await this.modalC.dismiss();
   }

@@ -30,9 +30,11 @@ iconoCargando = false;
     ) {
 
   }
-
+ 
   ngOnInit() {
-
+    console.log("hola");
+    this.producto=[];
+  
    this.mostrar();
         if(localStorage.getItem("cod")=='002'){
             setInterval(() => {
@@ -50,25 +52,28 @@ iconoCargando = false;
              
             },60000);
           }
-      setInterval(() => {
-      this._notificacionesService.getNotificaciones(localStorage.getItem('id')).then(data=>{
-        
-        if (data['code']=='200') {
-          this.localNotifications.schedule({
-            id: 1,
-            text: data['items']['mensaje'],
-            // sound: isAndroid? 'file://sound.mp3': 'file://beep.caf',
-            data: { secret:  "key" }
-           
-          });
-        } else {
-          console.log('Producto despachado');
-        }
-       
 
-      });
+
+      setInterval(() => {
+          this._notificacionesService.getNotificaciones(localStorage.getItem('id')).then(data=>{
+            
+            if (data['code']=='200') {
+              this.localNotifications.schedule({
+                title: 'notificacion',
+                id: 1,
+                text: data['items']['mensaje'],
+                // sound: isAndroid? 'file://sound.mp3': 'file://beep.caf',
+                data: { secret:  "key" }
+              
+              });
+            } else {
+              console.log('Producto despachado');
+            }
+          
+
+          });
       
-    },20000);
+      },20000);
     
   }
 
@@ -94,7 +99,7 @@ iconoCargando = false;
 
 
   async mostrar(){
-   
+    this.producto = [];
     this.iconoCargando=true;
     this.productoServi.mostrarProducto()
     .then(data=>{
@@ -244,6 +249,7 @@ async showAlert (Mensaje) {
 };
 
 cargarproducto(event){
+  
   setTimeout(() => {
 
       if (this.producto.length ==10) {
