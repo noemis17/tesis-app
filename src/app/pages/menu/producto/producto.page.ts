@@ -1,7 +1,7 @@
 import { Component, OnInit,ViewChild} from '@angular/core';
 import { ProductosService} from '../../../Servicios/productos.service';
 import { ModalController, IonInfiniteScroll } from '@ionic/angular';
-import { AlertController } from '@ionic/angular';
+import { AlertController,LoadingController  } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { NotificacionesService } from 'src/app/Servicios/notificaciones.service';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
@@ -26,6 +26,7 @@ iconoCargando = false;
     ,private _notificacionesService: NotificacionesService  //servicio de notificaciones
     ,private localNotifications: LocalNotifications,
     private transportistaServe: TransportistaService,
+    private loadingCtrl: LoadingController,
     ) {
 
   }
@@ -49,7 +50,7 @@ iconoCargando = false;
              
             },60000);
           }
-    setInterval(() => {
+      setInterval(() => {
       this._notificacionesService.getNotificaciones(localStorage.getItem('id')).then(data=>{
         
         if (data['code']=='200') {
@@ -58,13 +59,15 @@ iconoCargando = false;
             text: data['items']['mensaje'],
             // sound: isAndroid? 'file://sound.mp3': 'file://beep.caf',
             data: { secret:  "key" }
+           
           });
         } else {
-          
+          console.log('Producto despachado');
         }
-
+       
 
       });
+      
     },20000);
     
   }
@@ -90,12 +93,14 @@ iconoCargando = false;
   }
 
 
-  mostrar(){
+  async mostrar(){
+   
     this.iconoCargando=true;
     this.productoServi.mostrarProducto()
     .then(data=>{
       if(data['code']=="200"){
         this.producto=data['items'];
+      
       console.log('Muestra todos los productos:',this.producto);
       }
 

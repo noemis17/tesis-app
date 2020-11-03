@@ -75,38 +75,43 @@ export class PagoPage implements OnInit {
   longitud = 0;
   _marker:any;
   idTipoPago = '';
-  registroPago(item) {
-    if (item.identificador == 2) {
-      if (this.carritoProducto.find(e => e['PermitirVender'] == false) == undefined && this.carritoPromociones.find(e => e['PermitirVender'] == false) == undefined) {
-        this.compraServi.guardarCompra(JSON.stringify(this.carritoPromociones), localStorage.getItem("nomeToken"), JSON.stringify(this.carritoProducto), item.id, this.totalAPagar, JSON.parse(localStorage.getItem("ubicacion"))['lat'], JSON.parse(localStorage.getItem("ubicacion"))['lng'])
-          .then((ok) => {
-            console.log(ok)
-            if (ok['code'] == "200") {
-              var setDato: any[] = [];
-              localStorage.setItem("carrito", JSON.stringify(setDato));
-              localStorage.setItem("carritoPromociones", JSON.stringify(setDato));
-              //this.showAlert("Compra realizada exitosamenete");
-           
-              this.showMensaje("Compra realizada con exito");
-              
+  async registroPago(item) {
+    const loading = await this. loadingCtrl.create({
+      message: 'Comprando',
+      spinner: 'bubbles'
+    });
+    await loading.present();
+        if (item.identificador == 2) {
+          if (this.carritoProducto.find(e => e['PermitirVender'] == false) == undefined && this.carritoPromociones.find(e => e['PermitirVender'] == false) == undefined) {
+            this.compraServi.guardarCompra(JSON.stringify(this.carritoPromociones), localStorage.getItem("nomeToken"), JSON.stringify(this.carritoProducto), item.id, this.totalAPagar, JSON.parse(localStorage.getItem("ubicacion"))['lat'], JSON.parse(localStorage.getItem("ubicacion"))['lng'])
+              .then((ok) => {
+                console.log(ok)
+                if (ok['code'] == "200") {
+                  var setDato: any[] = [];
+                  localStorage.setItem("carrito", JSON.stringify(setDato));
+                  localStorage.setItem("carritoPromociones", JSON.stringify(setDato));
+                  this.showMensaje("Compra realizada con exito");
+                  loading.dismiss();
 
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      } else {
-        this.showAlert("Todos los productos no estan disponible");
-      }
-    } else {
-      // aqui va el codigo donde accede a la camara o a la galeria del telefono
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          } else {
+            this.showAlert("Todos los productos no estan disponible");
+            loading.dismiss();
+          }
+        } else {
+          // aqui va el codigo donde accede a la camara o a la galeria del telefono
 
-      this.idTipoPago = item.id;
-      this.presentAlertPrompt();
-      
-      
+          this.idTipoPago = item.id;
+          this.presentAlertPrompt();
+          
+          
 
-     }
+        }
+        
 
   }
   async showAlert(Mensaje) {
@@ -128,6 +133,7 @@ export class PagoPage implements OnInit {
           handler: () => {
             this.router.navigate(['/menu/vista-producto/product']);
             this.modalC.dismiss("1");
+           
                 }
               }
         ]
