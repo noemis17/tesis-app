@@ -107,7 +107,7 @@ export class PagoPage implements OnInit {
 
           this.idTipoPago = item.id;
           this.presentAlertPrompt();
-          
+          loading.dismiss();
           
 
         }
@@ -160,12 +160,15 @@ export class PagoPage implements OnInit {
           icon: 'camera-outline',
           handler: () => {
             this.takePicture();
+
+           
           }
         }, {
           text: 'Galeria',
           icon: 'image-outline',
           handler: () => {
             this.AccessGallery();
+           
           }
         }
       ],
@@ -198,6 +201,7 @@ export class PagoPage implements OnInit {
       this.image = 'data:image/jpeg;base64,' + imageData;
       // this.guardarDocumentoTransaccion(this.image);
       this.abrirModaComprobante();
+    
 
     }, (err) => {
 

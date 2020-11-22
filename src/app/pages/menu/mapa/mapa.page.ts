@@ -47,15 +47,16 @@ export class MapaPage implements OnInit {
       });
       setInterval(() => {
         this.posicionTransportista(this.navParams.data['orden'].idcourier);
-        console.log("acutalizando transportista")
-      }, 60000);
+      }, 20000);
     }
   }
   lugar: any[] = [];
   posicionTransportista(idCourier) {
+    console.log("courier id "+idCourier)
     this.transportistaServe.posicionTransportista(idCourier)
       .then((ok) => {
-        this.addMarker(ok['longitud'], ok['latitud'],ok['usuarios'].name);
+        console.log(ok)
+        this.addMarker(ok['longitud'], ok['latitud'],ok['usuariotransportista'].name);
         this.directions.setOrigin([ok['longitud'], ok['latitud']]);
       })
       .catch((error) => {

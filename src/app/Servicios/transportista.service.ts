@@ -23,6 +23,7 @@ export class TransportistaService {
                      });
          });
   }
+  
   posicionTransportista(idCourier){
     const registro=server+"/v0/PosicionTrasnportista?idUsuario="+idCourier;
          return new Promise((resolve, reject) => {
