@@ -71,51 +71,66 @@ export class PromocionPage implements OnInit {
   }
   verificarExistePromociones(item){
     var datoPromociones :any[]=[];
-    datoPromociones = JSON.parse(localStorage.getItem("carritoPromociones"));
-
-    if(datoPromociones == null){
+    //datoPromociones = JSON.parse(localStorage.getItem("carritoPromociones"));
+    datoPromociones = JSON.parse("["+localStorage.getItem("carritoPromociones")+"]")
+    var DatoABuscarPromociones = datoPromociones.filter(e=>e['id'] == item['id']);
+    if(DatoABuscarPromociones.length ==0){
       this.presentAlertPromocion(item);
     }else{
-      if(datoPromociones.length == undefined){
-        if(datoPromociones['id'] == item['id']){
-          this.showAlert("Ya esta en el carrito")
-        }else{
-          this.presentAlertPromocion(item);
-        }
-      }else{
-        var DatoABuscarPromociones = datoPromociones.filter(e=>e['id'] == item['id']);
-        if(DatoABuscarPromociones.length ==0){
-          this.presentAlertPromocion(item);
-        }else{
-          this.showAlert("Ya esta en el carrito")
-          //aqui tiene que mostrar un alert que diga que este prodcuto ya esta en el carrito
-        }
-      }
+      this.showAlert("Ya esta en el carrito")
+      //aqui tiene que mostrar un alert que diga que este prodcuto ya esta en el carrito
     }
+    // if(datoPromociones == null){
+    //   this.presentAlertPromocion(item);
+    // }else{
+    //   if(datoPromociones.length == undefined){
+    //     if(datoPromociones['id'] == item['id']){
+    //       this.showAlert("Ya esta en el carrito")
+    //     }else{
+    //       this.presentAlertPromocion(item);
+    //     }
+    //   }else{
+    //     var DatoABuscarPromociones = datoPromociones.filter(e=>e['id'] == item['id']);
+    //     if(DatoABuscarPromociones.length ==0){
+    //       this.presentAlertPromocion(item);
+    //     }else{
+    //       this.showAlert("Ya esta en el carrito")
+    //       //aqui tiene que mostrar un alert que diga que este prodcuto ya esta en el carrito
+    //     }
+    //   }
+    // }
   }
 
   agregarCarritoPromociones(item){
-    if(JSON.parse(localStorage.getItem("carritoPromociones")) == null){
-      var myJsonPromociones=[];
-      myJsonPromociones.push(item);
-      localStorage.setItem("carritoPromociones",JSON.stringify(myJsonPromociones));
+    //no existe registro
+    if(typeof(JSON.parse("["+localStorage.getItem("carritoPromociones")+"]")[0].length) == "number"){
+      localStorage.setItem("carritoPromociones",JSON.stringify(item));
     }else{
-      var myJsonPromociones=[];
-      var carritoPromociones=[];
-      carritoPromociones = JSON.parse(localStorage.getItem("carritoPromociones"));
-      if(carritoPromociones.length>=2){
-        carritoPromociones.map(option=>
-          myJsonPromociones.push(option)
-        );
-      }else{
-        myJsonPromociones.push(JSON.parse(localStorage.getItem("carritoPromociones")));
-      }
-      myJsonPromociones.push(item);
-      localStorage.removeItem("carritoPromociones");
-      localStorage.setItem("carritoPromociones",JSON.stringify(myJsonPromociones));
-
-
+      localStorage.setItem("carritoPromociones",localStorage.getItem("carritoPromociones")+","+JSON.stringify(item));
     }
+    //console.log(JSON.parse("["+localStorage.getItem("carrito")+"]"));
+
+    // if(JSON.parse(localStorage.getItem("carritoPromociones")) == null){
+    //   var myJsonPromociones=[];
+    //   myJsonPromociones.push(item);
+    //   localStorage.setItem("carritoPromociones",JSON.stringify(myJsonPromociones));
+    // }else{
+    //   var myJsonPromociones=[];
+    //   var carritoPromociones=[];
+    //   carritoPromociones = JSON.parse(localStorage.getItem("carritoPromociones"));
+    //   if(carritoPromociones.length>=2){
+    //     carritoPromociones.map(option=>
+    //       myJsonPromociones.push(option)
+    //     );
+    //   }else{
+    //     myJsonPromociones.push(JSON.parse(localStorage.getItem("carritoPromociones")));
+    //   }
+    //   myJsonPromociones.push(item);
+    //   localStorage.removeItem("carritoPromociones");
+    //   localStorage.setItem("carritoPromociones",JSON.stringify(myJsonPromociones));
+    //
+    //
+    // }
   }
   async presentAlertPromocion(item) {
     if(1<= item.cantidad){

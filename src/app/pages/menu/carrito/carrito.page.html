@@ -13,7 +13,7 @@
 <ion-content class="ion-padding ">
 
   <br>
-  
+
   <ion-row>
     <ion-col size="8" style="align-self: center;
     place-self: flex-end;" >
@@ -35,7 +35,7 @@
         <ion-button *ngIf="ubicacion != 'undefined'" class="boton" color="danger"  (click)="validarCarrito()" shape="round" >Comprar</ion-button>
         </ion-buttons>
       </ion-col>
-     
+
     </ion-row>
     <hr>
 
@@ -54,16 +54,16 @@
           </div>
         </div>
         <ion-buttons>
-          <ion-button (click)="eliminar(carri.id)" class="boton">
+          <ion-button (click)="eliminar(carri)" class="boton">
             <ion-icon slot="start" name="trash-outline"> </ion-icon>
           </ion-button>
         </ion-buttons>
       </ion-label>
     </ion-item>
 
-    
+
     </ion-row>
-    
+
   </ion-list>
 
 
@@ -88,11 +88,11 @@
           </ion-button>
         </ion-buttons>
       </ion-label>
-    
+
     </ion-item>
-    
+
     </ion-row>
-    
+
   </ion-list>
 
 </ion-content>
@@ -101,4 +101,3 @@
     <ion-title> Ubicación De Entrega</ion-title>
   </ion-toolbar>
 </ion-footer> -->
-

@@ -56,7 +56,7 @@ export class CarritoPage implements OnInit {
       // });
     }
   }
- 
+
 
   async abrirModal(){
       const modal = await this.modalC.create({
@@ -73,14 +73,14 @@ export class CarritoPage implements OnInit {
         this.totalAPagar = 0;
         this.carritoProducto = [];
         this.carritoPromociones = [];
-        this.router.navigate(['/menu/vista-producto/product']); 
+        this.router.navigate(['/menu/vista-producto/product']);
       }
     });
     return await modal.present();
   }
   validarubicacion()
   {
-    if(this.carritoProducto.length==0 && this.carritoPromociones.length==0){
+    if(Number(this.carritoProducto.length)==0 && Number(this.carritoPromociones.length)==0){
       this.showAlert("No tiene ningun producto en el carrito");
     }else{
       this.abrirModalubicacion();
@@ -100,18 +100,32 @@ export class CarritoPage implements OnInit {
   eliminar(carri) {
     let itemIndexProducto = this.carritoProducto.findIndex(item => item.id == carri.id);
     this.carritoProducto.splice(itemIndexProducto, 1);
-    //this.carritoProducto = this.carritoProducto.filter(option => option['id']!= carri);
-    localStorage.setItem("carrito", JSON.stringify(this.carritoProducto))
+    var i=0;
+    var stringDato="";
+    this.carritoProducto.map(e=>{
+      if(i==0){
+        stringDato=JSON.stringify(e);
+      }else{
+        stringDato+=","+JSON.stringify(e);
+      }
+      i++;
+    });
+    if(stringDato==""){
+      localStorage.setItem("carrito", "[]")
+    }else{
+      localStorage.setItem("carrito", stringDato)
+    }
     this.setDatos();
     this.setValor();
   }
   setDatos() {
+    //console.log(JSON.parse("["+localStorage.getItem("carrito")+"]"));
     this.totalAPagar = 0;
     this.carritoProducto = [];
     var lista: any[] = [];
-    lista = JSON.parse(localStorage.getItem("carrito"));
     var valor = 0;
-    if (lista.length > 0) {
+    if (typeof(JSON.parse("["+localStorage.getItem("carrito")+"]")[0].length) != "number") {
+      lista = JSON.parse("["+localStorage.getItem("carrito")+"]");
       lista.map(e => {
         if (e['cantidad'] != null) {
           this.productoServi.mostrarProductoId(e['id'])
@@ -152,8 +166,10 @@ export class CarritoPage implements OnInit {
   setDatos1() {
     this.carritoPromociones = [];
     var listaPromociones: any[] = [];
-    listaPromociones = JSON.parse(localStorage.getItem("carritoPromociones"));
-    if (listaPromociones.length>0) {
+    //listaPromociones = JSON.parse(localStorage.getItem("carritoPromociones"));
+    if (typeof(JSON.parse("["+localStorage.getItem("carritoPromociones")+"]")[0].length) != "number") {
+    //if (listaPromociones.length>0) {
+    listaPromociones = JSON.parse("["+localStorage.getItem("carritoPromociones")+"]");
       listaPromociones.map(e => {
         if (e['cantidad'] != null) {
           this.promocionServi.mostrarRegistroId(e['id'])
@@ -179,12 +195,30 @@ export class CarritoPage implements OnInit {
     }
     console.log(this.carritoPromociones)
   }
-  
+
   eliminarPromocion(carripro) {
-    this.carritoPromociones = this.carritoPromociones.filter(option => option['id'] != carripro);
-    localStorage.setItem("carritoPromociones", JSON.stringify(this.carritoPromociones))
+    let itemIndexProducto = this.carritoPromociones.findIndex(item => item.id == carripro);
+    this.carritoPromociones.splice(itemIndexProducto, 1);
+    var i=0;
+    var stringDato="";
+    this.carritoPromociones.map(e=>{
+      if(i==0){
+        stringDato=JSON.stringify(e);
+      }else{
+        stringDato+=","+JSON.stringify(e);
+      }
+      i++;
+    });
+    if(stringDato==""){
+      localStorage.setItem("carritoPromociones", "[]")
+    }else{
+      localStorage.setItem("carritoPromociones", stringDato)
+    }
     this.setDatos1();
     this.setValor();
+
+    //this.carritoPromociones = this.carritoPromociones.filter(option => option['id'] != carripro);
+    //localStorage.setItem("carritoPromociones", JSON.stringify(this.carritoPromociones))
   }
   //funcion para modificar cantidad
   setValor() {
@@ -205,11 +239,11 @@ export class CarritoPage implements OnInit {
   }
   async modificarCantidad(carri,event) {
     let itemIndexProducto = this.carritoProducto.findIndex(item => item.id == carri.id);
-    if (event.target.value <= 0) {
+    if (Number(event.target.value) <= 0) {
       this.carritoProducto[itemIndexProducto]['cantidad'] = 1;
     }else{
       if (carri.promocionesdel_producto == null) {
-        if (event.target.value <= carri.stock) {
+        if (Number(event.target.value) <= Number(carri.stock)) {
           this.carritoProducto[itemIndexProducto]['cantidad'] = event.target.value;
           // localStorage.setItem("carrito", JSON.stringify(this.carritoProducto));
           // this.setValor();
@@ -218,7 +252,7 @@ export class CarritoPage implements OnInit {
           this.showAlert("No hay la cantidad necesaria");
         }
       } else {
-        if (event.target.value <= carri.promocionesdel_producto.stock) {
+        if (Number(event.target.value) <= Number(carri.promocionesdel_producto.stock)) {
           this.carritoProducto[itemIndexProducto]['cantidad'] = event.target.value;
           // localStorage.setItem("carrito", JSON.stringify(this.carritoProducto));
         } else {
@@ -232,10 +266,10 @@ export class CarritoPage implements OnInit {
   }
   async modificarCantidadKit(carripro,event) {
     let itemIndex = this.carritoPromociones.findIndex(item => item.id == carripro.id);
-    if (event.target.value <= 0) {
+    if (Number(event.target.value) <= 0) {
       this.carritoProducto[itemIndex]['Carritocantidad'] = 1;
     }else{
-      if (event.target.value <= carripro.cantidad) {
+      if (Number(event.target.value) <= Number(carripro.cantidad)) {
         this.carritoPromociones[itemIndex]['Carritocantidad'] = event.target.value;
         // localStorage.setItem("carritoPromociones", JSON.stringify(this.carritoPromociones))
         // this.setValor()
