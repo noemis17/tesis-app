@@ -23,7 +23,7 @@
     <ion-col size="" *ngFor="let  item of producto |filtro: textoBuscar:'NAME' ">
       <ion-card  class="card-image">
         <ion-img class="ESTILO "  *ngIf="item.file_name == null" src="/assets/SUPERCITO.png"></ion-img>
-        <ion-img class="ESTILOIMAGEN" *ngIf="item.file_name != null" src="https://blooming-plateau-78501.herokuapp.com/img/items/{{item.file_name}}.{{item.file_extension}}"></ion-img>
+        <ion-img class="ESTILOIMAGEN" *ngIf="item.file_name != null" src="https://supercitomarkt.herokuapp.com/api/img/items/{{item.file_name}}.{{item.file_extension}}"></ion-img>
         <ion-card-content class="contenedor" >
     <h3 class="text" ><b>{{item.NAME}}</b></h3>
     <p class="text1" *ngIf=" item.promocionesdel_producto == null">Precio: {{ item.PRICE | currency:"USD":true}}</p>

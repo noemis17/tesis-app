@@ -18,6 +18,8 @@ import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 })
 export class MapaPage implements OnInit {
   mapRef: any;
+  notifica1: any;
+  notifica2: any;
   constructor(private geolocation: Geolocation,
     private loadingCtrl: LoadingController, private navParams: NavParams, private transportistaServe: TransportistaService, private modalC: ModalController, ) {
   }
@@ -32,22 +34,22 @@ export class MapaPage implements OnInit {
         this.addMarker(position.coords.longitude, position.coords.latitude, localStorage.getItem("name"));
         this.directions.setDestination([position.coords.longitude, position.coords.latitude]);
       });
-      setInterval(() => {
+       this.notifica1=setInterval(() => {
         navigator.geolocation.getCurrentPosition(position => {
           this.lugar[1].setLngLat([position.coords.longitude, position.coords.latitude]);
           this.directions.setDestination([position.coords.longitude, position.coords.latitude]);
           this.guardarUbicacionTransportista(position.coords.longitude, position.coords.latitude);
         });
-      },60000);
+      },10000);
     } else {
       this.cargarMapa();
       navigator.geolocation.getCurrentPosition(position => {
         this.addMarker(this.navParams.data['orden'].longitud, this.navParams.data['orden'].latitud, this.navParams.data['orden'].usuarios.name);
         this.directions.setDestination([this.navParams.data['orden'].longitud, this.navParams.data['orden'].latitud]);
       });
-      setInterval(() => {
+      this.notifica2=setInterval(() => {
         this.posicionTransportista(this.navParams.data['orden'].idcourier);
-      }, 20000);
+      }, 10000);
     }
   }
   lugar: any[] = [];
@@ -72,6 +74,9 @@ export class MapaPage implements OnInit {
       });
   }
   async closeModal() {
+    clearInterval(this.notifica1);
+    clearInterval(this.notifica2);
+
     await this.modalC.dismiss();
   }
   lat: any;

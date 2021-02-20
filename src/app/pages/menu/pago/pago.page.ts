@@ -14,7 +14,8 @@ import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import { FileUploadOptions, FileTransfer,FileTransferObject } from '@ionic-native/file-transfer/ngx';
 //import { File } from '@ionic-native/file';
 import { ComprobantePage } from '../comprobante/comprobante.page';
-
+import { NotificacionesService } from 'src/app/Servicios/notificaciones.service';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 declare var google;
 @Component({
   selector: 'app-pago',
@@ -40,10 +41,11 @@ export class PagoPage implements OnInit {
     private geolocation: Geolocation,
     private loadingCtrl: LoadingController,
     private rutaService: RutaService,
- 
+    private _notificacionesService: NotificacionesService, 
     public actionController: ActionSheetController,
     private camera: Camera,
-    private transfer: FileTransfer
+    private transfer: FileTransfer,
+    private localNotifications: LocalNotifications,
 
   ) { }
   posicion_: any[] = [];
@@ -61,7 +63,33 @@ export class PagoPage implements OnInit {
     // this.posicion();
     //this.obtenerlocalizacion();
     //this.addMarker(posicion_[1],posicion_[0],"");
+    // setInterval(() => {
+
+
+    //   this._notificacionesService.getNotificaciones(localStorage.getItem('id')).then(data=>{
+    //     //crear validacion que si
+    //     if (data['code']=='200') {
+    //       // this.localNotifications.schedule({
+    //       //   title: 'notificacion',
+    //       //   id: 1,
+    //       //   text: data['items']['mensaje'],
+    //       //   // sound: isAndroid? 'file://sound.mp3': 'file://beep.caf',
+    //       //   data: { secret:  "key" }
+          
+    //       // });
+    //     } else {
+    //       console.log('Producto despachado');
+    //     }
+      
+
+    //   });
+  
+    // },60000);
+    
+   
+   
   }
+  
   mostrarTipoPago() {
     this.tipoServicio.mostrarTipoPago()
       .then(data => {

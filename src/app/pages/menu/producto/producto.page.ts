@@ -54,28 +54,31 @@ iconoCargando = false;
           }
 
 
-      setInterval(() => {
-          this._notificacionesService.getNotificaciones(localStorage.getItem('id')).then(data=>{
-            
-            if (data['code']=='200') {
-              this.localNotifications.schedule({
-                title: 'notificacion',
-                id: 1,
-                text: data['items']['mensaje'],
-                // sound: isAndroid? 'file://sound.mp3': 'file://beep.caf',
-                data: { secret:  "key" }
+      // setInterval(() => {
+
+
+      //     this._notificacionesService.getNotificaciones(localStorage.getItem('id')).then(data=>{
+      //       //crear validacion que si
+      //       if (data['code']=='200') {
+      //         this.localNotifications.schedule({
+      //           title: 'notificacion',
+      //           id: 1,
+      //           text: data['items']['mensaje'],
+      //           // sound: isAndroid? 'file://sound.mp3': 'file://beep.caf',
+      //           data: { secret:  "key" }
               
-              });
-            } else {
-              console.log('Producto despachado');
-            }
+      //         });
+      //       } else {
+      //         console.log('Producto despachado');
+      //       }
           
 
-          });
+      //     });
       
-      },20000);
+      // },20000);
     
-  }
+  
+    }
 
   notificacion (_mensaje:string){
 
