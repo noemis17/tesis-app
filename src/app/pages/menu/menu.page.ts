@@ -209,7 +209,7 @@ export class MenuPage implements OnInit {
  
   ngOnInit() {
     this.email= localStorage.getItem("email");
-    this.image= this.DomSanitizer.bypassSecurityTrustUrl("http://blooming-plateau-78501.herokuapp.com/"+localStorage.getItem("imagen"));
+    this.image= this.DomSanitizer.bypassSecurityTrustUrl("http://young-woodland-01238.herokuapp.comssssss/"+localStorage.getItem("imagen"));
     const path = window.location.pathname.split('folder/')[1];
     if (path !== undefined) {
       this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());

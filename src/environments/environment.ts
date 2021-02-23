@@ -28,8 +28,10 @@ export const environment = {
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
 
-export const server ="http://blooming-plateau-78501.herokuapp.com/api";
-//export const server ="https://supercitomarkt.herokuapp.com/api";
+export const server ="https://young-woodland-01238.herokuapp.com/api";
+
+//export const server ="http://127.0.0.1:8000/api";
+
 
 
 

@@ -14,6 +14,7 @@
   <ion-list #lista id="list" >
     <ion-item >
       <ion-avatar (click)="presentAlertPrompt()" slot="start" >
+        <ion-img   *ngIf="image.image == null" src="/assets/SUPERCITO.png"></ion-img>
        <img *ngIf="image" [src]="image" > 
   
       </ion-avatar>

@@ -211,8 +211,8 @@ export class PagoPage implements OnInit {
       sourceType     : this.camera.PictureSourceType.CAMERA,
       mediaType: this.camera.MediaType.PICTURE
     }).then((imageData) => {
-  
-        this.image = 'data:image/jpeg;base64,' + imageData;
+      //this.image = 'data:image/jpeg;base64,' + imageData;
+        this.image =  imageData;
       //  this.guardarDocumentoTransaccion(this.image);
          this.abrirModaComprobante();
       }, (err) => {
@@ -226,10 +226,11 @@ export class PagoPage implements OnInit {
 
     }).then((imageData) => {
   
-      this.image = 'data:image/jpeg;base64,' + imageData;
+      this.image =  imageData;
+      console.log(this.image);
       // this.guardarDocumentoTransaccion(this.image);
       this.abrirModaComprobante();
-    
+  
 
     }, (err) => {
 

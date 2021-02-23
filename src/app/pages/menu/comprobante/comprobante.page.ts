@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./comprobante.page.scss'],
 })
 export class ComprobantePage implements OnInit {
-  image:string;
+  image:any;
   carritoProducto: any[] = [];
   carritoPromociones: any[] = [];
   idTipoPago: '';
@@ -34,7 +34,7 @@ export class ComprobantePage implements OnInit {
   async closeModal() {
     await this.modalC.dismiss();
   }
-  guardarDocumentoTransaccion(_imagen: string) {
+  guardarDocumentoTransaccion(imagen) {
     // debugger
     const fileTransfer: FileTransferObject = this.transfer.create();
   //  let params:datos[]=[]; 
@@ -49,21 +49,22 @@ export class ComprobantePage implements OnInit {
       //params : params,
        headers: {}
    }
-  //  console.log(_imagen)
-  //   console.log(localStorage.getItem("nomeToken"))
-  //   console.log(this.idTipoPago)
-  //   console.log(this.totalAPagar)
-  //   console.log(JSON.parse(localStorage.getItem("ubicacion"))['lat'])
-  //   console.log(JSON.parse(localStorage.getItem("ubicacion"))['lng'])
-  //   console.log(JSON.stringify(this.carritoPromociones))
-  //   console.log(JSON.stringify(this.carritoProducto))
-   fileTransfer.upload(_imagen, 'https://blooming-plateau-78501.herokuapp.com/api/v0/guardarDocumentoTransaccion/'+localStorage.getItem("nomeToken")+"/"+this.idTipoPago+"/"+this.totalAPagar+"/"+JSON.parse(localStorage.getItem("ubicacion"))['lat']+"/"+JSON.parse(localStorage.getItem("ubicacion"))['lng']+"/"+JSON.stringify(this.carritoPromociones)+"/"+JSON.stringify(this.carritoProducto), options)
+   console.log(imagen)
+  console.log(localStorage.getItem("nomeToken"))
+  console.log(this.idTipoPago)
+  console.log(this.totalAPagar)
+  console.log(JSON.parse(localStorage.getItem("ubicacion"))['lat'])
+  console.log(JSON.parse(localStorage.getItem("ubicacion"))['lng'])
+   console.log(JSON.stringify(this.carritoPromociones))
+  console.log(JSON.stringify(this.carritoProducto))
+   fileTransfer.upload(imagen,'https://young-woodland-01238.herokuapp.com/api/v0/guardarDocumentoTransaccion/'+localStorage.getItem("nomeToken")+"/"+this.idTipoPago+"/"+this.totalAPagar+"/"+JSON.parse(localStorage.getItem("ubicacion"))['lat']+"/"+JSON.parse(localStorage.getItem("ubicacion"))['lng']+"/"+JSON.stringify(this.carritoPromociones)+"/"+JSON.stringify(this.carritoProducto), options)
     .then((data) => {
+     
        var setDato: any[] = [];
               localStorage.setItem("carrito", JSON.stringify(setDato));
               localStorage.setItem("carritoPromociones", JSON.stringify(setDato));
               this.showAlertPago("Compra exitosa");
-  
+             
     }, (err) => {
       // error
       //  debugger

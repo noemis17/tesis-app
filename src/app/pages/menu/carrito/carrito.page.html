@@ -13,7 +13,7 @@
 <ion-content class="ion-padding ">
 
   <br>
-  
+
   <ion-row>
     <ion-col size="8" style="align-self: center;
     place-self: flex-end;" >
@@ -28,14 +28,14 @@
     <ion-row >
       <ion-col  style="align-self: center;
       place-self: flex-end;" >
-        <p class="text1">Precio:&nbsp;&nbsp;&nbsp;{{ totalAPagar | currency:"USD":true}}</p>
+        <p class="text1">Precio:&nbsp;&nbsp;{{totalAPagar}}</p>
       </ion-col>
       <ion-col style="text-align-last: end;">
         <ion-buttons >
         <ion-button *ngIf="ubicacion != 'undefined'" class="boton" color="danger"  (click)="validarCarrito()" shape="round" >Comprar</ion-button>
         </ion-buttons>
       </ion-col>
-     
+
     </ion-row>
     <hr>
 
@@ -44,7 +44,7 @@
     <ion-row [ngClass]="carri.PermitirVender?'positivo':'negativo'">
     <ion-item>
       <ion-img class="ESTILO "  *ngIf=" carri.file_name == null" src="/assets/SUPERCITO.png"></ion-img>
-      <ion-img class="ESTILOIMAGEN" *ngIf=" carri.file_name != null" src="https://supercitomarkt.herokuapp.com/api/img/items/{{ carri.file_name}}.{{ carri.file_extension}}"></ion-img>
+      <ion-img class="ESTILOIMAGEN" *ngIf=" carri.file_name != null" src="http://young-woodland-01238.herokuapp.com/img/items/{{carri.file_name}}.{{carri.file_extension}}"></ion-img>
       <ion-label>
         <h3 class="text" lines="full">{{ carri.NAME}}</h3>
         <p class="text1">Precio:&nbsp;&nbsp;{{ carri.PRICE | currency:"USD":true}}</p>
@@ -54,23 +54,25 @@
           </div>
         </div>
         <ion-buttons>
-          <ion-button (click)="eliminar(carri.id)" class="boton">
+          <ion-button (click)="eliminar(carri)" class="boton">
             <ion-icon slot="start" name="trash-outline"> </ion-icon>
           </ion-button>
         </ion-buttons>
       </ion-label>
     </ion-item>
 
-    
+
     </ion-row>
-    
+
   </ion-list>
 
 
   <ion-list *ngFor="let carripro of carritoPromociones">
     <ion-row>
     <ion-item [ngClass]="carripro.PermitirVender?'positivo':'negativo'">
+      
       <ion-img class="ESTILO "  *ngIf="  carripro.file_name == null" src="/assets/SUPERCITO.png"></ion-img>
+      <ion-img class="ESTILOIMAGEN" *ngIf="carripro.file_name != null" src="http://young-woodland-01238.herokuapp.com/img/items/{{carripro.file_name}}.{{carripro.file_extension}}"></ion-img>
       <ion-label>
         <h3 class="text" lines="full">{{carripro.descripcion}}</h3>
         <p class="text1">Precio:&nbsp;&nbsp;${{carripro.PrecioPromocionConDescuento |number}}</p>
@@ -88,11 +90,11 @@
           </ion-button>
         </ion-buttons>
       </ion-label>
-    
+
     </ion-item>
-    
+
     </ion-row>
-    
+
   </ion-list>
 
 </ion-content>
@@ -101,4 +103,3 @@
     <ion-title> Ubicación De Entrega</ion-title>
   </ion-toolbar>
 </ion-footer> -->
-
